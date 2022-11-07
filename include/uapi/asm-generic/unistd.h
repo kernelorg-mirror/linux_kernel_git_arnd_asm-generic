@@ -955,10 +955,6 @@ __SYSCALL(__NR_set_mempolicy_home_node, sys_set_mempolicy_home_node)
 #endif
 #define __NR_mmap __NR3264_mmap
 #define __NR_fadvise64 __NR3264_fadvise64
-#ifdef __NR3264_stat
-#define __NR_stat __NR3264_stat
-#define __NR_lstat __NR3264_lstat
-#endif
 #else
 #define __NR_fcntl64 __NR3264_fcntl
 #define __NR_statfs64 __NR3264_statfs
@@ -973,8 +969,4 @@ __SYSCALL(__NR_set_mempolicy_home_node, sys_set_mempolicy_home_node)
 #endif
 #define __NR_mmap2 __NR3264_mmap
 #define __NR_fadvise64_64 __NR3264_fadvise64
-#ifdef __NR3264_stat
-#define __NR_stat64 __NR3264_stat
-#define __NR_lstat64 __NR3264_lstat
-#endif
 #endif
