@@ -16,6 +16,7 @@
 #include <linux/syscalls.h>
 
 #include <asm/syscall.h>
+#include <asm/unistd-nr32.h>
 
 asmlinkage long compat_sys_sigreturn(void);
 asmlinkage long compat_sys_rt_sigreturn(void);
@@ -122,14 +123,16 @@ COMPAT_SYSCALL_DEFINE6(aarch32_fallocate, int, fd, int, mode,
 	return ksys_fallocate(fd, mode, arg_u64(offset), arg_u64(len));
 }
 
+#define __SYSCALL_WITH_COMPAT(nr, sym, compat) __SYSCALL(nr, compat)
+
 #undef __SYSCALL
 #define __SYSCALL(nr, sym)	asmlinkage long __arm64_##sym(const struct pt_regs *);
-#include <asm/unistd32.h>
+#include <asm/syscalls32.h>
 
 #undef __SYSCALL
 #define __SYSCALL(nr, sym)	[nr] = __arm64_##sym,
 
 const syscall_fn_t compat_sys_call_table[__NR_compat_syscalls] = {
 	[0 ... __NR_compat_syscalls - 1] = __arm64_sys_ni_syscall,
-#include <asm/unistd32.h>
+#include <asm/syscalls32.h>
 };

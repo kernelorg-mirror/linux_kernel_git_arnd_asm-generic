@@ -15,6 +15,7 @@
 #include <asm/syscall.h>
 #include <asm/thread_info.h>
 #include <asm/unistd.h>
+#include <asm/unistd-nr32.h>
 
 long compat_arm_syscall(struct pt_regs *regs, int scno);
 long sys_ni_syscall(void);
