@@ -48,6 +48,48 @@
 #define __SC_COMP(_nr, _sys, _comp) __SYSCALL(_nr, _sys)
 #endif
 
+#ifdef __ARCH_WANT_RENAMEAT
+#define __SYSCALL_renameat(_nr, _sys)	__SYSCALL(__NR_ ## _nr, _sys)
+#else
+#define __SYSCALL_renameat(_nr, _sys)
+#endif
+
+#ifdef __ARCH_WANT_STAT64
+#define __SYSCALL_stat64(_nr, _sys)	__SYSCALL(__NR_ ## _nr, _sys)
+#else
+#define __SYSCALL_stat64(_nr, _sys)
+#endif
+
+#ifdef __ARCH_WANT_NEW_STAT
+#define __SYSCALL_newstat(_nr, _sys)	__SYSCALL(__NR_ ## _nr, _sys)
+#else
+#define __SYSCALL_newstat(_nr, _sys)
+#endif
+
+#ifdef __ARCH_WANT_SET_GET_RLIMIT
+#define __SYSCALL_rlimit(_nr, _sys)	__SYSCALL(__NR_ ## _nr, _sys)
+#else
+#define __SYSCALL_rlimit(_nr, _sys)
+#endif
+
+#ifndef __ARCH_NOMMU
+#define __SYSCALL_mmu(_nr, _sys)	__SYSCALL(__NR_ ## _nr, _sys)
+#else
+#define __SYSCALL_mmu(_nr, _sys)
+#endif
+
+#ifdef __ARCH_WANT_SYS_CLONE3
+#define __SYSCALL_clone3(_nr, _sys)	__SYSCALL(__NR_ ## _nr, _sys)
+#else
+#define __SYSCALL_clone3(_nr, _sys)
+#endif
+
+#ifdef __ARCH_WANT_MEMFD_SECRET
+#define __SYSCALL_memfd_secret(_nr, _sys) __SYSCALL(__NR_ ## _nr, _sys)
+#else
+#define __SYSCALL_memfd_secret(_nr, _sys)
+#endif
+
 /*
  * 32 bit systems traditionally used different
  * syscalls for off_t and loff_t arguments, while
@@ -66,10 +108,6 @@
 #define __NR_ftruncate __NR3264_ftruncate
 #define __NR_lseek __NR3264_lseek
 #define __NR_sendfile __NR3264_sendfile
-#if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
-#define __NR_newfstatat __NR3264_fstatat
-#define __NR_fstat __NR3264_fstat
-#endif
 #define __NR_mmap __NR3264_mmap
 #define __NR_fadvise64 __NR3264_fadvise64
 #endif
@@ -82,10 +120,6 @@
 #define __NR_ftruncate64 __NR3264_ftruncate
 #define __NR_llseek __NR3264_lseek
 #define __NR_sendfile64 __NR3264_sendfile
-#if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
-#define __NR_fstatat64 __NR3264_fstatat
-#define __NR_fstat64 __NR3264_fstat
-#endif
 #define __NR_mmap2 __NR3264_mmap
 #define __NR_fadvise64_64 __NR3264_fadvise64
 #endif
@@ -195,7 +229,7 @@ __SYSCALL(__NR_linkat, sys_linkat)
 #ifdef __ARCH_WANT_RENAMEAT
 /* renameat is superseded with flags by renameat2 */
 #define __NR_renameat 38
-__SYSCALL(__NR_renameat, sys_renameat)
+__SC(renameat, renameat, sys_renameat)
 #endif /* __ARCH_WANT_RENAMEAT */
 
 /* fs/namespace.c */
@@ -312,13 +346,25 @@ __SYSCALL(__NR_tee, sys_tee)
 /* fs/stat.c */
 #define __NR_readlinkat 78
 __SYSCALL(__NR_readlinkat, sys_readlinkat)
-#if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
-#define __NR3264_fstatat 79
-__SC(32, fstatat64, sys_fstatat64)
-__SC(64, fstatat, sys_newfstatat)
-#define __NR3264_fstat 80
-__SC(32, fstat64, sys_fstat64)
-__SC(64, fstat, sys_newfstat)
+
+#ifdef __ARCH_WANT_STAT64
+#define __NR_fstatat64 79
+__SC(stat64, fstatat64, sys_fstatat64)
+#endif
+
+#ifdef __ARCH_WANT_NEW_STAT
+#define __NR_fstatat 79
+__SC(newstat, fstatat, sys_newfstatat)
+#endif
+
+#if defined(__ARCH_WANT_STAT64) || defined(__GEN_SYSCALL_TBL)
+#define __NR_fstat64 80
+__SC(stat64, fstat64, sys_fstat64)
+#endif
+
+#if defined(__ARCH_WANT_NEW_STAT) || defined(__GEN_SYSCALL_TBL)
+#define __NR_fstat 80
+__SC(newstat, fstat, sys_newfstat)
 #endif
 
 /* fs/sync.c */
@@ -563,9 +609,9 @@ __SYSCALL(__NR_setdomainname, sys_setdomainname)
 #ifdef __ARCH_WANT_SET_GET_RLIMIT
 /* getrlimit and setrlimit are superseded with prlimit64 */
 #define __NR_getrlimit 163
-__SC_COMP(__NR_getrlimit, sys_getrlimit, compat_sys_getrlimit)
+__SCC(rlimit, getrlimit, sys_getrlimit, compat_sys_getrlimit)
 #define __NR_setrlimit 164
-__SC_COMP(__NR_setrlimit, sys_setrlimit, compat_sys_setrlimit)
+__SCC(rlimit, setrlimit, sys_setrlimit, compat_sys_setrlimit)
 #endif
 
 #define __NR_getrusage 165
@@ -728,37 +774,37 @@ __SC(64, fadvise64, sys_fadvise64_64)
 /* mm/, CONFIG_MMU only */
 #ifndef __ARCH_NOMMU
 #define __NR_swapon 224
-__SYSCALL(__NR_swapon, sys_swapon)
+__SC(mmu, swapon, sys_swapon)
 #define __NR_swapoff 225
-__SYSCALL(__NR_swapoff, sys_swapoff)
+__SC(mmu, swapoff, sys_swapoff)
 #define __NR_mprotect 226
-__SYSCALL(__NR_mprotect, sys_mprotect)
+__SC(mmu, mprotect, sys_mprotect)
 #define __NR_msync 227
-__SYSCALL(__NR_msync, sys_msync)
+__SC(mmu, msync, sys_msync)
 #define __NR_mlock 228
-__SYSCALL(__NR_mlock, sys_mlock)
+__SC(mmu, mlock, sys_mlock)
 #define __NR_munlock 229
-__SYSCALL(__NR_munlock, sys_munlock)
+__SC(mmu, munlock, sys_munlock)
 #define __NR_mlockall 230
-__SYSCALL(__NR_mlockall, sys_mlockall)
+__SC(mmu, mlockall, sys_mlockall)
 #define __NR_munlockall 231
-__SYSCALL(__NR_munlockall, sys_munlockall)
+__SC(mmu, munlockall, sys_munlockall)
 #define __NR_mincore 232
-__SYSCALL(__NR_mincore, sys_mincore)
+__SC(mmu, mincore, sys_mincore)
 #define __NR_madvise 233
-__SYSCALL(__NR_madvise, sys_madvise)
+__SC(mmu, madvise, sys_madvise)
 #define __NR_remap_file_pages 234
-__SYSCALL(__NR_remap_file_pages, sys_remap_file_pages)
+__SC(mmu, remap_file_pages, sys_remap_file_pages)
 #define __NR_mbind 235
-__SYSCALL(__NR_mbind, sys_mbind)
+__SC(mmu, mbind, sys_mbind)
 #define __NR_get_mempolicy 236
-__SYSCALL(__NR_get_mempolicy, sys_get_mempolicy)
+__SC(mmu, get_mempolicy, sys_get_mempolicy)
 #define __NR_set_mempolicy 237
-__SYSCALL(__NR_set_mempolicy, sys_set_mempolicy)
+__SC(mmu, set_mempolicy, sys_set_mempolicy)
 #define __NR_migrate_pages 238
-__SYSCALL(__NR_migrate_pages, sys_migrate_pages)
+__SC(mmu, migrate_pages, sys_migrate_pages)
 #define __NR_move_pages 239
-__SYSCALL(__NR_move_pages, sys_move_pages)
+__SC(mmu, move_pages, sys_move_pages)
 #endif
 
 #define __NR_rt_tgsigqueueinfo 240
@@ -927,7 +973,7 @@ __SYSCALL(__NR_fspick, sys_fspick)
 __SYSCALL(__NR_pidfd_open, sys_pidfd_open)
 #ifdef __ARCH_WANT_SYS_CLONE3
 #define __NR_clone3 435
-__SYSCALL(__NR_clone3, sys_clone3)
+__SC(clone3, clone3, sys_clone3)
 #endif
 #define __NR_close_range 436
 __SYSCALL(__NR_close_range, sys_close_range)
@@ -956,7 +1002,7 @@ __SYSCALL(__NR_landlock_restrict_self, sys_landlock_restrict_self)
 
 #ifdef __ARCH_WANT_MEMFD_SECRET
 #define __NR_memfd_secret 447
-__SYSCALL(__NR_memfd_secret, sys_memfd_secret)
+__SC(memfd_secret, memfd_secret, sys_memfd_secret)
 #endif
 #define __NR_process_mrelease 448
 __SYSCALL(__NR_process_mrelease, sys_process_mrelease)
