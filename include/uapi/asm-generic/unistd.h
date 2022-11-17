@@ -29,11 +29,9 @@
 #endif
 
 #if __BITS_PER_LONG == 32 || defined(__SYSCALL_COMPAT)
-#define __SC_3264(_nr, _32, _64) __SYSCALL(_nr, _32)
 #define __SYSCALL_32(_nr, _sys)		__SYSCALL(__NR_ ## _nr, _sys)
 #define __SYSCALL_64(_nr, _sys)
 #else
-#define __SC_3264(_nr, _32, _64) __SYSCALL(_nr, _64)
 #define __SYSCALL_32(_nr, _sys)
 #define __SYSCALL_64(_nr, _sys)		__SYSCALL(__NR_ ## _nr, _sys)
 #endif
@@ -46,10 +44,50 @@
 
 #ifdef __SYSCALL_COMPAT
 #define __SC_COMP(_nr, _sys, _comp) __SYSCALL(_nr, _comp)
-#define __SC_COMP_3264(_nr, _32, _64, _comp) __SYSCALL(_nr, _comp)
 #else
 #define __SC_COMP(_nr, _sys, _comp) __SYSCALL(_nr, _sys)
-#define __SC_COMP_3264(_nr, _32, _64, _comp) __SC_3264(_nr, _32, _64)
+#endif
+
+/*
+ * 32 bit systems traditionally used different
+ * syscalls for off_t and loff_t arguments, while
+ * 64 bit systems only need the off_t version.
+ * For new 32 bit platforms, there is no need to
+ * implement the old 32 bit off_t syscalls, so
+ * they take different names.
+ * Here we map the numbers so that both versions
+ * use the same syscall table layout.
+ */
+#if __BITS_PER_LONG == 64
+#define __NR_fcntl __NR3264_fcntl
+#define __NR_statfs __NR3264_statfs
+#define __NR_fstatfs __NR3264_fstatfs
+#define __NR_truncate __NR3264_truncate
+#define __NR_ftruncate __NR3264_ftruncate
+#define __NR_lseek __NR3264_lseek
+#define __NR_sendfile __NR3264_sendfile
+#if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
+#define __NR_newfstatat __NR3264_fstatat
+#define __NR_fstat __NR3264_fstat
+#endif
+#define __NR_mmap __NR3264_mmap
+#define __NR_fadvise64 __NR3264_fadvise64
+#endif
+
+#if __BITS_PER_LONG == 32 || defined(__SYSCALL_COMPAT)
+#define __NR_fcntl64 __NR3264_fcntl
+#define __NR_statfs64 __NR3264_statfs
+#define __NR_fstatfs64 __NR3264_fstatfs
+#define __NR_truncate64 __NR3264_truncate
+#define __NR_ftruncate64 __NR3264_ftruncate
+#define __NR_llseek __NR3264_lseek
+#define __NR_sendfile64 __NR3264_sendfile
+#if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
+#define __NR_fstatat64 __NR3264_fstatat
+#define __NR_fstat64 __NR3264_fstat
+#endif
+#define __NR_mmap2 __NR3264_mmap
+#define __NR_fadvise64_64 __NR3264_fadvise64
 #endif
 
 #define __NR_io_setup 0
@@ -108,7 +146,9 @@ __SYSCALL(__NR_dup, sys_dup)
 #define __NR_dup3 24
 __SYSCALL(__NR_dup3, sys_dup3)
 #define __NR3264_fcntl 25
-__SC_COMP_3264(__NR3264_fcntl, sys_fcntl64, sys_fcntl, compat_sys_fcntl64)
+__SCC(32, fcntl64, sys_fcntl64, compat_sys_fcntl64)
+__SC(64, fcntl, sys_fcntl)
+
 #define __NR_inotify_init1 26
 __SYSCALL(__NR_inotify_init1, sys_inotify_init1)
 #define __NR_inotify_add_watch 27
@@ -149,17 +189,17 @@ __SYSCALL(__NR_pivot_root, sys_pivot_root)
 #define __NR_nfsservctl 42
 __SYSCALL(__NR_nfsservctl, sys_ni_syscall)
 #define __NR3264_statfs 43
-__SC_COMP_3264(__NR3264_statfs, sys_statfs64, sys_statfs, \
-	       compat_sys_statfs64)
+__SCC(32, statfs64, sys_statfs64, compat_sys_statfs64)
+__SC(64, statfs, sys_statfs)
 #define __NR3264_fstatfs 44
-__SC_COMP_3264(__NR3264_fstatfs, sys_fstatfs64, sys_fstatfs, \
-	       compat_sys_fstatfs64)
+__SCC(32, fstatfs64, sys_fstatfs64, compat_sys_fstatfs64)
+__SC(64, fstatfs, sys_fstatfs)
 #define __NR3264_truncate 45
-__SC_COMP_3264(__NR3264_truncate, sys_truncate64, sys_truncate, \
-	       compat_sys_truncate64)
+__SCC(32, truncate64, sys_truncate64, compat_sys_truncate64)
+__SC(64, truncate, sys_truncate)
 #define __NR3264_ftruncate 46
-__SC_COMP_3264(__NR3264_ftruncate, sys_ftruncate64, sys_ftruncate, \
-	       compat_sys_ftruncate64)
+__SCC(32, ftruncate64, sys_ftruncate64, compat_sys_ftruncate64)
+__SC(64, ftruncate, sys_ftruncate)
 #define __NR_fallocate 47
 __SC_COMP(__NR_fallocate, sys_fallocate, compat_sys_fallocate)
 #define __NR_faccessat 48
@@ -191,7 +231,8 @@ __SYSCALL(__NR_quotactl, sys_quotactl)
 #define __NR_getdents64 61
 __SYSCALL(__NR_getdents64, sys_getdents64)
 #define __NR3264_lseek 62
-__SC_3264(__NR3264_lseek, sys_llseek, sys_lseek)
+__SC(32, llseek, sys_llseek)
+__SC(64, lseek, sys_lseek)
 #define __NR_read 63
 __SYSCALL(__NR_read, sys_read)
 #define __NR_write 64
@@ -209,7 +250,8 @@ __SC_COMP(__NR_preadv, sys_preadv, compat_sys_preadv)
 #define __NR_pwritev 70
 __SC_COMP(__NR_pwritev, sys_pwritev, compat_sys_pwritev)
 #define __NR3264_sendfile 71
-__SYSCALL(__NR3264_sendfile, sys_sendfile64)
+__SC(32, sendfile64, sys_sendfile64)
+__SC(64, sendfile, sys_sendfile64)
 
 #if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
 #define __NR_pselect6 72
@@ -233,9 +275,11 @@ __SYSCALL(__NR_readlinkat, sys_readlinkat)
 
 #if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
 #define __NR3264_fstatat 79
-__SC_3264(__NR3264_fstatat, sys_fstatat64, sys_newfstatat)
+__SC(32, fstatat64, sys_fstatat64)
+__SC(64, fstatat, sys_newfstatat)
 #define __NR3264_fstat 80
-__SC_3264(__NR3264_fstat, sys_fstat64, sys_newfstat)
+__SC(32, fstat64, sys_fstat64)
+__SC(64, fstat, sys_newfstat)
 #endif
 
 #define __NR_sync 81
@@ -600,9 +644,11 @@ __SYSCALL(__NR_clone, sys_clone)
 #define __NR_execve 221
 __SC_COMP(__NR_execve, sys_execve, compat_sys_execve)
 #define __NR3264_mmap 222
-__SC_3264(__NR3264_mmap, sys_mmap2, sys_mmap)
+__SC(32, mmap2, sys_mmap2)
+__SC(64, mmap, sys_mmap)
 #define __NR3264_fadvise64 223
-__SC_COMP(__NR3264_fadvise64, sys_fadvise64_64, compat_sys_fadvise64_64)
+__SCC(32, fadvise64_64, sys_fadvise64_64, compat_sys_fadvise64_64)
+__SC(64, fadvise64, sys_fadvise64_64)
 
 /* CONFIG_MMU only */
 #define __NR_swapon 224
@@ -889,43 +935,3 @@ __SYSCALL(__NR_uretprobe, sys_uretprobe)
 
 #undef __NR_syscalls
 #define __NR_syscalls 468
-
-/*
- * 32 bit systems traditionally used different
- * syscalls for off_t and loff_t arguments, while
- * 64 bit systems only need the off_t version.
- * For new 32 bit platforms, there is no need to
- * implement the old 32 bit off_t syscalls, so
- * they take different names.
- * Here we map the numbers so that both versions
- * use the same syscall table layout.
- */
-#if __BITS_PER_LONG == 64 && !defined(__SYSCALL_COMPAT)
-#define __NR_fcntl __NR3264_fcntl
-#define __NR_statfs __NR3264_statfs
-#define __NR_fstatfs __NR3264_fstatfs
-#define __NR_truncate __NR3264_truncate
-#define __NR_ftruncate __NR3264_ftruncate
-#define __NR_lseek __NR3264_lseek
-#define __NR_sendfile __NR3264_sendfile
-#if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
-#define __NR_newfstatat __NR3264_fstatat
-#define __NR_fstat __NR3264_fstat
-#endif
-#define __NR_mmap __NR3264_mmap
-#define __NR_fadvise64 __NR3264_fadvise64
-#else
-#define __NR_fcntl64 __NR3264_fcntl
-#define __NR_statfs64 __NR3264_statfs
-#define __NR_fstatfs64 __NR3264_fstatfs
-#define __NR_truncate64 __NR3264_truncate
-#define __NR_ftruncate64 __NR3264_ftruncate
-#define __NR_llseek __NR3264_lseek
-#define __NR_sendfile64 __NR3264_sendfile
-#if defined(__ARCH_WANT_NEW_STAT) || defined(__ARCH_WANT_STAT64)
-#define __NR_fstatat64 __NR3264_fstatat
-#define __NR_fstat64 __NR3264_fstat
-#endif
-#define __NR_mmap2 __NR3264_mmap
-#define __NR_fadvise64_64 __NR3264_fadvise64
-#endif
