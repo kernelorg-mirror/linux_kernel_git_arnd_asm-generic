@@ -16,6 +16,10 @@
 #define __SYSCALL(x, y)
 #endif
 
+#ifdef __GEN_SYSCALL_TBL
+#define __SC(a,b,c) __NR_##b a b c
+#define __SCC(a,b,c,d) __NR_##b a b c d
+#else
 #ifndef __SC
 #define __SC(_cond, _nr, _sys) __SYSCALL_ ## _cond (_nr, _sys)
 #endif
@@ -86,6 +90,8 @@
 #define __SYSCALL_memfd_secret(_nr, _sys)
 #endif
 
+#endif /* !__GEN_SYSCALL_TBL */
+
 /*
  * 32 bit systems traditionally used different
  * syscalls for off_t and loff_t arguments, while
@@ -96,7 +102,7 @@
  * Here we map the numbers so that both versions
  * use the same syscall table layout.
  */
-#if __BITS_PER_LONG == 64
+#if __BITS_PER_LONG == 64 || defined(__GEN_SYSCALL_TBL)
 #define __NR_fcntl __NR3264_fcntl
 #define __NR_statfs __NR3264_statfs
 #define __NR_fstatfs __NR3264_fstatfs
@@ -108,7 +114,7 @@
 #define __NR_fadvise64 __NR3264_fadvise64
 #endif
 
-#if __BITS_PER_LONG == 32 || defined(__SYSCALL_COMPAT)
+#if __BITS_PER_LONG == 32 || defined(__SYSCALL_COMPAT) || defined(__GEN_SYSCALL_TBL)
 #define __NR_fcntl64 __NR3264_fcntl
 #define __NR_statfs64 __NR3264_statfs
 #define __NR_fstatfs64 __NR3264_fstatfs
@@ -128,7 +134,7 @@ __SC(common, io_destroy, sys_io_destroy)
 __SCC(common, io_submit, sys_io_submit, compat_sys_io_submit)
 #define __NR_io_cancel 3
 __SC(common, io_cancel, sys_io_cancel)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_io_getevents 4
 __SC(time32, io_getevents, sys_io_getevents_time32)
 __SC(64, io_getevents, sys_io_getevents)
@@ -222,7 +228,7 @@ __SC(common, unlinkat, sys_unlinkat)
 __SC(common, symlinkat, sys_symlinkat)
 #define __NR_linkat 37
 __SC(common, linkat, sys_linkat)
-#ifdef __ARCH_WANT_RENAMEAT
+#if defined(__ARCH_WANT_RENAMEAT) || defined(__GEN_SYSCALL_TBL)
 /* renameat is superseded with flags by renameat2 */
 #define __NR_renameat 38
 __SC(renameat, renameat, sys_renameat)
@@ -318,7 +324,7 @@ __SC(32, sendfile64, sys_sendfile64)
 __SC(64, sendfile, sys_sendfile64)
 
 /* fs/select.c */
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_pselect6 72
 __SCC(time32, pselect6, sys_pselect6_time32, compat_sys_pselect6_time32)
 __SC(64, pselect6, sys_pselect6)
@@ -343,12 +349,12 @@ __SC(common, tee, sys_tee)
 #define __NR_readlinkat 78
 __SC(common, readlinkat, sys_readlinkat)
 
-#ifdef __ARCH_WANT_STAT64
+#if defined(__ARCH_WANT_STAT64) || defined(__GEN_SYSCALL_TBL)
 #define __NR_fstatat64 79
 __SC(stat64, fstatat64, sys_fstatat64)
 #endif
 
-#ifdef __ARCH_WANT_NEW_STAT
+#if defined(__ARCH_WANT_NEW_STAT) || defined(__GEN_SYSCALL_TBL)
 #define __NR_fstatat 79
 __SC(newstat, fstatat, sys_newfstatat)
 #endif
@@ -377,7 +383,7 @@ __SCC(common, sync_file_range, sys_sync_file_range, \
 /* fs/timerfd.c */
 #define __NR_timerfd_create 85
 __SC(common, timerfd_create, sys_timerfd_create)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_timerfd_settime 86
 __SC(time32, timerfd_settime, sys_timerfd_settime32)
 __SC(64, timerfd_settime, sys_timerfd_settime)
@@ -387,7 +393,7 @@ __SC(64, timerfd_gettime, sys_timerfd_gettime)
 #endif
 
 /* fs/utimes.c */
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_utimensat 88
 __SC(time32, utimensat, sys_utimensat_time32)
 __SC(64, utimensat, sys_utimensat)
@@ -422,7 +428,7 @@ __SC(common, set_tid_address, sys_set_tid_address)
 __SC(common, unshare, sys_unshare)
 
 /* kernel/futex.c */
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_futex 98
 __SC(time32, futex, sys_futex_time32)
 __SC(64, futex, sys_futex)
@@ -435,7 +441,7 @@ __SCC(common, get_robust_list, sys_get_robust_list, \
 	  compat_sys_get_robust_list)
 
 /* kernel/hrtimer.c */
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_nanosleep 101
 __SC(time32, nanosleep, sys_nanosleep_time32)
 __SC(64, nanosleep, sys_nanosleep)
@@ -460,21 +466,21 @@ __SC(common, delete_module, sys_delete_module)
 /* kernel/posix-timers.c */
 #define __NR_timer_create 107
 __SCC(common, timer_create, sys_timer_create, compat_sys_timer_create)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_timer_gettime 108
 __SC(time32, timer_gettime, sys_timer_gettime32)
 __SC(64, timer_gettime, sys_timer_gettime)
 #endif
 #define __NR_timer_getoverrun 109
 __SC(common, timer_getoverrun, sys_timer_getoverrun)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_timer_settime 110
 __SC(time32, timer_settime, sys_timer_settime32)
 __SC(64, timer_settime, sys_timer_settime)
 #endif
 #define __NR_timer_delete 111
 __SC(common, timer_delete, sys_timer_delete)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_clock_settime 112
 __SC(time32, clock_settime, sys_clock_settime32)
 __SC(64, clock_settime, sys_clock_settime)
@@ -518,7 +524,7 @@ __SC(common, sched_yield, sys_sched_yield)
 __SC(common, sched_get_priority_max, sys_sched_get_priority_max)
 #define __NR_sched_get_priority_min 126
 __SC(common, sched_get_priority_min, sys_sched_get_priority_min)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_sched_rr_get_interval 127
 __SC(time32, sched_rr_get_interval, sys_sched_rr_get_interval_time32)
 __SC(64, sched_rr_get_interval, sys_sched_rr_get_interval)
@@ -543,7 +549,7 @@ __SCC(common, rt_sigaction, sys_rt_sigaction, compat_sys_rt_sigaction)
 __SCC(common, rt_sigprocmask, sys_rt_sigprocmask, compat_sys_rt_sigprocmask)
 #define __NR_rt_sigpending 136
 __SCC(common, rt_sigpending, sys_rt_sigpending, compat_sys_rt_sigpending)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_rt_sigtimedwait 137
 __SCC(time32, rt_sigtimedwait, sys_rt_sigtimedwait_time32, compat_sys_rt_sigtimedwait_time32)
 __SC(64, rt_sigtimedwait, sys_rt_sigtimedwait)
@@ -602,7 +608,7 @@ __SC(common, sethostname, sys_sethostname)
 #define __NR_setdomainname 162
 __SC(common, setdomainname, sys_setdomainname)
 
-#ifdef __ARCH_WANT_SET_GET_RLIMIT
+#if defined(__ARCH_WANT_SET_GET_RLIMIT) || defined(__GEN_SYSCALL_TBL)
 /* getrlimit and setrlimit are superseded with prlimit64 */
 #define __NR_getrlimit 163
 __SCC(rlimit, getrlimit, sys_getrlimit, compat_sys_getrlimit)
@@ -620,7 +626,7 @@ __SC(common, prctl, sys_prctl)
 __SC(common, getcpu, sys_getcpu)
 
 /* kernel/time.c */
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_gettimeofday 169
 __SCC(time32, gettimeofday, sys_gettimeofday, compat_sys_gettimeofday)
 __SC(64, gettimeofday, sys_gettimeofday)
@@ -655,7 +661,7 @@ __SCC(common, sysinfo, sys_sysinfo, compat_sys_sysinfo)
 __SCC(common, mq_open, sys_mq_open, compat_sys_mq_open)
 #define __NR_mq_unlink 181
 __SC(common, mq_unlink, sys_mq_unlink)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_mq_timedsend 182
 __SC(time32, mq_timedsend, sys_mq_timedsend_time32)
 __SC(64, mq_timedsend, sys_mq_timedsend)
@@ -683,7 +689,7 @@ __SCC(common, msgsnd, sys_msgsnd, compat_sys_msgsnd)
 __SC(common, semget, sys_semget)
 #define __NR_semctl 191
 __SCC(common, semctl, sys_semctl, compat_sys_semctl)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_semtimedop 192
 __SC(time32, semtimedop, sys_semtimedop_time32)
 __SC(64, semtimedop, sys_semtimedop)
@@ -768,7 +774,7 @@ __SCC(32, fadvise64_64, sys_fadvise64_64, compat_sys_fadvise64_64)
 __SC(64, fadvise64, sys_fadvise64_64)
 
 /* mm/, CONFIG_MMU only */
-#ifndef __ARCH_NOMMU
+#if !defined(__ARCH_NOMMU) || defined(__GEN_SYSCALL_TBL)
 #define __NR_swapon 224
 __SC(mmu, swapon, sys_swapon)
 #define __NR_swapoff 225
@@ -810,7 +816,7 @@ __SCC(common, rt_tgsigqueueinfo, sys_rt_tgsigqueueinfo, \
 __SC(common, perf_event_open, sys_perf_event_open)
 #define __NR_accept4 242
 __SC(common, accept4, sys_accept4)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_recvmmsg 243
 __SCC(time32, recvmmsg, sys_recvmmsg_time32, compat_sys_recvmmsg_time32)
 __SC(64, recvmmsg, sys_recvmmsg)
@@ -822,7 +828,7 @@ __SC(64, recvmmsg, sys_recvmmsg)
  */
 #define __NR_arch_specific_syscall 244
 
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_wait4 260
 __SCC(time32, wait4, sys_wait4, compat_sys_wait4)
 __SC(64, wait4, sys_wait4)
@@ -837,7 +843,7 @@ __SC(common, fanotify_mark, sys_fanotify_mark)
 __SC(common, name_to_handle_at, sys_name_to_handle_at)
 #define __NR_open_by_handle_at         265
 __SC(common, open_by_handle_at, sys_open_by_handle_at)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_clock_adjtime 266
 __SC(time32, clock_adjtime, sys_clock_adjtime32)
 __SC(64, clock_adjtime, sys_clock_adjtime)
@@ -892,7 +898,7 @@ __SC(common, pkey_alloc,    sys_pkey_alloc)
 __SC(common, pkey_free,     sys_pkey_free)
 #define __NR_statx 291
 __SC(common, statx,     sys_statx)
-#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
+#if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_io_pgetevents 292
 __SCC(time32, io_pgetevents, sys_io_pgetevents_time32, compat_sys_io_pgetevents)
 __SC(64, io_pgetevents, sys_io_pgetevents)
@@ -902,7 +908,7 @@ __SC(common, rseq, sys_rseq)
 #define __NR_kexec_file_load 294
 __SC(common, kexec_file_load,     sys_kexec_file_load)
 /* 295 through 402 are unassigned to sync up with generic numbers, don't use */
-#if defined(__SYSCALL_COMPAT) || __BITS_PER_LONG == 32
+#if defined(__SYSCALL_COMPAT) || __BITS_PER_LONG == 32 || defined(__GEN_SYSCALL_TBL)
 #define __NR_clock_gettime64 403
 __SC(32, clock_gettime64, sys_clock_gettime)
 #define __NR_clock_settime64 404
@@ -967,7 +973,7 @@ __SC(common, fsmount, sys_fsmount)
 __SC(common, fspick, sys_fspick)
 #define __NR_pidfd_open 434
 __SC(common, pidfd_open, sys_pidfd_open)
-#ifdef __ARCH_WANT_SYS_CLONE3
+#if defined(__ARCH_WANT_SYS_CLONE3) || defined(__GEN_SYSCALL_TBL)
 #define __NR_clone3 435
 __SC(clone3, clone3, sys_clone3)
 #endif
@@ -996,7 +1002,7 @@ __SC(common, landlock_add_rule, sys_landlock_add_rule)
 #define __NR_landlock_restrict_self 446
 __SC(common, landlock_restrict_self, sys_landlock_restrict_self)
 
-#ifdef __ARCH_WANT_MEMFD_SECRET
+#if defined(__ARCH_WANT_MEMFD_SECRET) || defined(__GEN_SYSCALL_TBL)
 #define __NR_memfd_secret 447
 __SC(memfd_secret, memfd_secret, sys_memfd_secret)
 #endif
