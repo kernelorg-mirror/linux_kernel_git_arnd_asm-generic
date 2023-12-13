@@ -319,32 +319,6 @@ do_entIF(unsigned long type, struct pt_regs *regs)
 		return;
 
 	      case 4: /* opDEC */
-		if (implver() == IMPLVER_EV4) {
-			long si_code;
-
-			/* The some versions of SRM do not handle
-			   the opDEC properly - they return the PC of the
-			   opDEC fault, not the instruction after as the
-			   Alpha architecture requires.  Here we fix it up.
-			   We do this by intentionally causing an opDEC
-			   fault during the boot sequence and testing if
-			   we get the correct PC.  If not, we set a flag
-			   to correct it every time through.  */
-			regs->pc += opDEC_fix; 
-			
-			/* EV4 does not implement anything except normal
-			   rounding.  Everything else will come here as
-			   an illegal instruction.  Emulate them.  */
-			si_code = alpha_fp_emul(regs->pc - 4);
-			if (si_code == 0)
-				return;
-			if (si_code > 0) {
-				send_sig_fault_trapno(SIGFPE, si_code,
-						      (void __user *) regs->pc,
-						      0, current);
-				return;
-			}
-		}
 		break;
 
 	      case 5: /* illoc */
@@ -944,11 +918,6 @@ trap_init(void)
 	/* Tell PAL-code what global pointer we want in the kernel.  */
 	register unsigned long gptr __asm__("$29");
 	wrkgp(gptr);
-
-	/* Hack for Multia (UDB) and JENSEN: some of their SRMs have
-	   a bug in the handling of the opDEC fault.  Fix it up if so.  */
-	if (implver() == IMPLVER_EV4)
-		opDEC_check();
 
 	wrent(entArith, 1);
 	wrent(entMM, 2);
