@@ -29,39 +29,6 @@
 
 #include "proto.h"
 
-/* Work-around for some SRMs which mishandle opDEC faults.  */
-
-static int opDEC_fix;
-
-static void
-opDEC_check(void)
-{
-	__asm__ __volatile__ (
-	/* Load the address of... */
-	"	br	$16, 1f\n"
-	/* A stub instruction fault handler.  Just add 4 to the
-	   pc and continue.  */
-	"	ldq	$16, 8($sp)\n"
-	"	addq	$16, 4, $16\n"
-	"	stq	$16, 8($sp)\n"
-	"	call_pal %[rti]\n"
-	/* Install the instruction fault handler.  */
-	"1:	lda	$17, 3\n"
-	"	call_pal %[wrent]\n"
-	/* With that in place, the fault from the round-to-minf fp
-	   insn will arrive either at the "lda 4" insn (bad) or one
-	   past that (good).  This places the correct fixup in %0.  */
-	"	lda %[fix], 0\n"
-	"	cvttq/svm $f31,$f31\n"
-	"	lda %[fix], 4"
-	: [fix] "=r" (opDEC_fix)
-	: [rti] "n" (PAL_rti), [wrent] "n" (PAL_wrent)
-	: "$0", "$1", "$16", "$17", "$22", "$23", "$24", "$25");
-
-	if (opDEC_fix)
-		printk("opDEC fixup enabled.\n");
-}
-
 void
 dik_show_regs(struct pt_regs *regs, unsigned long *r9_15)
 {
