@@ -16,13 +16,6 @@ struct task_struct;
 struct pci_dev;
 struct pci_controller;
 
-/* core_apecs.c */
-extern struct pci_ops apecs_pci_ops;
-extern void apecs_init_arch(void);
-extern void apecs_pci_clr_err(void);
-extern void apecs_machine_check(unsigned long vector, unsigned long la_ptr);
-extern void apecs_pci_tbi(struct pci_controller *, dma_addr_t, dma_addr_t);
-
 /* core_cia.c */
 extern struct pci_ops cia_pci_ops;
 extern void cia_init_pci(void);
@@ -37,12 +30,6 @@ extern struct pci_ops irongate_pci_ops;
 extern int irongate_pci_clr_err(void);
 extern void irongate_init_arch(void);
 #define irongate_pci_tbi ((void *)0)
-
-/* core_lca.c */
-extern struct pci_ops lca_pci_ops;
-extern void lca_init_arch(void);
-extern void lca_machine_check(unsigned long vector, unsigned long la_ptr);
-extern void lca_pci_tbi(struct pci_controller *, dma_addr_t, dma_addr_t);
 
 /* core_marvel.c */
 extern struct pci_ops marvel_pci_ops;
