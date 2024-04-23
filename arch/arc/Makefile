@@ -109,4 +109,7 @@ uImage: $(uimage-default-y)
 	@ln -sf $< $(boot)/uImage
 	@$(kecho) '  Image $(boot)/uImage is ready'
 
+archheaders:
+	$(Q)$(MAKE) $(build)=arch/arc/kernel/syscalls all
+
 CLEAN_FILES += $(boot)/uImage
