@@ -290,7 +290,24 @@
 242	common	accept4				sys_accept4
 243	time32	recvmmsg			sys_recvmmsg_time32		compat_sys_recvmmsg_time32
 243	64	recvmmsg			sys_recvmmsg
+
 # Architectures may provide up to 16 syscalls of their own between 244 and 259
+244	arc	cacheflush			sys_cacheflush
+245	arc	arc_settls			sys_arc_settls
+246	arc	arc_gettls			sys_arc_getls
+247	arc	sysfs				sys_sysfs
+248	arc	arc_usr_cmpxchg			sys_arc_usr_cmpxchg
+
+244	csky	set_thread_area			sys_set_thread_area
+245	csky	cacheflush			sys_cacheflush
+
+244	nios2	cacheflush			sys_cacheflush
+
+244	or1k	or1k_atomic			sys_or1k_atomic
+
+244	riscv	riscv_flush_icache		sys_riscv_flush_icache
+245	riscv	riscv_hwprobe			sys_riscv_hwprobe
+
 260	time32	wait4				sys_wait4			compat_sys_wait4
 260	64	wait4				sys_wait4
 261	common	prlimit64			sys_prlimit64
