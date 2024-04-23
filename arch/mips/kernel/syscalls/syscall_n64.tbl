@@ -364,7 +364,7 @@
 # 447 reserved for memfd_secret
 448	n64	process_mrelease		sys_process_mrelease
 449	n64	futex_waitv			sys_futex_waitv
-450	common	set_mempolicy_home_node		sys_set_mempolicy_home_node
+450	n64	set_mempolicy_home_node		sys_set_mempolicy_home_node
 451	n64	cachestat			sys_cachestat
 452	n64	fchmodat2			sys_fchmodat2
 453	n64	map_shadow_stack		sys_map_shadow_stack
