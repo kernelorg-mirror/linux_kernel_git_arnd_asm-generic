@@ -53,6 +53,9 @@ $(BOOT_TARGETS): vmlinux
 install:
 	$(call cmd,install)
 
+archheaders:
+	$(Q)$(MAKE) $(build)=arch/nios2/kernel/syscalls all
+
 define archhelp
   echo  '* vmImage         - Kernel-only image for U-Boot ($(KBUILD_IMAGE))'
   echo  '  install         - Install kernel using'
