@@ -11,9 +11,11 @@
 
 #include <asm/syscall.h>
 
-#undef __SYSCALL
 #define __SYSCALL(nr, call) [nr] = (call),
+#define __SYSCALL_WITH_COMPAT(nr, native, compat)        __SYSCALL(nr, native)
+
+#define sys_mmap2 sys_mmap_pgoff
 
 void *sys_call_table[__NR_syscalls] = {
-#include <asm/unistd.h>
+#include <asm/syscall_table.h>
 };
