@@ -5,7 +5,7 @@ kapi := $(gen)/asm
 uapi := $(gen)/uapi/asm
 
 syscall-32 := $(src)/syscall_32.tbl
-syscall-64 := $(obj)/syscall_64.tbl
+syscall-64 := include/uapi/asm-generic/unistd.h
 ABIS_unistd32.h := common,32
 ABIS_unistd64.h := common,64,renameat,newstat,rlimit,mmu,clone3,memfd_secret --emit-nr
 ABIS_syscalls32.h := common,32
@@ -68,6 +68,3 @@ $(kapi)/syscalls64.h: $(syscall-64) $(systbl) FORCE
 	$(call if_changed,systbl)
 
 CPPFLAGS_syscall_64.lds := -D __GEN_SYSCALL_TBL
-
-$(obj)/syscall_64.tbl: $(srctree)/include/uapi/asm-generic/unistd.h FORCE
-	$(call if_changed_dep,cpp_tbl_h)
