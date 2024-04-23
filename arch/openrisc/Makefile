@@ -25,6 +25,9 @@ KBUILD_CFLAGS	+= -msfimm -mshftimm
 
 all: vmlinux.bin
 
+archheaders:
+	$(Q)$(MAKE) $(build)=arch/openrisc/kernel/syscalls all
+
 boot := arch/$(ARCH)/boot
 
 ifeq ($(CONFIG_OPENRISC_HAVE_INST_MUL),y)
