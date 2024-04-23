@@ -177,6 +177,9 @@ install:
 	$(Q)install -D -m 644 .config $(INSTALL_PATH)/config-$(KERNELRELEASE)
 	$(Q)install -D -m 644 System.map $(INSTALL_PATH)/System.map-$(KERNELRELEASE)
 
+archheaders:
+	$(Q)$(MAKE) $(build)=arch/loongarch/kernel/syscalls all
+
 define archhelp
 	echo '  install              - install kernel into $(INSTALL_PATH)'
 	echo
