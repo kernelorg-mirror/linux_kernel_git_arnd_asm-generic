@@ -71,6 +71,9 @@ all: zImage
 zImage Image uImage: vmlinux
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
+archheaders:
+	$(Q)$(MAKE) $(build)=arch/csky/kernel/syscalls all
+
 define archhelp
   echo  '* zImage       - Compressed kernel image (arch/$(ARCH)/boot/zImage)'
   echo  '  Image        - Uncompressed kernel image (arch/$(ARCH)/boot/Image)'
