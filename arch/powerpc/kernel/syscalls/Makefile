@@ -8,30 +8,20 @@ syscall := $(src)/syscall.tbl
 syshdr := $(srctree)/scripts/syscallhdr.sh
 systbl := $(srctree)/scripts/syscalltbl.sh
 
+abis_32  := common,nospu,32
+abis_64  := common,nospu,64
+abis_spu := common,spu
+
 quiet_cmd_syshdr = SYSHDR  $@
-      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) --emit-nr --abis $(abis) $< $@
+      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) --emit-nr --abis $(abis_$*) $< $@
 
 quiet_cmd_systbl = SYSTBL  $@
-      cmd_systbl = $(CONFIG_SHELL) $(systbl) --abis $(abis) $< $@
+      cmd_systbl = $(CONFIG_SHELL) $(systbl) --abis $(abis_$*) $< $@
 
-$(uapi)/unistd_32.h: abis := common,nospu,32
-$(uapi)/unistd_32.h: $(syscall) $(syshdr) FORCE
+$(uapi)/unistd_%.h: $(syscall) $(syshdr) FORCE
 	$(call if_changed,syshdr)
 
-$(uapi)/unistd_64.h: abis := common,nospu,64
-$(uapi)/unistd_64.h: $(syscall) $(syshdr) FORCE
-	$(call if_changed,syshdr)
-
-$(kapi)/syscall_table_32.h: abis := common,nospu,32
-$(kapi)/syscall_table_32.h: $(syscall) $(systbl) FORCE
-	$(call if_changed,systbl)
-
-$(kapi)/syscall_table_64.h: abis := common,nospu,64
-$(kapi)/syscall_table_64.h: $(syscall) $(systbl) FORCE
-	$(call if_changed,systbl)
-
-$(kapi)/syscall_table_spu.h: abis := common,spu
-$(kapi)/syscall_table_spu.h: $(syscall) $(systbl) FORCE
+$(kapi)/syscall_table_%.h: $(syscall) $(systbl) FORCE
 	$(call if_changed,systbl)
 
 uapisyshdr-y		+= unistd_32.h unistd_64.h
