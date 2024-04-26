@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0
+syscalltbl := arch/powerpc/kernel/syscalls/syscall.tbl
+syscall_abis_32  += nospu
+syscall_abis_64  += nospu
+syscall_abis_spu := common,spu

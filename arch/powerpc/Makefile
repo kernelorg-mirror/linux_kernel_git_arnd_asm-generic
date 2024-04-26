@@ -10,6 +10,11 @@
 # Rewritten by Cort Dougan and Paul Mackerras
 #
 
+syscalltbl := arch/powerpc/kernel/syscalls/syscall.tbl
+syscall_abis_32  += nospu
+syscall_abis_64  += nospu
+syscall_abis_spu := common,spu
+
 ifdef cross_compiling
   ifeq ($(CROSS_COMPILE),)
     # Auto detect cross compiler prefix.
@@ -398,9 +403,6 @@ vdso_prepare: prepare0
 endif
 
 archprepare: checkbin
-
-archheaders:
-	$(Q)$(MAKE) $(build)=arch/powerpc/kernel/syscalls all
 
 ifdef CONFIG_STACKPROTECTOR
 prepare: stack_protector_prepare

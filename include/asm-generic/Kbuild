@@ -4,10 +4,6 @@
 # (This file is not included when SRCARCH=um since UML borrows several
 # asm headers from the host architecture.)
 
-generated-y += syscall_table.h
-generated-y += syscall_table_32.h
-generated-y += syscall_table_64.h
-
 mandatory-y += atomic.h
 mandatory-y += archrandom.h
 mandatory-y += barrier.h
