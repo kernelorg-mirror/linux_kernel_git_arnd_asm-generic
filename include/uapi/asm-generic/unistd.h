@@ -611,7 +611,6 @@ __SC_3264(__NR3264_mmap, sys_mmap2, sys_mmap)
 __SC_COMP(__NR3264_fadvise64, sys_fadvise64_64, compat_sys_fadvise64_64)
 
 /* CONFIG_MMU only */
-#ifndef __ARCH_NOMMU
 #define __NR_swapon 224
 __SYSCALL(__NR_swapon, sys_swapon)
 #define __NR_swapoff 225
@@ -644,7 +643,6 @@ __SYSCALL(__NR_set_mempolicy, sys_set_mempolicy)
 __SYSCALL(__NR_migrate_pages, sys_migrate_pages)
 #define __NR_move_pages 239
 __SYSCALL(__NR_move_pages, sys_move_pages)
-#endif
 
 #define __NR_rt_tgsigqueueinfo 240
 __SC_COMP(__NR_rt_tgsigqueueinfo, sys_rt_tgsigqueueinfo, \
