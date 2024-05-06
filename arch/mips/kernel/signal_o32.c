@@ -20,13 +20,9 @@
 #include <asm/sim.h>
 #include <asm/unistd.h>
 #include <asm/syscalls.h>
+#include <asm/unistd_compat_o32.h>
 
 #include "signal-common.h"
-
-/*
- * Including <asm/unistd.h> would give use the 64-bit syscall numbers ...
- */
-#define __NR_O32_restart_syscall	4253
 
 struct sigframe32 {
 	u32 sf_ass[4];		/* argument save space for o32 */
@@ -244,7 +240,7 @@ static int setup_rt_frame_32(void *sig_return, struct ksignal *ksig,
 struct mips_abi mips_abi_32 = {
 	.setup_frame	= setup_frame_32,
 	.setup_rt_frame = setup_rt_frame_32,
-	.restart	= __NR_O32_restart_syscall,
+	.restart	= __NR_compato32_restart_syscall,
 
 	.off_sc_fpregs = offsetof(struct sigcontext32, sc_fpregs),
 	.off_sc_fpc_csr = offsetof(struct sigcontext32, sc_fpc_csr),

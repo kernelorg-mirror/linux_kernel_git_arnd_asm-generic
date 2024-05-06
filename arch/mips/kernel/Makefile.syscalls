@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0
+
+syscalltbl := arch/mips/kernel/syscalls/syscall_%.tbl
+
+syscall_abis_n64 := common n64 64
+syscall_abis_n32 := common n32 32
+syscall_abis_o32 := common o32 32

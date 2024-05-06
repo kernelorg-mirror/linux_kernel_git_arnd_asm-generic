@@ -19,6 +19,7 @@
 #include <asm/sysmips.h>
 #include <asm/thread_info.h>
 #include <asm/unistd.h>
+#include <asm/unistd_compat_o32.h>
 #include <asm/asm-offsets.h>
 
 	.align	5
@@ -95,7 +96,7 @@ loads_done:
 	bnez	t0, syscall_trace_entry # -> yes
 syscall_common:
 	subu	v0, v0, __NR_O32_Linux	# check syscall number
-	sltiu	t0, v0, __NR_O32_Linux_syscalls
+	sltiu	t0, v0, __NR_compato32_syscalls
 	beqz	t0, illegal_syscall
 
 	sll	t0, v0, 2
@@ -182,7 +183,7 @@ illegal_syscall:
 
 	LEAF(sys_syscall)
 	subu	t0, a0, __NR_O32_Linux	# check syscall number
-	sltiu	v0, t0, __NR_O32_Linux_syscalls
+	sltiu	v0, t0, __NR_compato32_syscalls
 	beqz	t0, einval		# do not recurse
 	sll	t1, t0, 2
 	beqz	v0, einval

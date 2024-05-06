@@ -13,20 +13,18 @@
 #define _ASM_UNISTD_H
 
 #include <uapi/asm/unistd.h>
-#include <asm/unistd_nr_n32.h>
-#include <asm/unistd_nr_n64.h>
-#include <asm/unistd_nr_o32.h>
 
 #define __NR_N32_Linux	6000
 #define __NR_64_Linux	5000
 #define __NR_O32_Linux	4000
 
 #ifdef CONFIG_MIPS32_N32
-#define NR_syscalls  (__NR_N32_Linux + __NR_N32_Linux_syscalls)
+#include <asm/unistd_compat_n32.h>
+#define NR_syscalls  (__NR_N32_Linux + __NR_compatn32_syscalls)
 #elif defined(CONFIG_64BIT)
-#define NR_syscalls  (__NR_64_Linux + __NR_64_Linux_syscalls)
+#define NR_syscalls  (__NR_64_Linux + __NR_syscalls)
 #else
-#define NR_syscalls  (__NR_O32_Linux + __NR_O32_Linux_syscalls)
+#define NR_syscalls  (__NR_O32_Linux + __NR_syscalls)
 #endif
 
 #ifndef __ASSEMBLY__

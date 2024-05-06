@@ -25,13 +25,9 @@
 #include <asm/fpu.h>
 #include <asm/cpu-features.h>
 #include <asm/syscalls.h>
+#include <asm/unistd_compat_n32.h>
 
 #include "signal-common.h"
-
-/*
- * Including <asm/unistd.h> would give use the 64-bit syscall numbers ...
- */
-#define __NR_N32_restart_syscall	6214
 
 struct ucontextn32 {
 	u32		    uc_flags;
@@ -136,7 +132,7 @@ static int setup_rt_frame_n32(void *sig_return, struct ksignal *ksig,
 
 struct mips_abi mips_abi_n32 = {
 	.setup_rt_frame = setup_rt_frame_n32,
-	.restart	= __NR_N32_restart_syscall,
+	.restart	= __NR_compatn32_restart_syscall,
 
 	.off_sc_fpregs = offsetof(struct sigcontext, sc_fpregs),
 	.off_sc_fpc_csr = offsetof(struct sigcontext, sc_fpc_csr),
