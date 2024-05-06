@@ -1,11 +1,28 @@
 # SPDX-License-Identifier: GPL-2.0
 # MIPS headers
-generated-y += syscall_table_n32.h
-generated-y += syscall_table_n64.h
-generated-y += syscall_table_o32.h
-generated-y += unistd_nr_n32.h
-generated-y += unistd_nr_n64.h
-generated-y += unistd_nr_o32.h
+syscall-y += syscall_table_n32.h
+syscall-y += syscall_table_n64.h
+syscall-y += syscall_table_o32.h
+
+# custom rules for generating unistd_nr_%.h
+# can probably be simplified if NR_syscalls as always the same across ABIs
+
+sysnr := $(srctree)/arch/mips/kernel/syscalls/syscallnr.sh
+
+syscall-y += unistd_nr_n32.h
+syscall-y += unistd_nr_n64.h
+syscall-y += unistd_nr_o32.h
+
+sysnr_pfx_unistd_nr_n32 := N32
+sysnr_pfx_unistd_nr_n64 := 64
+sysnr_pfx_unistd_nr_o32 := O32
+
+quiet_cmd_sysnr = SYSNR   $@
+      cmd_sysnr = $(CONFIG_SHELL) '$(sysnr)' '$<' '$@'		\
+		  '$(sysnr_pfx_$(basetarget))'
+
+$(obj)/unistd_nr_%.h: $(srctree)/arch/mips/kernel/syscalls/syscall_%.tbl $(sysnr) FORCE
+	$(call if_changed,sysnr)
 
 generic-y += kvm_para.h
 generic-y += mcs_spinlock.h

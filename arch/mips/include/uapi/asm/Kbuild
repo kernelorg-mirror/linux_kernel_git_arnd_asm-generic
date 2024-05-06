@@ -1,6 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
-generated-y += unistd_n32.h
-generated-y += unistd_n64.h
-generated-y += unistd_o32.h
+
+syshdr-args := --offset __NR_Linux
+
+syscall-y += unistd_n32.h
+syscall-y += unistd_n64.h
+syscall-y += unistd_o32.h
 
 generic-y += kvm_para.h
