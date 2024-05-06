@@ -18,6 +18,7 @@ src := $(subst /generated,,$(obj))
 syscall_abis_32  += common,32
 syscall_abis_64  += common,64
 syscalltbl := $(srctree)/include/uapi/asm-generic/unistd.h
+syshdr-args := --emit-nr
 
 # let architectures override $(syscall_abis_%) and $(syscalltbl)
 -include $(srctree)/arch/$(SRCARCH)/kernel/Makefile.syscalls
@@ -57,12 +58,12 @@ quiet_cmd_remove = REMOVE  $(unwanted)
       cmd_remove = rm -f $(unwanted)
 
 quiet_cmd_syshdr = SYSHDR  $@
-      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) --emit-nr \
+      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) $(syshdr-args) \
 		   --abis $(subst $(space),$(comma),$(strip $(syscall_abis_$*))) \
 		   $< $@
 
 quiet_cmd_systbl = SYSTBL  $@
-      cmd_systbl = $(CONFIG_SHELL) $(systbl) \
+      cmd_systbl = $(CONFIG_SHELL) $(systbl) $(systbl-args)\
 		   --abis $(subst $(space),$(comma),$(strip $(syscall_abis_$*))) \
 		   $< $@
 
