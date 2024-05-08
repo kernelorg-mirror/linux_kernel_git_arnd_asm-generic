@@ -7,6 +7,6 @@
  * this is for the kernel only.
  */
 #define __SYSCALL_ia32_NR(x) (x)
-#include <asm/unistd_32_ia32.h>
+#include <asm/unistd_compat_32.h>
 
 #endif /* _ASM_X86_IA32_UNISTD_H */

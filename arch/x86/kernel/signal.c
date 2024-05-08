@@ -289,7 +289,7 @@ static inline unsigned long get_nr_restart_syscall(const struct pt_regs *regs)
 {
 #ifdef CONFIG_IA32_EMULATION
 	if (current->restart_block.arch_data & TS_COMPAT)
-		return __NR_ia32_restart_syscall;
+		return __NR_compat32_restart_syscall;
 #endif
 #ifdef CONFIG_X86_X32_ABI
 	return __NR_restart_syscall | (regs->orig_ax & __X32_SYSCALL_BIT);
