@@ -9,10 +9,10 @@ syshdr := $(srctree)/scripts/syscallhdr.sh
 systbl := $(srctree)/scripts/syscalltbl.sh
 
 quiet_cmd_syshdr = SYSHDR  $@
-      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) --abis common,csky,32,time32,stat64,rlimit,mmu,clone3 --emit-nr $< $@
+      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) --abis common,csky,32,time32,stat64,rlimit,mmu --emit-nr $< $@
 
 quiet_cmd_systbl = SYSTBL  $@
-      cmd_systbl = $(CONFIG_SHELL) $(systbl) --abis common,csky,32,time32,stat64,rlimit,mmu,clone3 $< $@
+      cmd_systbl = $(CONFIG_SHELL) $(systbl) --abis common,csky,32,time32,stat64,rlimit,mmu $< $@
 
 $(uapi)/unistd_32.h: $(syscall) $(syshdr) FORCE
 	$(call if_changed,syshdr)
