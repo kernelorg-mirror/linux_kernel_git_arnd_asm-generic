@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0
+
+syscall_abis_32		:= common 32 i386
+syscall_abis_64		:= common 64
+syscall_abis_x32	:= common x32
+
+# The 32-bit (i386) ABI uses one file, while x86-64 and
+# x32 share the same contents, using a symlink
+syscalltbl := arch/x86/entry/syscalls/syscall_%.tbl
