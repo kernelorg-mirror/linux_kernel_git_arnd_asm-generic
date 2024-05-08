@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0
 
+syscall-y += syscall_table_32.h
+syscall-y += syscall_table_64.h
+syscall-y += syscall_table_x32.h
+
+syscall-y += unistd_compat_32.h
+syscall-y += unistd_compat_x32.h
 
 generated-y += orc_hash.h
-generated-y += syscalls_32.h
-generated-y += syscalls_64.h
-generated-y += syscalls_x32.h
-generated-y += unistd_compat_32.h
-generated-y += unistd_compat_x32.h
 generated-y += xen-hypercalls.h
 
 generic-y += early_ioremap.h
