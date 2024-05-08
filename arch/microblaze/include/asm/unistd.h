@@ -33,6 +33,8 @@
 #define __ARCH_WANT_SYS_VFORK
 #define __ARCH_WANT_SYS_FORK
 
+#define __ARCH_BROKEN_SYS_CLONE3
+
 #endif /* __ASSEMBLY__ */
 
 #endif /* _ASM_MICROBLAZE_UNISTD_H */
