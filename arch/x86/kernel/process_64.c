@@ -59,7 +59,7 @@
 #include <asm/fred.h>
 #ifdef CONFIG_IA32_EMULATION
 /* Not included via unistd.h */
-#include <asm/unistd_32_ia32.h>
+#include <asm/unistd_compat_32.h>
 #endif
 
 #include "process.h"
@@ -746,7 +746,7 @@ static void __set_personality_x32(void)
 	 *
 	 * Pretend to come from a x32 execve.
 	 */
-	task_pt_regs(current)->orig_ax = __NR_x32_execve | __X32_SYSCALL_BIT;
+	task_pt_regs(current)->orig_ax = __NR_compatx32_execve | __X32_SYSCALL_BIT;
 	current_thread_info()->status &= ~TS_COMPAT;
 #endif
 }
@@ -764,7 +764,7 @@ static void __set_personality_ia32(void)
 
 	current->personality |= force_personality32;
 	/* Prepare the first "return" to user space */
-	task_pt_regs(current)->orig_ax = __NR_ia32_execve;
+	task_pt_regs(current)->orig_ax = __NR_compat32_execve;
 	current_thread_info()->status |= TS_COMPAT;
 #endif
 }

@@ -34,7 +34,7 @@
 #include <asm/gsseg.h>
 
 #ifdef CONFIG_IA32_EMULATION
-#include <asm/unistd_32_ia32.h>
+#include <asm/unistd_compat_32.h>
 
 static inline void reload_segments(struct sigcontext_32 *sc)
 {
@@ -63,8 +63,8 @@ static inline void reload_segments(struct sigcontext_32 *sc)
 
 #define sigset32_t			sigset_t
 #define siginfo32_t			siginfo_t
-#define __NR_ia32_sigreturn		__NR_sigreturn
-#define __NR_ia32_rt_sigreturn		__NR_rt_sigreturn
+#define __NR_compat32_sigreturn		__NR_sigreturn
+#define __NR_compat32_rt_sigreturn	__NR_rt_sigreturn
 #define restore_altstack32		restore_altstack
 #define unsafe_save_altstack32		unsafe_save_altstack
 #define __copy_siginfo_to_user32	copy_siginfo_to_user
@@ -242,7 +242,7 @@ int ia32_setup_frame(struct ksignal *ksig, struct pt_regs *regs)
 		u16 int80;
 	} __attribute__((packed)) code = {
 		0xb858,		 /* popl %eax ; movl $...,%eax */
-		__NR_ia32_sigreturn,
+		__NR_compat32_sigreturn,
 		0x80cd,		/* int $0x80 */
 	};
 
@@ -314,7 +314,7 @@ int ia32_setup_rt_frame(struct ksignal *ksig, struct pt_regs *regs)
 		u8  pad;
 	} __attribute__((packed)) code = {
 		0xb8,
-		__NR_ia32_rt_sigreturn,
+		__NR_compat32_rt_sigreturn,
 		0x80cd,
 		0,
 	};

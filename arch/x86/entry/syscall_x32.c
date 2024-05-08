@@ -9,7 +9,7 @@
 
 #define __SYSCALL(nr, sym) extern long __x64_##sym(const struct pt_regs *);
 #define __SYSCALL_NORETURN(nr, sym) extern long __noreturn __x64_##sym(const struct pt_regs *);
-#include <asm/syscalls_x32.h>
+#include <asm/syscall_table_x32.h>
 #undef  __SYSCALL
 
 #undef  __SYSCALL_NORETURN
@@ -19,7 +19,7 @@
 long x32_sys_call(const struct pt_regs *regs, unsigned int nr)
 {
 	switch (nr) {
-	#include <asm/syscalls_x32.h>
+	#include <asm/syscall_table_x32.h>
 	default: return __x64_sys_ni_syscall(regs);
 	}
 };

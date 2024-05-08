@@ -9,11 +9,11 @@
 #endif
 
 #ifdef CONFIG_COMPAT
-#include <asm/unistd_32_ia32.h>
-#define __NR_seccomp_read_32		__NR_ia32_read
-#define __NR_seccomp_write_32		__NR_ia32_write
-#define __NR_seccomp_exit_32		__NR_ia32_exit
-#define __NR_seccomp_sigreturn_32	__NR_ia32_sigreturn
+#include <asm/unistd_compat_32.h>
+#define __NR_seccomp_read_32		__NR_compat32_read
+#define __NR_seccomp_write_32		__NR_compat32_write
+#define __NR_seccomp_exit_32		__NR_compat32_exit
+#define __NR_seccomp_sigreturn_32	__NR_compat32_sigreturn
 #endif
 
 #ifdef CONFIG_X86_64

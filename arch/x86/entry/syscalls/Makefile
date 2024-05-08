@@ -28,9 +28,9 @@ $(uapi)/unistd_32.h: abis := i386
 $(uapi)/unistd_32.h: $(syscall32) $(syshdr) FORCE
 	$(call if_changed,syshdr)
 
-$(out)/unistd_32_ia32.h: abis := i386
-$(out)/unistd_32_ia32.h: prefix := ia32_
-$(out)/unistd_32_ia32.h: $(syscall32) $(syshdr) FORCE
+$(out)/unistd_compat_32.h: abis := i386
+$(out)/unistd_compat_32.h: prefix := 32_
+$(out)/unistd_compat_32.h: $(syscall32) $(syshdr) FORCE
 	$(call if_changed,syshdr)
 
 $(uapi)/unistd_x32.h: abis := common,x32
@@ -42,19 +42,19 @@ $(uapi)/unistd_64.h: abis := common,64
 $(uapi)/unistd_64.h: $(syscall64) $(syshdr) FORCE
 	$(call if_changed,syshdr)
 
-$(out)/unistd_64_x32.h: abis := x32
-$(out)/unistd_64_x32.h: prefix := x32_
-$(out)/unistd_64_x32.h: $(syscall64) $(syshdr) FORCE
+$(out)/unistd_compat_x32.h: abis := x32
+$(out)/unistd_compat_x32.h: prefix := x32_
+$(out)/unistd_compat_x32.h: $(syscall64) $(syshdr) FORCE
 	$(call if_changed,syshdr)
 
-$(out)/syscalls_32.h: abis := i386
-$(out)/syscalls_32.h: $(syscall32) $(systbl) FORCE
+$(out)/syscall_table_32.h: abis := i386
+$(out)/syscall_table_32.h: $(syscall32) $(systbl) FORCE
 	$(call if_changed,systbl)
-$(out)/syscalls_64.h: abis := common,64
-$(out)/syscalls_64.h: $(syscall64) $(systbl) FORCE
+$(out)/syscall_table_64.h: abis := common,64
+$(out)/syscall_table_64.h: $(syscall64) $(systbl) FORCE
 	$(call if_changed,systbl)
-$(out)/syscalls_x32.h: abis := common,x32
-$(out)/syscalls_x32.h: $(syscall64) $(systbl) FORCE
+$(out)/syscall_table_x32.h: abis := common,x32
+$(out)/syscall_table_x32.h: $(syscall64) $(systbl) FORCE
 	$(call if_changed,systbl)
 
 $(out)/xen-hypercalls.h: $(srctree)/scripts/xen-hypercalls.sh FORCE
@@ -63,10 +63,10 @@ $(out)/xen-hypercalls.h: $(srctree)/scripts/xen-hypercalls.sh FORCE
 $(out)/xen-hypercalls.h: $(srctree)/include/xen/interface/xen*.h
 
 uapisyshdr-y			+= unistd_32.h unistd_64.h unistd_x32.h
-syshdr-y			+= syscalls_32.h
-syshdr-$(CONFIG_X86_64)		+= unistd_32_ia32.h unistd_64_x32.h
-syshdr-$(CONFIG_X86_64)		+= syscalls_64.h
-syshdr-$(CONFIG_X86_X32_ABI)	+= syscalls_x32.h
+syshdr-y			+= syscall_table_32.h
+syshdr-$(CONFIG_X86_64)		+= unistd_compat_32.h unistd_compat_x32.h
+syshdr-$(CONFIG_X86_64)		+= syscall_table_64.h
+syshdr-$(CONFIG_X86_X32_ABI)	+= syscall_table_x32.h
 syshdr-$(CONFIG_XEN)		+= xen-hypercalls.h
 
 uapisyshdr-y	:= $(addprefix $(uapi)/, $(uapisyshdr-y))

@@ -15,7 +15,7 @@
 
 #define __SYSCALL(nr, sym) extern long __ia32_##sym(const struct pt_regs *);
 #define __SYSCALL_NORETURN(nr, sym) extern long __noreturn __ia32_##sym(const struct pt_regs *);
-#include <asm/syscalls_32.h>
+#include <asm/syscall_table_32.h>
 #undef  __SYSCALL
 
 #undef  __SYSCALL_NORETURN
@@ -29,7 +29,7 @@
 #ifdef CONFIG_X86_32
 #define __SYSCALL(nr, sym) __ia32_##sym,
 const sys_call_ptr_t sys_call_table[] = {
-#include <asm/syscalls_32.h>
+#include <asm/syscall_table_32.h>
 };
 #undef  __SYSCALL
 #endif
@@ -38,7 +38,7 @@ const sys_call_ptr_t sys_call_table[] = {
 long ia32_sys_call(const struct pt_regs *regs, unsigned int nr)
 {
 	switch (nr) {
-	#include <asm/syscalls_32.h>
+	#include <asm/syscall_table_32.h>
 	default: return __ia32_sys_ni_syscall(regs);
 	}
 };
