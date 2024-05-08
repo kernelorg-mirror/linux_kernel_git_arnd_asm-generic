@@ -58,12 +58,15 @@ quiet_cmd_remove = REMOVE  $(unwanted)
       cmd_remove = rm -f $(unwanted)
 
 quiet_cmd_syshdr = SYSHDR  $@
-      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) $(syshdr-args) \
+      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) \
+		   $(if $(syshdr-args-$*),$(syshdr-args-$*),$(syshdr-args)) \
+		   $(if $(syscall_compat),--prefix "compat$*_") \
 		   --abis $(subst $(space),$(comma),$(strip $(syscall_abis_$*))) \
 		   $< $@
 
 quiet_cmd_systbl = SYSTBL  $@
-      cmd_systbl = $(CONFIG_SHELL) $(systbl) $(systbl-args)\
+      cmd_systbl = $(CONFIG_SHELL) $(systbl) \
+		   $(if $(systbl-args-$*),$(systbl-args-$*),$(systbl-args)) \
 		   --abis $(subst $(space),$(comma),$(strip $(syscall_abis_$*))) \
 		   $< $@
 
@@ -75,6 +78,10 @@ $(obj)/%.h: $(srctree)/$(generic)/%.h
 	$(call cmd,wrap)
 
 $(obj)/unistd_%.h: $(syscalltbl) $(syshdr) FORCE
+	$(call if_changed,syshdr)
+
+$(obj)/unistd_compat_%.h: syscall_compat:=1
+$(obj)/unistd_compat_%.h: $(syscalltbl) $(syshdr) FORCE
 	$(call if_changed,syshdr)
 
 $(obj)/syscall_table_%.h: $(syscalltbl) $(systbl) FORCE
