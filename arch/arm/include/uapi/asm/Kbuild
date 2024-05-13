@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0
 
-generated-y += unistd-oabi.h
-generated-y += unistd-eabi.h
+syscall-y += unistd_oabi.h
+syscall-y += unistd_eabi.h
+
+syshdr-args := --offset __NR_SYSCALL_BASE
+
 generic-y += kvm_para.h

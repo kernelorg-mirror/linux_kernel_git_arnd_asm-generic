@@ -279,10 +279,6 @@ endif
 
 all:	$(notdir $(KBUILD_IMAGE))
 
-
-archheaders:
-	$(Q)$(MAKE) $(build)=arch/arm/tools uapi
-
 archprepare:
 	$(Q)$(MAKE) $(build)=arch/arm/tools kapi
 

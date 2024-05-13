@@ -5,4 +5,6 @@ generic-y += flat.h
 generic-y += parport.h
 
 generated-y += mach-types.h
-generated-y += unistd-nr.h
+
+syscall-y += syscall_table_eabi.h
+syscall-y += syscall_table_oabi.h

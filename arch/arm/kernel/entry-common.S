@@ -11,7 +11,7 @@
 #include <asm/unwind.h>
 #include <asm/page.h>
 #ifdef CONFIG_AEABI
-#include <asm/unistd-oabi.h>
+#include <asm/unistd_oabi.h>
 #endif
 
 	.equ	NR_syscalls, __NR_syscalls
@@ -351,9 +351,9 @@ ENTRY(\sym)
  */
 	syscall_table_start sys_call_table
 #ifdef CONFIG_AEABI
-#include <calls-eabi.S>
+#include <asm/syscall_table_eabi.h>
 #else
-#include <calls-oabi.S>
+#include <asm/syscall_table_oabi.h>
 #endif
 	syscall_table_end sys_call_table
 
@@ -454,7 +454,7 @@ ENDPROC(sys_oabi_readahead)
 	syscall_table_start sys_oabi_call_table
 #undef __SYSCALL_WITH_COMPAT
 #define __SYSCALL_WITH_COMPAT(nr, native, compat)	__SYSCALL(nr, compat)
-#include <calls-oabi.S>
+#include <asm/syscall_table_oabi.h>
 	syscall_table_end sys_oabi_call_table
 
 #endif
