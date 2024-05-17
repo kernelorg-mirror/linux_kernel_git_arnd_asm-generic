@@ -13,8 +13,8 @@ HAVE_KVM_STAT_SUPPORT := 1
 out    := $(OUTPUT)arch/loongarch/include/generated/asm
 header := $(out)/syscalls.c
 incpath := $(srctree)/tools
-sysdef := $(srctree)/tools/arch/loongarch/include/uapi/asm/unistd.h
 sysprf := $(srctree)/tools/perf/arch/loongarch/entry/syscalls/
+sysdef := $(srctree)/tools/arch/loongarch/include/uapi/asm/unistd.h
 systbl := $(sysprf)/mksyscalltbl
 
 # Create output directory if not already present
