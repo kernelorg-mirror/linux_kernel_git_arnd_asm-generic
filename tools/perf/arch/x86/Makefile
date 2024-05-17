@@ -15,7 +15,7 @@ header := $(out)/syscalls_64.c
 
 sysprf := $(srctree)/tools/perf/arch/x86/entry/syscalls
 sysdef := $(sysprf)/syscall_64.tbl
-systbl := $(sysprf)/syscalltbl.sh
+systbl := $(sysprf)/mksyscalltbl
 
 # Create output directory if not already present
 $(shell [ -d '$(out)' ] || mkdir -p '$(out)')
