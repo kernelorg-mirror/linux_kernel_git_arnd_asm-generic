@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0
 
 in="$1"
-arch="$2"
+arch="x86_64"
 
 syscall_macro() {
     nr="$1"
