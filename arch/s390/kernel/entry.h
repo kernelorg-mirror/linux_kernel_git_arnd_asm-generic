@@ -47,13 +47,6 @@ struct s390_mmap_arg_struct;
 struct fadvise64_64_args;
 struct old_sigaction;
 
-long sys_s390_personality(unsigned int personality);
-long sys_s390_runtime_instr(int command, int signum);
-long sys_s390_guarded_storage(int command, struct gs_cb __user *);
-long sys_s390_pci_mmio_write(unsigned long, const void __user *, size_t);
-long sys_s390_pci_mmio_read(unsigned long, void __user *, size_t);
-long sys_s390_sthyi(unsigned long function_code, void __user *buffer, u64 __user *return_code, unsigned long flags);
-
 DECLARE_PER_CPU(u64, mt_cycles[8]);
 
 unsigned long stack_alloc(void);

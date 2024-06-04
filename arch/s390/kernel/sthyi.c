@@ -17,6 +17,7 @@
 #include <asm/ebcdic.h>
 #include <asm/facility.h>
 #include <asm/sthyi.h>
+#include <asm/syscalls.h>
 #include "entry.h"
 
 #define DED_WEIGHT 0xffff

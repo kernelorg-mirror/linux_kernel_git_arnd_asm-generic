@@ -17,6 +17,7 @@
 #include <asm/runtime_instr.h>
 #include <asm/cpu_mf.h>
 #include <asm/irq.h>
+#include <asm/syscalls.h>
 
 #include "entry.h"
 

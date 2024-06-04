@@ -10,6 +10,7 @@
 #include <linux/mm.h>
 #include <linux/slab.h>
 #include <asm/guarded_storage.h>
+#include <asm/syscalls.h>
 #include "entry.h"
 
 void guarded_storage_release(struct task_struct *tsk)

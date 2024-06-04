@@ -14,6 +14,7 @@
 #include <asm/asm-extable.h>
 #include <asm/pci_io.h>
 #include <asm/pci_debug.h>
+#include <asm/syscalls.h>
 
 static inline void zpci_err_mmio(u8 cc, u8 status, u64 offset)
 {
