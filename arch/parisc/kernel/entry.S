@@ -1679,10 +1679,10 @@ ENTRY_CFI(sys_rt_sigreturn_wrapper)
 	STREG	%r2, -RP_OFFSET(%r30)
 #ifdef CONFIG_64BIT
 	ldo	FRAME_SIZE(%r30), %r30
-	BL	sys_rt_sigreturn,%r2
+	BL	do_rt_sigreturn,%r2
 	ldo	-16(%r30),%r29		/* Reference param save area */
 #else
-	BL	sys_rt_sigreturn,%r2
+	BL	do_rt_sigreturn,%r2
 	ldo	FRAME_SIZE(%r30), %r30
 #endif
 

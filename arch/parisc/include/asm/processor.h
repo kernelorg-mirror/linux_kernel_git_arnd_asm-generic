@@ -304,7 +304,7 @@ extern void handle_interruption(int, struct pt_regs *);
 /* called from assembly code: */
 extern void start_parisc(void);
 extern void smp_callin(unsigned long);
-extern void sys_rt_sigreturn(struct pt_regs *, int);
+extern void do_rt_sigreturn(struct pt_regs *, int);
 extern void do_notify_resume(struct pt_regs *, long);
 extern long do_syscall_trace_enter(struct pt_regs *);
 extern void do_syscall_trace_exit(struct pt_regs *);

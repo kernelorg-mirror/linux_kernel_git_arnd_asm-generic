@@ -1192,7 +1192,7 @@ ENTRY(__sys_fork)
 	 l.ori	r29,r29,lo(sys_fork)
 
 ENTRY(sys_rt_sigreturn)
-	l.jal	_sys_rt_sigreturn
+	l.jal	do_rt_sigreturn
 	 l.addi	r3,r1,0
 	l.sfne	r30,r0
 	l.bnf	_no_syscall_trace

@@ -184,7 +184,7 @@ static int restore_sigframe(struct pt_regs *regs, struct sigframe __user *sf)
 	return err;
 }
 
-asmlinkage int sys_sigreturn(struct pt_regs *regs)
+asmlinkage int do_sigreturn(struct pt_regs *regs)
 {
 	struct sigframe __user *frame;
 
@@ -214,7 +214,7 @@ badframe:
 	return 0;
 }
 
-asmlinkage int sys_rt_sigreturn(struct pt_regs *regs)
+asmlinkage int do_rt_sigreturn(struct pt_regs *regs)
 {
 	struct rt_sigframe __user *frame;
 

@@ -78,7 +78,7 @@ static int restore_sigcontext(struct pt_regs *regs,
 	return err;
 }
 
-asmlinkage long sys_rt_sigreturn(struct pt_regs *regs)
+asmlinkage long do_rt_sigreturn(struct pt_regs *regs)
 {
 	struct rt_sigframe __user *frame =
 		(struct rt_sigframe __user *)(regs->r1);

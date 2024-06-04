@@ -6,8 +6,8 @@
 #include <linux/types.h>
 
 struct pt_regs;
-asmlinkage int sys_sigreturn(struct pt_regs *regs);
-asmlinkage int sys_rt_sigreturn(struct pt_regs *regs);
+asmlinkage int do_sigreturn(struct pt_regs *regs);
+asmlinkage int do_rt_sigreturn(struct pt_regs *regs);
 asmlinkage long sys_arm_fadvise64_64(int fd, int advice,
 				     loff_t offset, loff_t len);
 

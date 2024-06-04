@@ -382,13 +382,13 @@ ENDPROC(sys_syscall)
 sys_sigreturn_wrapper:
 		add	r0, sp, #S_OFF
 		mov	why, #0		@ prevent syscall restart handling
-		b	sys_sigreturn
+		b	do_sigreturn
 ENDPROC(sys_sigreturn_wrapper)
 
 sys_rt_sigreturn_wrapper:
 		add	r0, sp, #S_OFF
 		mov	why, #0		@ prevent syscall restart handling
-		b	sys_rt_sigreturn
+		b	do_rt_sigreturn
 ENDPROC(sys_rt_sigreturn_wrapper)
 
 sys_statfs64_wrapper:

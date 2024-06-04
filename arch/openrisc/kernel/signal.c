@@ -35,7 +35,7 @@ struct rt_sigframe {
 	unsigned char retcode[16];	/* trampoline code */
 };
 
-asmlinkage long _sys_rt_sigreturn(struct pt_regs *regs);
+asmlinkage long do_rt_sigreturn(struct pt_regs *regs);
 
 asmlinkage int do_work_pending(struct pt_regs *regs, unsigned int thread_flags,
 			       int syscall);
@@ -102,7 +102,7 @@ static int restore_sigcontext(struct pt_regs *regs,
 	return err;
 }
 
-asmlinkage long _sys_rt_sigreturn(struct pt_regs *regs)
+asmlinkage long do_rt_sigreturn(struct pt_regs *regs)
 {
 	struct rt_sigframe __user *frame = (struct rt_sigframe __user *)regs->sp;
 	sigset_t set;

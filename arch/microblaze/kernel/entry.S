@@ -518,7 +518,7 @@ C_ENTRY(ret_from_kernel_thread):
 
 C_ENTRY(sys_rt_sigreturn_wrapper):
 	addik	r30, r0, 0		/* no restarts */
-	brid	sys_rt_sigreturn	/* Do real work */
+	brid	do_rt_sigreturn		/* Do real work */
 	addik	r5, r1, 0;		/* add user context as 1st arg */
 
 /*

@@ -28,6 +28,7 @@ DECLARE_PER_CPU(unsigned int, ENTRY_SP); /* Saved SP on kernel entry */
 DECLARE_PER_CPU(unsigned int, R11_SAVE); /* Temp variable for entry */
 DECLARE_PER_CPU(unsigned int, CURRENT_SAVE); /* Saved current pointer */
 
+extern asmlinkage long do_rt_sigreturn(struct pt_regs *regs);
 extern asmlinkage void do_notify_resume(struct pt_regs *regs, int in_syscall);
 # endif /* __ASSEMBLY__ */
 
