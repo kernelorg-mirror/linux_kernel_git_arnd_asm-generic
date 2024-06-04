@@ -13,6 +13,7 @@
 #include <asm/processor.h>
 #include <asm/proto.h>
 #include <asm/gsseg.h>
+#include <asm/syscalls.h>
 
 #include "tls.h"
 

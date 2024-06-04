@@ -19,6 +19,7 @@
 #include <linux/uaccess.h>
 #include <linux/elf.h>
 
+#include <asm/syscalls.h>
 #include <asm/elf.h>
 #include <asm/ia32.h>
 

@@ -51,6 +51,7 @@
 #include <asm/ia32.h>
 #include <asm/debugreg.h>
 #include <asm/switch_to.h>
+#include <asm/syscalls.h>
 #include <asm/xen/hypervisor.h>
 #include <asm/vdso.h>
 #include <asm/resctrl.h>

@@ -22,7 +22,4 @@ extern syscall_handler_t *sys_call_table[];
 				      UPT_SYSCALL_ARG5(&regs->regs), \
 				      UPT_SYSCALL_ARG6(&regs->regs)))
 
-extern syscall_handler_t sys_modify_ldt;
-extern syscall_handler_t sys_arch_prctl;
-
 #endif

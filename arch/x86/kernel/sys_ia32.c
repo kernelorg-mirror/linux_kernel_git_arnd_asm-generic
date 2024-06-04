@@ -48,6 +48,7 @@
 #include <linux/atomic.h>
 #include <asm/vgtod.h>
 #include <asm/ia32.h>
+#include <asm/syscalls.h>
 
 #define AA(__x)		((unsigned long)(__x))
 

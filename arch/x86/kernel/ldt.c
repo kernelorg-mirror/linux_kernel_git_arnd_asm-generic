@@ -28,6 +28,7 @@
 #include <asm/desc.h>
 #include <asm/mmu_context.h>
 #include <asm/pgtable_areas.h>
+#include <asm/syscalls.h>
 
 #include <xen/xen.h>
 
