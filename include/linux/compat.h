@@ -723,12 +723,15 @@ asmlinkage long compat_sys_mq_notify(mqd_t mqdes,
 asmlinkage long compat_sys_mq_getsetattr(mqd_t mqdes,
 			const struct compat_mq_attr __user *u_mqstat,
 			struct compat_mq_attr __user *u_omqstat);
+asmlinkage long compat_sys_old_msgctl(int msqid, int cmd, void __user *uptr);
 asmlinkage long compat_sys_msgctl(int first, int second, void __user *uptr);
 asmlinkage long compat_sys_msgrcv(int msqid, compat_uptr_t msgp,
 		compat_ssize_t msgsz, compat_long_t msgtyp, int msgflg);
 asmlinkage long compat_sys_msgsnd(int msqid, compat_uptr_t msgp,
 		compat_ssize_t msgsz, int msgflg);
+asmlinkage long compat_sys_old_semctl(int semid, int semnum, int cmd, int arg);
 asmlinkage long compat_sys_semctl(int semid, int semnum, int cmd, int arg);
+asmlinkage long compat_sys_old_shmctl(int shmid, int cmd, void __user *uptr);
 asmlinkage long compat_sys_shmctl(int first, int second, void __user *uptr);
 asmlinkage long compat_sys_shmat(int shmid, compat_uptr_t shmaddr, int shmflg);
 asmlinkage long compat_sys_recvfrom(int fd, void __user *buf, compat_size_t len,
