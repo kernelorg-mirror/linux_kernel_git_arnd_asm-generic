@@ -14,6 +14,7 @@
 #include <linux/unistd.h>
 #include <linux/compat.h>
 #include <linux/bitops.h>
+#include <linux/syscalls.h>
 
 #include <asm/abi.h>
 #include <asm/asm.h>
@@ -24,7 +25,6 @@
 #include <asm/ucontext.h>
 #include <asm/fpu.h>
 #include <asm/cpu-features.h>
-#include <asm/syscalls.h>
 #include <asm/unistd_compat_n32.h>
 
 #include "signal-common.h"
@@ -44,7 +44,7 @@ struct rt_sigframe_n32 {
 	struct ucontextn32 rs_uc;
 };
 
-asmlinkage void sysn32_rt_sigreturn(void)
+SYSCALL_DEFINE0(n32_rt_sigreturn)
 {
 	struct rt_sigframe_n32 __user *frame;
 	struct pt_regs *regs;
@@ -81,6 +81,8 @@ asmlinkage void sysn32_rt_sigreturn(void)
 
 badframe:
 	force_sig(SIGSEGV);
+
+	return 0;
 }
 
 static int setup_rt_frame_n32(void *sig_return, struct ksignal *ksig,

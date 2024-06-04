@@ -26,10 +26,10 @@
 #include <linux/binfmts.h>
 #include <linux/io.h>
 #include <linux/resume_user_mode.h>
+#include <linux/syscalls.h>
 #include <asm/ucontext.h>
 #include <linux/uaccess.h>
 #include <asm/cacheflush.h>
-#include <asm/syscalls.h>
 #include <asm/fpu.h>
 
 struct fdpic_func_descriptor {
@@ -152,7 +152,7 @@ restore_sigcontext(struct pt_regs *regs, struct sigcontext __user *sc, int *r0_p
 	return err;
 }
 
-asmlinkage int sys_sigreturn(void)
+asmlinkage long sys_sigreturn(void)
 {
 	struct pt_regs *regs = current_pt_regs();
 	struct sigframe __user *frame = (struct sigframe __user *)regs->regs[15];
@@ -182,7 +182,7 @@ badframe:
 	return 0;
 }
 
-asmlinkage int sys_rt_sigreturn(void)
+asmlinkage long sys_rt_sigreturn(void)
 {
 	struct pt_regs *regs = current_pt_regs();
 	struct rt_sigframe __user *frame = (struct rt_sigframe __user *)regs->regs[15];

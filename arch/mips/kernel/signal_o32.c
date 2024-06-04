@@ -13,13 +13,13 @@
 #include <linux/signal.h>
 #include <linux/sched/signal.h>
 #include <linux/uaccess.h>
+#include <linux/syscalls.h>
 
 #include <asm/abi.h>
 #include <asm/compat-signal.h>
 #include <asm/dsp.h>
 #include <asm/sim.h>
 #include <asm/unistd.h>
-#include <asm/syscalls.h>
 #include <asm/unistd_compat_o32.h>
 
 #include "signal-common.h"
@@ -148,7 +148,7 @@ static int setup_frame_32(void *sig_return, struct ksignal *ksig,
 	return 0;
 }
 
-asmlinkage void sys32_rt_sigreturn(void)
+COMPAT_SYSCALL_DEFINE0(rt_sigreturn)
 {
 	struct rt_sigframe32 __user *frame;
 	struct pt_regs *regs;
@@ -185,6 +185,8 @@ asmlinkage void sys32_rt_sigreturn(void)
 
 badframe:
 	force_sig(SIGSEGV);
+
+	return 0;
 }
 
 static int setup_rt_frame_32(void *sig_return, struct ksignal *ksig,
@@ -250,7 +252,7 @@ struct mips_abi mips_abi_32 = {
 };
 
 
-asmlinkage void sys32_sigreturn(void)
+COMPAT_SYSCALL_DEFINE0(sigreturn)
 {
 	struct sigframe32 __user *frame;
 	struct pt_regs *regs;
@@ -284,4 +286,6 @@ asmlinkage void sys32_sigreturn(void)
 
 badframe:
 	force_sig(SIGSEGV);
+
+	return 0;
 }

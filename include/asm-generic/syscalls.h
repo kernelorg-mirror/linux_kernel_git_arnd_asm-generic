@@ -22,8 +22,4 @@ asmlinkage long sys_mmap(unsigned long addr, unsigned long len,
 			unsigned long fd, unsigned long off);
 #endif
 
-#ifndef sys_rt_sigreturn
-asmlinkage long sys_rt_sigreturn(struct pt_regs *regs);
-#endif
-
 #endif /* __ASM_GENERIC_SYSCALLS_H */

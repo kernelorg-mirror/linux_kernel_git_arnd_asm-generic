@@ -656,6 +656,8 @@ asmlinkage long sys_restart_syscall(void);
 asmlinkage long sys_kill(pid_t pid, int sig);
 asmlinkage long sys_tkill(pid_t pid, int sig);
 asmlinkage long sys_tgkill(pid_t tgid, pid_t pid, int sig);
+asmlinkage long sys_sigreturn(void);
+asmlinkage long sys_rt_sigreturn(void);
 asmlinkage long sys_sigaltstack(const struct sigaltstack __user *uss,
 				struct sigaltstack __user *uoss);
 asmlinkage long sys_rt_sigsuspend(sigset_t __user *unewset, size_t sigsetsize);

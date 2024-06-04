@@ -47,9 +47,6 @@ struct s390_mmap_arg_struct;
 struct fadvise64_64_args;
 struct old_sigaction;
 
-long sys_rt_sigreturn(void);
-long sys_sigreturn(void);
-
 long sys_s390_personality(unsigned int personality);
 long sys_s390_runtime_instr(int command, int signum);
 long sys_s390_guarded_storage(int command, struct gs_cb __user *);

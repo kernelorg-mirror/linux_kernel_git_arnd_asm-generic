@@ -12,9 +12,6 @@
 #include <asm/syscall.h>
 #include <asm/unistd_compat_32.h>
 
-asmlinkage long compat_sys_sigreturn(void);
-asmlinkage long compat_sys_rt_sigreturn(void);
-
 COMPAT_SYSCALL_DEFINE3(aarch32_statfs64, const char __user *, pathname,
 		       compat_size_t, sz, struct compat_statfs64 __user *, buf)
 {

@@ -634,7 +634,7 @@ SYSCALL_DEFINE3(sigaction, int, sig, const struct sigaction __user *, act,
 #endif
 
 #ifdef CONFIG_TRAD_SIGNALS
-asmlinkage void sys_sigreturn(void)
+SYSCALL_DEFINE0(sigreturn)
 {
 	struct sigframe __user *frame;
 	struct pt_regs *regs;
@@ -668,10 +668,12 @@ asmlinkage void sys_sigreturn(void)
 
 badframe:
 	force_sig(SIGSEGV);
+
+	return 0;
 }
 #endif /* CONFIG_TRAD_SIGNALS */
 
-asmlinkage void sys_rt_sigreturn(void)
+SYSCALL_DEFINE0(rt_sigreturn)
 {
 	struct rt_sigframe __user *frame;
 	struct pt_regs *regs;
@@ -708,6 +710,8 @@ asmlinkage void sys_rt_sigreturn(void)
 
 badframe:
 	force_sig(SIGSEGV);
+
+	return 0;
 }
 
 #ifdef CONFIG_TRAD_SIGNALS

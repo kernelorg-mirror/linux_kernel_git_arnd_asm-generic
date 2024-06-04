@@ -8,8 +8,6 @@
 
 struct pt_regs;
 
-asmlinkage int sys_sigreturn(void);
-asmlinkage int sys_rt_sigreturn(void);
 asmlinkage int sys_sh_pipe(void);
 asmlinkage ssize_t sys_pread_wrapper(unsigned int fd, char __user *buf,
 				     size_t count, long dummy, loff_t pos);

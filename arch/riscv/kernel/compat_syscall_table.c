@@ -17,8 +17,6 @@
 #undef __SYSCALL
 #define __SYSCALL(nr, call)      [nr] = __riscv_##call,
 
-asmlinkage long compat_sys_rt_sigreturn(void);
-
 void * const compat_sys_call_table[__NR_syscalls] = {
 	[0 ... __NR_syscalls - 1] = __riscv_sys_ni_syscall,
 #include <asm/syscall_table_32.h>

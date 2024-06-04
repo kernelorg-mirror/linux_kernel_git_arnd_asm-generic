@@ -697,6 +697,8 @@ asmlinkage long compat_sys_sched_setaffinity(compat_pid_t pid,
 asmlinkage long compat_sys_sched_getaffinity(compat_pid_t pid,
 				     unsigned int len,
 				     compat_ulong_t __user *user_mask_ptr);
+asmlinkage long compat_sys_sigreturn(void);
+asmlinkage long compat_sys_rt_sigreturn(void);
 asmlinkage long compat_sys_sigaltstack(const compat_stack_t __user *uss_ptr,
 				       compat_stack_t __user *uoss_ptr);
 asmlinkage long compat_sys_rt_sigsuspend(compat_sigset_t __user *unewset,

@@ -61,12 +61,9 @@ long sys_mmap2(unsigned long addr, size_t len,
 long sys_switch_endian(void);
 
 #ifdef CONFIG_PPC32
-long sys_sigreturn(void);
 long sys_debug_setcontext(struct ucontext __user *ctx, int ndbg,
 			  struct sig_dbg_op __user *dbg);
 #endif
-
-long sys_rt_sigreturn(void);
 
 long sys_subpage_prot(unsigned long addr,
 		      unsigned long len, u32 __user *map);
@@ -77,8 +74,6 @@ long compat_sys_swapcontext(struct ucontext32 __user *old_ctx,
 			    int ctx_size);
 long compat_sys_old_getrlimit(unsigned int resource,
 			      struct compat_rlimit __user *rlim);
-long compat_sys_sigreturn(void);
-long compat_sys_rt_sigreturn(void);
 #endif /* CONFIG_COMPAT */
 
 /*
