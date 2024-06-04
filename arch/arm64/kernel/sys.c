@@ -14,6 +14,7 @@
 #include <linux/sched.h>
 #include <linux/slab.h>
 #include <linux/syscalls.h>
+#include <asm/syscalls.h>
 
 #include <asm/cpufeature.h>
 #include <asm/syscall.h>
