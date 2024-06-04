@@ -12,11 +12,7 @@
 #include <asm/unistd.h>
 #include <asm/ucontext.h>
 
-#ifndef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
 long sys_ni_syscall(void);
-#else
-long sys_ni_syscall(const struct pt_regs *regs);
-#endif
 
 struct rtas_args;
 
@@ -95,7 +91,7 @@ long compat_sys_mmap2(unsigned long addr, size_t len,
 
 #define __SYSCALL_WITH_COMPAT(nr, native, compat)	__SYSCALL(nr, native)
 #define __SYSCALL(nr, entry) \
-	long entry(const struct pt_regs *regs);
+	long __powerpc_##entry(const struct pt_regs *regs);
 
 #ifdef CONFIG_PPC64
 #include <asm/syscall_table_64.h>

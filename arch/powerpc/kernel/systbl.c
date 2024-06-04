@@ -20,7 +20,14 @@
 
 #undef __SYSCALL
 #ifdef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
-#define __SYSCALL(nr, entry) [nr] = entry,
+#define __SYSCALL(nr, entry)      asmlinkage long __powerpc_##entry(const struct pt_regs *);
+#ifdef CONFIG_PPC64
+#include <asm/syscall_table_64.h>
+#else
+#include <asm/syscall_table_32.h>
+#endif
+#undef __SYSCALL
+#define __SYSCALL(nr, entry) [nr] = __powerpc_##entry,
 #else
 /*
  * Coerce syscall handlers with arbitrary parameters to common type

@@ -127,3 +127,10 @@ SYSCALL_DEFINE0(switch_endian)
 
 	return 0;
 }
+
+#ifdef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
+SYSCALL_DEFINE0(ni_syscall)
+{
+	return -ENOSYS;
+}
+#endif

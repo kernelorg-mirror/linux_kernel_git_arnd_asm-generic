@@ -33,6 +33,7 @@
 #include <linux/uaccess.h>
 #include <linux/xarray.h>
 
+#include <asm/syscalls.h>
 #include <asm/delay.h>
 #include <asm/firmware.h>
 #include <asm/interrupt.h>
