@@ -6,6 +6,7 @@
  */
 
 #include <linux/syscalls.h>
+#include <asm/syscalls.h>
 #include <asm/cacheflush.h>
 
 static long riscv_sys_mmap(unsigned long addr, unsigned long len,

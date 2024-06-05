@@ -11,6 +11,7 @@
 #include <asm/processor.h>
 #include <asm/sbi.h>
 #include <asm/switch_to.h>
+#include <asm/syscalls.h>
 #include <asm/uaccess.h>
 #include <asm/unistd.h>
 #include <asm/vector.h>
