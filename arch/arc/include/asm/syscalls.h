@@ -10,11 +10,11 @@
 #include <linux/linkage.h>
 #include <linux/types.h>
 
-int sys_clone_wrapper(int, int, int, int, int);
-int sys_clone3_wrapper(void *, size_t);
-int sys_arc_settls(void *);
-int sys_arc_gettls(void);
-int sys_arc_usr_cmpxchg(int *, int, int);
+asmlinkage long sys_clone_wrapper(int, int, int, int, int);
+asmlinkage long sys_clone3_wrapper(void *, size_t);
+asmlinkage long sys_arc_settls(void *);
+asmlinkage long sys_arc_gettls(void);
+asmlinkage long sys_arc_usr_cmpxchg(int *, int, int);
 
 #include <asm-generic/syscalls.h>
 
