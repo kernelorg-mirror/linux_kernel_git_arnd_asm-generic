@@ -23,6 +23,7 @@
 #include <linux/proc_fs.h>
 #include <linux/proc_ns.h>
 #include <linux/file.h>
+#include <linux/sem.h>
 #include <linux/syscalls.h>
 #include <linux/cgroup.h>
 #include <linux/perf_event.h>

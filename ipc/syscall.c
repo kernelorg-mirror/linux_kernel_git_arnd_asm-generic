@@ -9,11 +9,11 @@
 #include <linux/syscalls.h>
 #include <linux/security.h>
 #include <linux/ipc_namespace.h>
+#include <linux/ipc.h>
 #include "util.h"
 
 #ifdef __ARCH_WANT_SYS_IPC
 #include <linux/errno.h>
-#include <linux/ipc.h>
 #include <linux/shm.h>
 #include <linux/uaccess.h>
 
