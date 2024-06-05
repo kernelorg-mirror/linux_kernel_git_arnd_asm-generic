@@ -82,6 +82,7 @@ struct xattr_args;
 #include <linux/types.h>
 #include <linux/aio_abi.h>
 #include <linux/personality.h>
+#include <asm/syscalls.h>
 #include <trace/syscall.h>
 
 #ifdef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
@@ -207,7 +208,8 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #ifndef SYSCALL_DEFINE0
 #define SYSCALL_DEFINE0(sname)					\
 	SYSCALL_METADATA(_##sname, 0);				\
-	asmlinkage long sys_##sname(void);			\
+	static __maybe_unused asmlinkage long			\
+		(*__typecheck_sys_##sname)(void) = sys_##sname;	\
 	ALLOW_ERROR_INJECTION(sys_##sname, ERRNO);		\
 	asmlinkage long sys_##sname(void)
 #endif /* SYSCALL_DEFINE0 */
@@ -236,23 +238,26 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
  */
 #ifndef __SYSCALL_DEFINEx
 #define __SYSCALL_DEFINEx(x, name, ...)					\
+	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
+	static inline asmlinkage long					\
+		__do_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__));		\
+	asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__));	\
+	asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))	\
+	{								\
+		long ret = __do_sys##name(__MAP(x,__SC_CAST,__VA_ARGS__));\
+		(void)(__do_sys##name == sys##name);			\
+		__MAP(x,__SC_TEST,__VA_ARGS__);				\
+		__PROTECT(x, ret,__MAP(x,__SC_ARGS,__VA_ARGS__));	\
+		return ret;						\
+	}								\
 	__diag_push();							\
 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
 		      "Type aliasing is used to sanitize syscall arguments");\
 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
 		__attribute__((alias(__stringify(__se_sys##name))));	\
-	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
-	static inline long __do_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__));\
-	asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__));	\
-	asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))	\
-	{								\
-		long ret = __do_sys##name(__MAP(x,__SC_CAST,__VA_ARGS__));\
-		__MAP(x,__SC_TEST,__VA_ARGS__);				\
-		__PROTECT(x, ret,__MAP(x,__SC_ARGS,__VA_ARGS__));	\
-		return ret;						\
-	}								\
 	__diag_pop();							\
-	static inline long __do_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))
+	static inline asmlinkage long					\
+		__do_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))
 #endif /* __SYSCALL_DEFINEx */
 
 /* For split 64-bit arguments on 32-bit architectures */
@@ -311,12 +316,7 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
  * Please note that these prototypes here are only provided for information
  * purposes, for static analysis, and for linking from the syscall table.
  * These functions should not be called elsewhere from kernel code.
- *
- * As the syscall calling convention may be different from the default
- * for architectures overriding the syscall calling convention, do not
- * include the prototypes if CONFIG_ARCH_HAS_SYSCALL_WRAPPER is enabled.
  */
-#ifndef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
 asmlinkage long sys_io_setup(unsigned nr_reqs, aio_context_t __user *ctx);
 asmlinkage long sys_io_destroy(aio_context_t ctx);
 asmlinkage long sys_io_submit(aio_context_t, long, struct iocb __user * __user *);
@@ -894,8 +894,6 @@ asmlinkage long sys_old_mmap(struct mmap_arg_struct __user *arg);
  * not implemented -- see kernel/sys_ni.c
  */
 asmlinkage long sys_ni_syscall(void);
-
-#endif /* CONFIG_ARCH_HAS_SYSCALL_WRAPPER */
 
 asmlinkage long sys_ni_posix_timers(void);
 

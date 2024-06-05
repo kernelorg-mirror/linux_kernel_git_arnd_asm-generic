@@ -53,6 +53,7 @@ mandatory-y += shmparam.h
 mandatory-y += simd.h
 mandatory-y += softirq_stack.h
 mandatory-y += switch_to.h
+mandatory-y += syscalls.h
 mandatory-y += timex.h
 mandatory-y += tlbflush.h
 mandatory-y += topology.h

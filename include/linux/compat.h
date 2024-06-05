@@ -69,20 +69,21 @@
  */
 #ifndef COMPAT_SYSCALL_DEFINEx
 #define COMPAT_SYSCALL_DEFINEx(x, name, ...)					\
-	__diag_push();								\
-	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
-		      "Type aliasing is used to sanitize syscall arguments");\
-	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
-		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
 	static inline long __do_compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__));\
 	asmlinkage long __se_compat_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__));	\
 	asmlinkage long __se_compat_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))	\
 	{									\
 		long ret = __do_compat_sys##name(__MAP(x,__SC_DELOUSE,__VA_ARGS__));\
+		(void)(__do_compat_sys##name == compat_sys##name);		\
 		__MAP(x,__SC_TEST,__VA_ARGS__);					\
 		return ret;							\
 	}									\
+	__diag_push();								\
+	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
+		      "Type aliasing is used to sanitize syscall arguments");\
+	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
+		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
 	__diag_pop();								\
 	static inline long __do_compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))
 #endif /* COMPAT_SYSCALL_DEFINEx */
@@ -565,7 +566,6 @@ int __compat_save_altstack(compat_stack_t __user *, unsigned long);
  * for architectures overriding the syscall calling convention, do not
  * include the prototypes if CONFIG_ARCH_HAS_SYSCALL_WRAPPER is enabled.
  */
-#ifndef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
 asmlinkage long compat_sys_io_setup(unsigned nr_reqs, u32 __user *ctx32p);
 asmlinkage long compat_sys_io_submit(compat_aio_context_t ctx_id, int nr,
 				     u32 __user *iocb);
@@ -825,8 +825,6 @@ asmlinkage long compat_sys_sigaction(int sig,
 
 /* obsolete */
 asmlinkage long compat_sys_socketcall(int call, u32 __user *args);
-
-#endif /* CONFIG_ARCH_HAS_SYSCALL_WRAPPER */
 
 /**
  * ns_to_old_timeval32 - Compat version of ns_to_timeval

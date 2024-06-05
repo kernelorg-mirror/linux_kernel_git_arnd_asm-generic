@@ -27,6 +27,7 @@ struct pt_regs;
 	static long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))		\
 	{									\
 		long ret = __do_sys##name(__MAP(x,__SC_CAST,__VA_ARGS__));	\
+		(void)(__do_sys##name == sys##name);				\
 		__MAP(x,__SC_TEST,__VA_ARGS__);					\
 		__PROTECT(x, ret,__MAP(x,__SC_ARGS,__VA_ARGS__));		\
 		return ret;							\
@@ -36,6 +37,7 @@ struct pt_regs;
 #define SYSCALL_DEFINE0(sname)							\
 	SYSCALL_METADATA(_##sname, 0);						\
 	long __powerpc_sys_##sname(const struct pt_regs *__unused);		\
+	static __maybe_unused long (*__typecheck_sys_##sname)(void) = sys_##sname;\
 	ALLOW_ERROR_INJECTION(__powerpc_sys_##sname, ERRNO);			\
 	long __powerpc_sys_##sname(const struct pt_regs *__unused)
 

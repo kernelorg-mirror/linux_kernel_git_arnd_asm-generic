@@ -32,8 +32,6 @@ struct rtas_args;
  * PowerPC architecture-specific syscalls
  */
 
-#ifndef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
-
 long sys_rtas(struct rtas_args __user *uargs);
 
 #ifdef CONFIG_PPC64
@@ -98,8 +96,6 @@ long compat_sys_mmap2(unsigned long addr, size_t len,
 #else
 #include <asm/syscall_table_32.h>
 #endif /* CONFIG_PPC64 */
-
-#endif /* CONFIG_ARCH_HAS_SYSCALL_WRAPPER */
 
 #endif /* __KERNEL__ */
 #endif /* __ASM_POWERPC_SYSCALLS_H */

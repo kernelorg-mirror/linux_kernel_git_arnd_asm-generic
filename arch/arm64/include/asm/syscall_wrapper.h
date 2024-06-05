@@ -28,12 +28,14 @@
 	}										\
 	static long __se_compat_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))		\
 	{										\
+		(void)(__do_compat_sys##name == compat_sys##name);			\
 		return __do_compat_sys##name(__MAP(x,__SC_DELOUSE,__VA_ARGS__));	\
 	}										\
 	static inline long __do_compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))
 
 #define COMPAT_SYSCALL_DEFINE0(sname)							\
 	asmlinkage long __arm64_compat_sys_##sname(const struct pt_regs *__unused);	\
+	static __maybe_unused long (*__typecheck_compat_sys_##sname)(void) = compat_sys_##sname;\
 	ALLOW_ERROR_INJECTION(__arm64_compat_sys_##sname, ERRNO);			\
 	asmlinkage long __arm64_compat_sys_##sname(const struct pt_regs *__unused)
 
@@ -58,6 +60,7 @@
 	static long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))		\
 	{									\
 		long ret = __do_sys##name(__MAP(x,__SC_CAST,__VA_ARGS__));	\
+		(void)(__do_sys##name == sys##name);				\
 		__MAP(x,__SC_TEST,__VA_ARGS__);					\
 		__PROTECT(x, ret,__MAP(x,__SC_ARGS,__VA_ARGS__));		\
 		return ret;							\
@@ -67,6 +70,7 @@
 #define SYSCALL_DEFINE0(sname)							\
 	SYSCALL_METADATA(_##sname, 0);						\
 	asmlinkage long __arm64_sys_##sname(const struct pt_regs *__unused);	\
+	static __maybe_unused long (*__typecheck_sys_##sname)(void) = sys_##sname;\
 	ALLOW_ERROR_INJECTION(__arm64_sys_##sname, ERRNO);			\
 	asmlinkage long __arm64_sys_##sname(const struct pt_regs *__unused)
 

@@ -39,10 +39,12 @@
  */
 #define COMPAT_SYSCALL_DEFINE0(sname)					\
 	long __s390_compat_sys_##sname(void);				\
+	static __maybe_unused long (*__typecheck_compat_sys_##sname)(void) = compat_sys_##sname;\
 	ALLOW_ERROR_INJECTION(__s390_compat_sys_##sname, ERRNO);	\
 	long __s390_compat_sys_##sname(void)
 
 #define SYSCALL_DEFINE0(sname)						\
+	static __maybe_unused long (*__typecheck_sys_##sname)(void) = sys_##sname;\
 	SYSCALL_METADATA(_##sname, 0);					\
 	long __s390_sys_##sname(void);					\
 	ALLOW_ERROR_INJECTION(__s390_sys_##sname, ERRNO);		\
@@ -70,6 +72,7 @@
 	static inline long __do_compat_sys##name(__MAP(x, __SC_DECL, __VA_ARGS__));	\
 	long __s390_compat_sys##name(struct pt_regs *regs)				\
 	{										\
+		(void)(__do_compat_sys##name == compat_sys##name);			\
 		return __se_compat_sys##name(SC_S390_REGS_TO_ARGS(x, __VA_ARGS__));	\
 	}										\
 	static inline long __se_compat_sys##name(__MAP(x, __SC_LONG, __VA_ARGS__))	\
@@ -134,6 +137,7 @@
 	{									\
 		__MAP(x, __SC_TEST, __VA_ARGS__);				\
 		return __do_sys##name(__MAP(x, __SC_CAST, __VA_ARGS__));	\
+		(void)(__do_sys##name == sys##name);				\
 	}									\
 	static inline long __do_sys##name(__MAP(x, __SC_DECL, __VA_ARGS__))
 
