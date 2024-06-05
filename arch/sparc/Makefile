@@ -73,9 +73,6 @@ image zImage uImage tftpboot.img vmlinux.aout: vmlinux
 install:
 	$(call cmd,install)
 
-archheaders:
-	$(Q)$(MAKE) $(build)=arch/sparc/kernel/syscalls all
-
 vdso-install-$(CONFIG_SPARC64)	+= arch/sparc/vdso/vdso64.so.dbg
 vdso-install-$(CONFIG_COMPAT)	+= arch/sparc/vdso/vdso32.so.dbg
 
