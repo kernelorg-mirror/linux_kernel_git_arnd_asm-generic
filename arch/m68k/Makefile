@@ -126,9 +126,6 @@ endif
 
 CLEAN_FILES += vmlinux.gz vmlinux.bz2
 
-archheaders:
-	$(Q)$(MAKE) $(build)=arch/m68k/kernel/syscalls all
-
 install: KBUILD_IMAGE := vmlinux.gz
 install:
 	$(call cmd,install)
