@@ -705,6 +705,8 @@ asmlinkage long compat_sys_rt_sigqueueinfo(compat_pid_t pid, int sig,
 				struct compat_siginfo __user *uinfo);
 /* No generic prototype for rt_sigreturn */
 asmlinkage long compat_sys_times(struct compat_tms __user *tbuf);
+asmlinkage long compat_sys_old_getrlimit(unsigned int resource,
+					 struct compat_rlimit __user *rlim);
 asmlinkage long compat_sys_getrlimit(unsigned int resource,
 				     struct compat_rlimit __user *rlim);
 asmlinkage long compat_sys_setrlimit(unsigned int resource,
