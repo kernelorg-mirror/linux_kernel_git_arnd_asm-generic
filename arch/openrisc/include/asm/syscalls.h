@@ -21,7 +21,7 @@ asmlinkage long sys_or1k_atomic(unsigned long type, unsigned long *v1,
 #include <asm-generic/syscalls.h>
 
 asmlinkage long __sys_clone(unsigned long clone_flags, unsigned long newsp,
-			void __user *parent_tid, void __user *child_tid, int tls);
+			int __user *parent_tid, int __user *child_tid, unsigned long tls);
 asmlinkage long __sys_clone3(struct clone_args __user *uargs, size_t size);
 asmlinkage long __sys_fork(void);
 
