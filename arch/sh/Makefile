@@ -174,9 +174,6 @@ compressed: zImage
 archprepare:
 	$(Q)$(MAKE) $(build)=arch/sh/tools include/generated/machtypes.h
 
-archheaders:
-	$(Q)$(MAKE) $(build)=arch/sh/kernel/syscalls all
-
 define archhelp
 	@echo '  zImage 	           - Compressed kernel image'
 	@echo '  romImage	           - Compressed ROM image, if supported'

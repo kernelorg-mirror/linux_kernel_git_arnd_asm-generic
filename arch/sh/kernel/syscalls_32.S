@@ -13,5 +13,5 @@
 #define __SYSCALL(nr, entry)	.long entry
 	.data
 ENTRY(sys_call_table)
-#include <asm/syscall_table.h>
+#include <asm/syscall_table_32.h>
 #undef __SYSCALL
