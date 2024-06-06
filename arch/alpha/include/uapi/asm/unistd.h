@@ -12,6 +12,6 @@
 #define __NR_getuid	__NR_getxuid
 #define __NR_getgid	__NR_getxgid
 
-#include <asm/unistd_32.h>
+#include <asm/unistd_64.h>
 
 #endif /* _UAPI_ALPHA_UNISTD_H */

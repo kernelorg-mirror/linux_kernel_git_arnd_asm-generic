@@ -12,4 +12,4 @@
 	.align 3
 	.globl sys_call_table
 sys_call_table:
-#include <asm/syscall_table.h>
+#include <asm/syscall_table_64.h>
