@@ -59,9 +59,6 @@ export DTB
 
 all: linux.bin
 
-archheaders:
-	$(Q)$(MAKE) $(build)=arch/microblaze/kernel/syscalls all
-
 PHONY += linux.bin linux.bin.gz linux.bin.ub
 linux.bin.ub linux.bin.gz: linux.bin
 linux.bin: vmlinux
