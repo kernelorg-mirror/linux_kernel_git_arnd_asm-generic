@@ -672,7 +672,7 @@ SYSCALL_DEFINE1(memory_ordering, unsigned long, model)
 	return 0;
 }
 
-SYSCALL_DEFINE5(rt_sigaction, int, sig, const struct sigaction __user *, act,
+SYSCALL_DEFINE5(sparc_rt_sigaction, int, sig, const struct sigaction __user *, act,
 		struct sigaction __user *, oact, void __user *, restorer,
 		size_t, sigsetsize)
 {

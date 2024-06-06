@@ -135,7 +135,7 @@ COMPAT_SYSCALL_DEFINE3(sparc_sigaction, int, sig,
 	return compat_sys_sigaction(-sig, act, oact);
 }
 
-COMPAT_SYSCALL_DEFINE5(rt_sigaction, int, sig,
+COMPAT_SYSCALL_DEFINE5(sparc_rt_sigaction, int, sig,
 			struct compat_sigaction __user *,act,
 			struct compat_sigaction __user *,oact,
 			void __user *,restorer,

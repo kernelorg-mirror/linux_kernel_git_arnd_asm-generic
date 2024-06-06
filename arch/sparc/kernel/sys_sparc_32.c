@@ -165,7 +165,7 @@ SYSCALL_DEFINE3(sparc_sigaction, int, sig,
 	return sys_sigaction(-sig, act, oact);
 }
 
-SYSCALL_DEFINE5(rt_sigaction, int, sig,
+SYSCALL_DEFINE5(sparc_rt_sigaction, int, sig,
 		 const struct sigaction __user *, act,
 		 struct sigaction __user *, oact,
 		 void __user *, restorer,

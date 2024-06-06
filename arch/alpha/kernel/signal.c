@@ -87,7 +87,7 @@ SYSCALL_DEFINE3(osf_sigaction, int, sig,
 	return ret;
 }
 
-SYSCALL_DEFINE5(rt_sigaction, int, sig, const struct sigaction __user *, act,
+SYSCALL_DEFINE5(alpha_rt_sigaction, int, sig, const struct sigaction __user *, act,
 		struct sigaction __user *, oact,
 		size_t, sigsetsize, void __user *, restorer)
 {

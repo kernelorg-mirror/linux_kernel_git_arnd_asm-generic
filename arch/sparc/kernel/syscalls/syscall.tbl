@@ -128,7 +128,7 @@
 99	common	accept			sys_accept
 100	common	getpriority		sys_getpriority
 101	common	rt_sigreturn		sys_rt_sigreturn		sys32_rt_sigreturn
-102	common	rt_sigaction		sys_rt_sigaction		compat_sys_rt_sigaction
+102	common	rt_sigaction		sys_sparc_rt_sigaction		compat_sys_sparc_rt_sigaction
 103	common	rt_sigprocmask		sys_rt_sigprocmask		compat_sys_rt_sigprocmask
 104	common	rt_sigpending		sys_rt_sigpending		compat_sys_rt_sigpending
 105	32	rt_sigtimedwait		sys_rt_sigtimedwait_time32	compat_sys_rt_sigtimedwait_time32

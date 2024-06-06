@@ -11,6 +11,11 @@ asmlinkage long sys_getdomainname(char __user *name, int len);
 asmlinkage long sys_mmap(unsigned long addr, unsigned long len,
 			 unsigned long prot, unsigned long flags,
 			 unsigned long fd, unsigned long off);
+asmlinkage long sys_sparc_rt_sigaction(int sig,
+                        const struct sigaction __user *act,
+                        struct sigaction __user *oact,
+                        void __user *restorer,
+                        size_t sigsetsize);
 
 #ifdef CONFIG_SPARC32
 asmlinkage long sys_mmap2(unsigned long addr, unsigned long len,
@@ -22,11 +27,6 @@ asmlinkage long sys_sparc_remap_file_pages(unsigned long start, unsigned long si
 asmlinkage long sys_sparc_sigaction(int sig,
                         struct old_sigaction __user *act,
                         struct old_sigaction __user *oact);
-asmlinkage long sys_sparc_rt_sigaction(int sig,
-                        const struct sigaction __user *act,
-                        struct sigaction __user *oact,
-                        void __user *restorer,
-                        size_t sigsetsize);
 #endif /* CONFIG_SPARC32 */
 
 #ifdef CONFIG_SPARC64
