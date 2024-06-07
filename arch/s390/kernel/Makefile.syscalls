@@ -1,0 +1,3 @@
+# SPDX-License-Identifier: GPL-2.0
+
+syscalltbl := arch/s390/kernel/syscalls/syscall.tbl

@@ -8,7 +8,6 @@
 #define _ASM_S390_UNISTD_H_
 
 #include <uapi/asm/unistd.h>
-#include <asm/unistd_nr.h>
 
 #define __ARCH_WANT_NEW_STAT
 #define __ARCH_WANT_OLD_READDIR
@@ -35,5 +34,7 @@
 #define __ARCH_WANT_SYS_FORK
 #define __ARCH_WANT_SYS_VFORK
 #define __ARCH_WANT_SYS_CLONE
+
+#define NR_syscalls __NR_syscalls
 
 #endif /* _ASM_S390_UNISTD_H_ */
