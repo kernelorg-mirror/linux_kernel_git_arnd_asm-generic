@@ -908,7 +908,7 @@ EXPORT_SYMBOL(clear_user_page);
  * Explicit Cache flush request from user space via syscall
  * Needed for JITs which generate code on the fly
  */
-SYSCALL_DEFINE3(cacheflush, uint32_t, start, uint32_t, sz, uint32_t, flags)
+SYSCALL_DEFINE3(cacheflush, void __user *, start, unsigned long, sz, int, flags)
 {
 	/* TBD: optimize this */
 	flush_cache_all();

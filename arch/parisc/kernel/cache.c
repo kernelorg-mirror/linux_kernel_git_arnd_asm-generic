@@ -936,18 +936,17 @@ void invalidate_kernel_vmap_range(void *vaddr, int size)
 EXPORT_SYMBOL(invalidate_kernel_vmap_range);
 
 
-SYSCALL_DEFINE3(cacheflush, unsigned long, addr, unsigned long, bytes,
-	unsigned int, cache)
+SYSCALL_DEFINE3(cacheflush, void __user *, addr, unsigned long, bytes,
+	int, cache)
 {
-	unsigned long start, end;
+	void __user *start;
+	void __user *end = addr + bytes;
 	ASM_EXCEPTIONTABLE_VAR(error);
 
 	if (bytes == 0)
 		return 0;
-	if (!access_ok((void __user *) addr, bytes))
+	if (!access_ok(addr, bytes))
 		return -EFAULT;
-
-	end = addr + bytes;
 
 	if (cache & DCACHE) {
 		start = addr;

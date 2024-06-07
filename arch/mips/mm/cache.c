@@ -86,15 +86,15 @@ void (*_dma_cache_inv)(unsigned long start, unsigned long size);
  * We could optimize the case where the cache argument is not BCACHE but
  * that seems very atypical use ...
  */
-SYSCALL_DEFINE3(cacheflush, unsigned long, addr, unsigned long, bytes,
-	unsigned int, cache)
+SYSCALL_DEFINE3(cacheflush, void __user *,addr, unsigned long, bytes,
+	int, cache)
 {
 	if (bytes == 0)
 		return 0;
-	if (!access_ok((void __user *) addr, bytes))
+	if (!access_ok(addr, bytes))
 		return -EFAULT;
 
-	__flush_icache_user_range(addr, addr + bytes);
+	__flush_icache_user_range((unsigned long)addr, (unsigned long)addr + bytes);
 
 	return 0;
 }

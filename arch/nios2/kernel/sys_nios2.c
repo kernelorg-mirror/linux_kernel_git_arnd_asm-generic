@@ -18,11 +18,11 @@
 #include <asm/traps.h>
 
 /* sys_cacheflush -- flush the processor cache. */
-asmlinkage int sys_cacheflush(unsigned long addr, unsigned long len,
-				unsigned int op)
+SYSCALL_DEFINE3(cacheflush, void __user *, p, unsigned long, len, int, op)
 {
 	struct vm_area_struct *vma;
 	struct mm_struct *mm = current->mm;
+	unsigned long addr = (unsigned long)p;
 
 	if (len == 0)
 		return 0;

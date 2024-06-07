@@ -5,8 +5,6 @@
 
 #include <asm-generic/syscalls.h>
 
-long sys_cacheflush(void __user *, unsigned long, int);
-
 long sys_set_thread_area(unsigned long addr);
 
 #endif /* __ASM_CSKY_SYSCALLS_H */
