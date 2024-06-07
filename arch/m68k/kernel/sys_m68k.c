@@ -374,8 +374,8 @@ cache_flush_060 (unsigned long addr, int scope, int cache, unsigned long len)
 }
 
 /* sys_cacheflush -- flush (part of) the processor cache.  */
-asmlinkage int
-sys_cacheflush (unsigned long addr, int scope, int cache, unsigned long len)
+SYSCALL_DEFINE4(m68k_cacheflush, unsigned long, addr, int, scope,
+		int, cache, unsigned long, len)
 {
 	int ret = -EINVAL;
 
@@ -533,8 +533,8 @@ sys_atomic_cmpxchg_32(unsigned long newval, int oldval, int d3, int d4, int d5,
 #else
 
 /* sys_cacheflush -- flush (part of) the processor cache.  */
-asmlinkage int
-sys_cacheflush (unsigned long addr, int scope, int cache, unsigned long len)
+SYSCALL_DEFINE4(m68k_cacheflush, unsigned long, addr, int, scope,
+		int, cache, unsigned long, len)
 {
 	flush_cache_all();
 	return 0;
