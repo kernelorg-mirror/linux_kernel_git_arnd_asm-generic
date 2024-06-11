@@ -260,7 +260,7 @@
 250  common	epoll_ctl		sys_epoll_ctl			sys_epoll_ctl
 251  common	epoll_wait		sys_epoll_wait			sys_epoll_wait
 252  common	set_tid_address		sys_set_tid_address		sys_set_tid_address
-253  common	fadvise64		sys_fadvise64_64		compat_sys_s390_fadvise64
+253  common	fadvise64		sys_fadvise64			compat_sys_s390_fadvise64
 254  common	timer_create		sys_timer_create		compat_sys_timer_create
 255  common	timer_settime		sys_timer_settime		sys_timer_settime32
 256  common	timer_gettime		sys_timer_gettime		sys_timer_gettime32

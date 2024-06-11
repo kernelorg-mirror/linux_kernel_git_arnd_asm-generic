@@ -68,7 +68,7 @@ static inline bool arch_syscall_match_sym_name(const char *sym,
 		sym = "sys_statfs64";
 	else if (!strcmp(sym, "sys_fstatfs64_wrapper"))
 		sym = "sys_fstatfs64";
-	else if (!strcmp(sym, "sys_arm_fadvise64_64"))
+	else if (!strcmp(sym, "sys_fadvise64_64_2"))
 		sym = "sys_fadvise64_64";
 
 	/* Ignore case since sym may start with "SyS" instead of "sys" */

@@ -104,14 +104,6 @@ PPC32_SYSCALL_DEFINE4(ppc_ftruncate64,
 	return ksys_ftruncate(fd, merge_64(len1, len2));
 }
 
-PPC32_SYSCALL_DEFINE6(ppc32_fadvise64,
-		       int, fd, u32, unused, u32, offset1, u32, offset2,
-		       size_t, len, int, advice)
-{
-	return ksys_fadvise64_64(fd, merge_64(offset1, offset2), len,
-				 advice);
-}
-
 PPC32_SYSCALL_DEFINE6(ppc_sync_file_range2,
 		       int, fd, unsigned int, flags,
 		       unsigned int, offset1, unsigned int, offset2,

@@ -257,7 +257,7 @@
 247	common	io_getevents			sys_io_getevents_time32
 248	common	io_submit			sys_io_submit
 249	common	io_cancel			sys_io_cancel
-250	common	fadvise64			sys_fadvise64
+250	common	fadvise64			sys_fadvise64_5
 # 251 is available for reuse (was briefly sys_set_zone_reclaim)
 252	common	exit_group			sys_exit_group
 253	common	lookup_dcookie			sys_ni_syscall
@@ -279,7 +279,7 @@
 269	common	fstatfs64			sys_fstatfs64
 270	common	tgkill				sys_tgkill
 271	common	utimes				sys_utimes_time32
-272	common	fadvise64_64			sys_fadvise64_64
+272	common	fadvise64_64			sys_fadvise64_64_6
 273	common	vserver				sys_ni_syscall
 274	common	mbind				sys_mbind
 275	common	get_mempolicy			sys_get_mempolicy

@@ -205,21 +205,6 @@ COMPAT_SYSCALL_DEFINE4(readahead, int, fd, u32, offhi, u32, offlo,
 	return ksys_readahead(fd, ((u64)offhi << 32) | offlo, count);
 }
 
-COMPAT_SYSCALL_DEFINE5(fadvise64, int, fd, u32, offhi, u32, offlo,
-			  compat_size_t, len, int, advice)
-{
-	return ksys_fadvise64_64(fd, ((u64)offhi << 32) | offlo, len, advice);
-}
-
-COMPAT_SYSCALL_DEFINE6(fadvise64_64, int, fd, u32, offhi, u32, offlo,
-			     u32, lenhi, u32, lenlo, int, advice)
-{
-	return ksys_fadvise64_64(fd,
-				 ((u64)offhi << 32) | offlo,
-				 ((u64)lenhi << 32) | lenlo,
-				 advice);
-}
-
 COMPAT_SYSCALL_DEFINE6(sync_file_range, unsigned int, fd, u32, off_high, u32, off_low,
 			u32, nb_high, u32, nb_low, unsigned int, flags)
 {

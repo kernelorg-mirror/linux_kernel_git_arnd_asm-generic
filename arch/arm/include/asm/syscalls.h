@@ -8,8 +8,6 @@
 struct pt_regs;
 asmlinkage int do_sigreturn(struct pt_regs *regs);
 asmlinkage int do_rt_sigreturn(struct pt_regs *regs);
-asmlinkage long sys_arm_fadvise64_64(int fd, int advice,
-				     loff_t offset, loff_t len);
 
 struct oldabi_stat64;
 asmlinkage long sys_oabi_stat64(const char __user * filename,

@@ -244,14 +244,13 @@ COMPAT_SYSCALL_DEFINE3(s390_write, unsigned int, fd, const char __user *, buf, c
  * because the 31 bit values differ from the 64 bit values.
  */
 
-COMPAT_SYSCALL_DEFINE5(s390_fadvise64, int, fd, u32, high, u32, low, compat_size_t, len, int, advise)
+COMPAT_SYSCALL_DEFINE5(s390_fadvise64, int, fd, SC_ARG64(offset), compat_size_t, len, int, advise)
 {
 	if (advise == 4)
 		advise = POSIX_FADV_DONTNEED;
 	else if (advise == 5)
 		advise = POSIX_FADV_NOREUSE;
-	return ksys_fadvise64_64(fd, (unsigned long)high << 32 | low, len,
-				 advise);
+	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset), len, advise);
 }
 
 struct fadvise64_64_args {

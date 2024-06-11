@@ -28,16 +28,3 @@ SYSCALL_DEFINE6(mmap2,
 	return ksys_mmap_pgoff(addr, len, prot, flags, fd,
 			       offset >> (PAGE_SHIFT - 12));
 }
-
-/*
- * for abiv1 the 64bits args should be even th, So we need mov the advice
- * forward.
- */
-SYSCALL_DEFINE4(csky_fadvise64_64,
-	int, fd,
-	int, advice,
-	loff_t, offset,
-	loff_t, len)
-{
-	return ksys_fadvise64_64(fd, offset, len, advice);
-}

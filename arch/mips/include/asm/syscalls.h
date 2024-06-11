@@ -19,9 +19,9 @@ asmlinkage long mipsmt_sys_sched_getaffinity(pid_t pid, unsigned int len,
 asmlinkage long sys32_fallocate(int fd, int mode, unsigned offset_a2,
 				unsigned offset_a3, unsigned len_a4,
 				unsigned len_a5);
-asmlinkage long sys32_fadvise64_64(int fd, int __pad,
-				   unsigned long a2, unsigned long a3,
-				   unsigned long a4, unsigned long a5,
+asmlinkage long sys_fadvise64_64_7(int fd, int __pad,
+				   u32 a2, u32 a3,
+				   u32 a4, u32 a5,
 				   int flags);
 asmlinkage ssize_t sys32_readahead(int fd, u32 pad0, u64 a2, u64 a3,
 				   size_t count);

@@ -202,28 +202,68 @@ int ksys_fadvise64_64(int fd, loff_t offset, loff_t len, int advice)
 	return ret;
 }
 
-SYSCALL_DEFINE4(fadvise64_64, int, fd, loff_t, offset, loff_t, len, int, advice)
-{
-	return ksys_fadvise64_64(fd, offset, len, advice);
-}
-
-#ifdef __ARCH_WANT_SYS_FADVISE64
-
+#if defined(CONFIG_64BIT)
+/*
+ * 64-bit architectures, as well as x32 and n32 can pass 64-bit
+ * offset and len arguments in normal registers
+ */
 SYSCALL_DEFINE4(fadvise64, int, fd, loff_t, offset, size_t, len, int, advice)
 {
 	return ksys_fadvise64_64(fd, offset, len, advice);
 }
-
 #endif
 
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_FADVISE64_64)
-
-COMPAT_SYSCALL_DEFINE6(fadvise64_64, int, fd, compat_arg_u64_dual(offset),
-		       compat_arg_u64_dual(len), int, advice)
+#if defined(CONFIG_COMPAT) || !defined(CONFIG_64BIT)
+/*
+ * 32-bit ABIs need some form of fadvise64_64, usually either
+ * fadvise64_64_6 or fadvise64_64_2, which differ only in the
+ * order of the arguments.
+ */
+#ifdef __ARCH_WANT_SYS_FADVISE64_64_2
+/*
+ * Used on architectures that need even/odd register pairs, except
+ * on mips and s390
+ */
+SYSCALL_DEFINE6(fadvise64_64_2, int, fd, int, advice,
+		SC_ARG64(offset), SC_ARG64(len))
 {
-	return ksys_fadvise64_64(fd, compat_arg_u64_glue(offset),
-				 compat_arg_u64_glue(len), advice);
+	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset),
+				 SC_VAL64(loff_t, len), advice);
 }
+#else
+/*
+ * Used on architectures that can do odd/even register pairs or
+ * that chose these calling conventions anyway
+ */
+SYSCALL_DEFINE6(fadvise64_64_6, int, fd, SC_ARG64(offset),
+		SC_ARG64(len), int, advice)
+{
+	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset),
+				 SC_VAL64(loff_t, len), advice);
+}
+#endif
 
+#ifdef __ARCH_WANT_SYS_FADVISE64_5
+/*
+ * Five-argument version on 32-bit architectures without alignment
+ * constraints that had this before fadvise64_64_6
+ */
+SYSCALL_DEFINE5(fadvise64_5, int, fd, SC_ARG64(offset),
+		size_t, len, int, advice)
+{
+	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset), len, advice);
+}
 #endif
+
+#ifdef __ARCH_WANT_SYS_FADVISE64_6
+/*
+ * Six-argument version of the same, only powerpc32
+ */
+SYSCALL_DEFINE6(fadvise64_6, int, fd, int, unused, SC_ARG64(offset),
+		size_t, len, int, advice)
+{
+	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset), len, advice);
+}
 #endif
+#endif /* 32-bit ABI */
+#endif /* CONFIG_ADVISE_SYSCALLS */

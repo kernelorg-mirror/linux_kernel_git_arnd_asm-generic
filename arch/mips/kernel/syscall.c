@@ -241,3 +241,10 @@ SYSCALL_DEFINE3(cachectl, char *, addr, int, nbytes, int, op)
 {
 	return -ENOSYS;
 }
+
+SYSCALL_DEFINE7(fadvise64_64_7, int, fd, int, __pad,
+	SC_ARG64(offset), SC_ARG64(len), int, flags)
+{
+	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset),
+				 SC_VAL64(loff_t, len), flags);
+}

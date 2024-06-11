@@ -265,14 +265,6 @@ asmlinkage ssize_t parisc_readahead(int fd, unsigned int high, unsigned int low,
 	return ksys_readahead(fd, (loff_t)high << 32 | low, count);
 }
 
-asmlinkage long parisc_fadvise64_64(int fd,
-			unsigned int high_off, unsigned int low_off,
-			unsigned int high_len, unsigned int low_len, int advice)
-{
-	return ksys_fadvise64_64(fd, (loff_t)high_off << 32 | low_off,
-			(loff_t)high_len << 32 | low_len, advice);
-}
-
 asmlinkage long parisc_sync_file_range(int fd,
 			u32 hi_off, u32 lo_off, u32 hi_nbytes, u32 lo_nbytes,
 			unsigned int flags)

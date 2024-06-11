@@ -292,6 +292,14 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #define SYSCALL32_DEFINE6 SYSCALL_DEFINE6
 #endif
 
+#ifdef __ARCH_WANT_SYSCALLS_32PAD
+#define __ARCH_WANT_SYS_FADVISE64_64_2
+#endif
+
+#ifdef __ARCH_WANT_SYSCALLS_32NOPAD
+#define __ARCH_WANT_SYS_FADVISE64_64_6
+#endif
+
 /*
  * These syscall function prototypes are kept in the same order as
  * include/uapi/asm-generic/unistd.h. Architecture specific entries go below,
@@ -820,6 +828,10 @@ asmlinkage long sys_execve(const char __user *filename,
 		const char __user *const __user *argv,
 		const char __user *const __user *envp);
 asmlinkage long sys_fadvise64_64(int fd, loff_t offset, loff_t len, int advice);
+asmlinkage long sys_fadvise64_64_6(int fd, SC_DECL64(offset), SC_DECL64(len),
+				   int advice);
+asmlinkage long sys_fadvise64_64_2(int fd, int advice, SC_DECL64(offset),
+				   SC_DECL64(len));
 
 /* CONFIG_MMU only */
 asmlinkage long sys_swapon(const char __user *specialfile, int swap_flags);
@@ -1063,6 +1075,10 @@ asmlinkage long sys_newstat(const char __user *filename,
 asmlinkage long sys_newlstat(const char __user *filename,
 				struct stat __user *statbuf);
 asmlinkage long sys_fadvise64(int fd, loff_t offset, size_t len, int advice);
+asmlinkage long sys_fadvise64_5(int fd, SC_DECL64(offset), size_t len,
+				int advice);
+asmlinkage long sys_fadvise64_6(int fd, int unused, SC_DECL64(offset),
+				size_t len, int advice);
 
 /* __ARCH_WANT_SYSCALL_DEPRECATED */
 asmlinkage long sys_alarm(unsigned int seconds);

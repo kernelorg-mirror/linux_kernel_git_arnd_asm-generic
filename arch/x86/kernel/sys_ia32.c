@@ -79,21 +79,6 @@ SYSCALL_DEFINE5(ia32_pwrite64, unsigned int, fd, const char __user *, ubuf,
 			     ((loff_t)AA(poshi) << 32) | AA(poslo));
 }
 
-
-/*
- * Some system calls that need sign extended arguments. This could be
- * done by a generic wrapper.
- */
-SYSCALL_DEFINE6(ia32_fadvise64_64, int, fd, __u32, offset_low,
-		__u32, offset_high, __u32, len_low, __u32, len_high,
-		int, advice)
-{
-	return ksys_fadvise64_64(fd,
-				 (((u64)offset_high)<<32) | offset_low,
-				 (((u64)len_high)<<32) | len_low,
-				 advice);
-}
-
 SYSCALL_DEFINE4(ia32_readahead, int, fd, unsigned int, off_lo,
 		unsigned int, off_hi, size_t, count)
 {
@@ -107,13 +92,6 @@ SYSCALL_DEFINE6(ia32_sync_file_range, int, fd, unsigned int, off_low,
 	return ksys_sync_file_range(fd,
 				    ((u64)off_hi << 32) | off_low,
 				    ((u64)n_hi << 32) | n_low, flags);
-}
-
-SYSCALL_DEFINE5(ia32_fadvise64, int, fd, unsigned int, offset_lo,
-		unsigned int, offset_hi, size_t, len, int, advice)
-{
-	return ksys_fadvise64_64(fd, ((u64)offset_hi << 32) | offset_lo,
-				 len, advice);
 }
 
 SYSCALL_DEFINE6(ia32_fallocate, int, fd, int, mode,

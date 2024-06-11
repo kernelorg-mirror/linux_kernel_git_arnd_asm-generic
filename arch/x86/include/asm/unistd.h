@@ -33,6 +33,7 @@
 # endif
 
 #if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+#  define __ARCH_WANT_SYS_FADVISE64_5
 #  define __ARCH_WANT_SYSCALLS_32NOPAD
 #endif
 
@@ -42,7 +43,6 @@
 # define __ARCH_WANT_OLD_READDIR
 # define __ARCH_WANT_OLD_STAT
 # define __ARCH_WANT_SYS_ALARM
-# define __ARCH_WANT_SYS_FADVISE64
 # define __ARCH_WANT_SYS_GETHOSTNAME
 # define __ARCH_WANT_SYS_GETPGRP
 # define __ARCH_WANT_SYS_NICE

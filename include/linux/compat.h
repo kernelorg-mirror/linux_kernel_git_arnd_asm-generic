@@ -890,11 +890,6 @@ asmlinkage long compat_sys_sync_file_range(int fd, compat_arg_u64(pos),
 					   compat_arg_u64(nbytes), unsigned int flags);
 #endif
 
-#ifdef __ARCH_WANT_COMPAT_FADVISE64_64
-asmlinkage long compat_sys_fadvise64_64(int fd, compat_arg_u64(pos),
-					compat_arg_u64(len), int advice);
-#endif
-
 #ifdef __ARCH_WANT_COMPAT_READAHEAD
 asmlinkage long compat_sys_readahead(int fd, compat_arg_u64(offset), size_t count);
 #endif

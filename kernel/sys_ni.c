@@ -2,6 +2,7 @@
 
 #include <linux/linkage.h>
 #include <linux/errno.h>
+#include <linux/syscalls.h>
 
 #include <asm/unistd.h>
 
@@ -167,8 +168,15 @@ COND_SYSCALL_COMPAT(keyctl);
 COND_SYSCALL(landlock_create_ruleset);
 COND_SYSCALL(landlock_add_rule);
 COND_SYSCALL(landlock_restrict_self);
-COND_SYSCALL(fadvise64_64);
-COND_SYSCALL_COMPAT(fadvise64_64);
+#ifdef CONFIG_64BIT
+COND_SYSCALL(fadvise64);
+#endif
+#ifdef __ARCH_WANT_SYS_FADVISE64_64_6
+COND_SYSCALL(fadvise64_64_6);
+#endif
+#ifdef __ARCH_WANT_SYS_FADVISE64_64_2
+COND_SYSCALL(fadvise64_64_2);
+#endif
 COND_SYSCALL(lsm_get_self_attr);
 COND_SYSCALL(lsm_set_self_attr);
 COND_SYSCALL(lsm_list_modules);
@@ -319,7 +327,12 @@ COND_SYSCALL(signalfd);
 COND_SYSCALL_COMPAT(signalfd);
 
 /* __ARCH_WANT_SYSCALL_OFF_T */
-COND_SYSCALL(fadvise64);
+#ifdef __ARCH_WANT_SYS_FADVISE64_5
+COND_SYSCALL(fadvise64_5);
+#endif
+#ifdef __ARCH_WANT_SYS_FADVISE64_6
+COND_SYSCALL(fadvise64_6);
+#endif
 
 /* __ARCH_WANT_SYSCALL_DEPRECATED */
 COND_SYSCALL(epoll_wait);

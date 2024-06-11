@@ -70,7 +70,5 @@ static inline void syscall_get_arguments(struct task_struct *task,
 
 asmlinkage long xtensa_rt_sigreturn(void);
 asmlinkage long xtensa_shmat(int, char __user *, int);
-asmlinkage long xtensa_fadvise64_64(int, int,
-				    unsigned long long, unsigned long long);
 
 #endif

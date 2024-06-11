@@ -282,7 +282,7 @@
 267	common	fstatfs64			sys_fstatfs64_wrapper		compat_sys_aarch32_fstatfs64
 268	common	tgkill				sys_tgkill
 269	common	utimes				sys_utimes_time32
-270	common	arm_fadvise64_64		sys_arm_fadvise64_64		compat_sys_aarch32_fadvise64_64
+270	common	arm_fadvise64_64		sys_fadvise64_64_2
 271	common	pciconfig_iobase		sys_pciconfig_iobase
 272	common	pciconfig_read			sys_pciconfig_read
 273	common	pciconfig_write			sys_pciconfig_write

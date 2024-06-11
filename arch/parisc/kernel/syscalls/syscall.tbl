@@ -261,8 +261,8 @@
 233	common	mq_notify		sys_mq_notify			compat_sys_mq_notify
 234	common	mq_getsetattr		sys_mq_getsetattr		compat_sys_mq_getsetattr
 235	common	waitid			sys_waitid			compat_sys_waitid
-236	32	fadvise64_64		parisc_fadvise64_64
-236	64	fadvise64_64		sys_fadvise64_64
+236	32	fadvise64_64		sys_fadvise64_64_6
+236	64	fadvise64_64		sys_fadvise64
 237	common	set_tid_address		sys_set_tid_address
 238	common	setxattr		sys_setxattr
 239	common	lsetxattr		sys_lsetxattr

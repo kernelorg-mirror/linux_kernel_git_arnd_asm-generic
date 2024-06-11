@@ -16,13 +16,6 @@
 
 #define sys_mmap2 sys_mmap_pgoff
 
-SYSCALL_DEFINE6(hexagon_fadvise64_64, int, fd, int, advice,
-		SC_ARG64(offset), SC_ARG64(len))
-{
-	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset), SC_VAL64(loff_t, len), advice);
-}
-#define sys_fadvise64_64 sys_hexagon_fadvise64_64
-
 #define sys_sync_file_range sys_sync_file_range2
 
 void *sys_call_table[__NR_syscalls] = {

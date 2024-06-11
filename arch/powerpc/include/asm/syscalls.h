@@ -97,8 +97,6 @@ long sys_ppc_truncate64(const char __user *path, u32 reg4,
 		        unsigned long len1, unsigned long len2);
 long sys_ppc_ftruncate64(unsigned int fd, u32 reg4,
 			 unsigned long len1, unsigned long len2);
-long sys_ppc32_fadvise64(int fd, u32 unused, u32 offset1, u32 offset2,
-			 size_t len, int advice);
 long sys_ppc_sync_file_range2(int fd, unsigned int flags,
 			      unsigned int offset1,
 			      unsigned int offset2,
@@ -123,20 +121,12 @@ long compat_sys_ppc_truncate64(const char __user *path, u32 reg4,
 			       unsigned long len1, unsigned long len2);
 long compat_sys_ppc_ftruncate64(unsigned int fd, u32 reg4,
 				unsigned long len1, unsigned long len2);
-long compat_sys_ppc32_fadvise64(int fd, u32 unused, u32 offset1, u32 offset2,
-				size_t len, int advice);
 long compat_sys_ppc_sync_file_range2(int fd, unsigned int flags,
 				     unsigned int offset1,
 				     unsigned int offset2,
 				     unsigned int nbytes1,
 				     unsigned int nbytes2);
 #endif /* CONFIG_COMPAT */
-
-#if defined(CONFIG_PPC32) || defined(CONFIG_COMPAT)
-long sys_ppc_fadvise64_64(int fd, int advice,
-			  u32 offset_high, u32 offset_low,
-			  u32 len_high, u32 len_low);
-#endif
 
 #else
 
