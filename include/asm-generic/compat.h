@@ -15,15 +15,9 @@
 #endif
 
 #ifndef compat_arg_u64
-#ifndef CONFIG_CPU_BIG_ENDIAN
-#define compat_arg_u64(name)		u32  name##_lo, u32  name##_hi
-#define compat_arg_u64_dual(name)	u32, name##_lo, u32, name##_hi
-#else
-#define compat_arg_u64(name)		u32  name##_hi, u32  name##_lo
-#define compat_arg_u64_dual(name)	u32, name##_hi, u32, name##_lo
-#endif
-#define compat_arg_u64_glue(name)	(((u64)name##_lo & 0xffffffffUL) | \
-					 ((u64)name##_hi << 32))
+#define compat_arg_u64(name)		SC_DECL64(name)
+#define compat_arg_u64_dual(name)	SC_ARG64(name)
+#define compat_arg_u64_glue(name)	SC_VAL64(u64, name)
 #endif /* compat_arg_u64 */
 
 /* These types are common across all compat ABIs */

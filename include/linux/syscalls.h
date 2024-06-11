@@ -264,11 +264,13 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 
 /* For split 64-bit arguments on 32-bit architectures */
 #ifdef __LITTLE_ENDIAN
+#define SC_DECL64(name) u32 name##_lo, u32  name##_hi
 #define SC_ARG64(name) u32, name##_lo, u32, name##_hi
 #else
+#define SC_DECL64(name) u32 name##_hi, u32  name##_lo
 #define SC_ARG64(name) u32, name##_hi, u32, name##_lo
 #endif
-#define SC_VAL64(type, name) ((type) name##_hi << 32 | name##_lo)
+#define SC_VAL64(type, name) (type)((u64)name##_hi << 32 | (name##_lo & 0xffffffffUL))
 
 #ifdef CONFIG_COMPAT
 #define SYSCALL32_DEFINE0 COMPAT_SYSCALL_DEFINE0
