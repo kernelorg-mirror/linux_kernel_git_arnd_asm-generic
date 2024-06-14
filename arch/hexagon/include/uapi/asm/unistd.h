@@ -28,6 +28,3 @@
  */
 
 #include <asm/unistd_32.h>
-
-#define __NR_sync_file_range2 84
-#undef __NR_sync_file_range

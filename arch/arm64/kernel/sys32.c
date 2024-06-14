@@ -95,13 +95,6 @@ COMPAT_SYSCALL_DEFINE5(aarch32_readahead, int, fd, u32, __pad,
 	return ksys_readahead(fd, arg_u64(offset), count);
 }
 
-COMPAT_SYSCALL_DEFINE6(aarch32_sync_file_range2, int, fd, unsigned int, flags,
-		       arg_u32p(offset), arg_u32p(nbytes))
-{
-	return ksys_sync_file_range(fd, arg_u64(offset), arg_u64(nbytes),
-				    flags);
-}
-
 COMPAT_SYSCALL_DEFINE6(aarch32_fallocate, int, fd, int, mode,
 		       arg_u32p(offset), arg_u32p(len))
 {

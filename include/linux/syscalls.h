@@ -293,10 +293,12 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #endif
 
 #ifdef __ARCH_WANT_SYSCALLS_32PAD
+#define __ARCH_WANT_SYS_SYNC_FILE_RANGE2
 #define __ARCH_WANT_SYS_FADVISE64_64_2
 #endif
 
 #ifdef __ARCH_WANT_SYSCALLS_32NOPAD
+#define __ARCH_WANT_SYS_SYNC_FILE_RANGE6
 #define __ARCH_WANT_SYS_FADVISE64_64_6
 #endif
 
@@ -536,7 +538,9 @@ asmlinkage long sys_sync(void);
 asmlinkage long sys_fsync(unsigned int fd);
 asmlinkage long sys_fdatasync(unsigned int fd);
 asmlinkage long sys_sync_file_range2(int fd, unsigned int flags,
-				     loff_t offset, loff_t nbytes);
+				     SC_DECL64(offset), SC_DECL64(nbytes));
+asmlinkage long sys_sync_file_range6(int fd, SC_DECL64(offset),
+				     SC_DECL64(nbytes), unsigned int flags);
 asmlinkage long sys_sync_file_range(int fd, loff_t offset, loff_t nbytes,
 					unsigned int flags);
 asmlinkage long sys_timerfd_create(int clockid, int flags);

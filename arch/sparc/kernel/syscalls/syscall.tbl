@@ -307,7 +307,8 @@
 253	common	fdatasync		sys_fdatasync
 254	32	nfsservctl		sys_ni_syscall			sys_nis_syscall
 254	64	nfsservctl		sys_nis_syscall
-255	common	sync_file_range		sys_sync_file_range		compat_sys_sync_file_range
+255	32	sync_file_range		sys_sync_file_range6
+255	64	sync_file_range		sys_sync_file_range
 256	32	clock_settime		sys_clock_settime32
 256	64	clock_settime		sys_clock_settime
 257	32	clock_gettime		sys_clock_gettime32

@@ -45,6 +45,9 @@ long sys_rtas(struct rtas_args __user *uargs);
 
 #ifdef CONFIG_PPC64
 long sys_ppc64_personality(unsigned long personality);
+asmlinkage long sys_ppc64_sync_file_range2(int fd, unsigned int flags,
+					   loff_t offset, loff_t nbytes);
+
 #ifdef CONFIG_COMPAT
 long compat_sys_ppc64_personality(unsigned long personality);
 #endif /* CONFIG_COMPAT */
@@ -97,11 +100,6 @@ long sys_ppc_truncate64(const char __user *path, u32 reg4,
 		        unsigned long len1, unsigned long len2);
 long sys_ppc_ftruncate64(unsigned int fd, u32 reg4,
 			 unsigned long len1, unsigned long len2);
-long sys_ppc_sync_file_range2(int fd, unsigned int flags,
-			      unsigned int offset1,
-			      unsigned int offset2,
-			      unsigned int nbytes1,
-			      unsigned int nbytes2);
 long sys_ppc_fallocate(int fd, int mode, u32 offset1, u32 offset2,
 		       u32 len1, u32 len2);
 #endif
@@ -121,11 +119,6 @@ long compat_sys_ppc_truncate64(const char __user *path, u32 reg4,
 			       unsigned long len1, unsigned long len2);
 long compat_sys_ppc_ftruncate64(unsigned int fd, u32 reg4,
 				unsigned long len1, unsigned long len2);
-long compat_sys_ppc_sync_file_range2(int fd, unsigned int flags,
-				     unsigned int offset1,
-				     unsigned int offset2,
-				     unsigned int nbytes1,
-				     unsigned int nbytes2);
 #endif /* CONFIG_COMPAT */
 
 #else

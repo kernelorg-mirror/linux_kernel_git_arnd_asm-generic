@@ -47,14 +47,3 @@ asmlinkage ssize_t sys_pwrite_wrapper(unsigned int fd, const char __user *buf,
 {
 	return ksys_pwrite64(fd, buf, count, pos);
 }
-
-/*
- * swap the arguments the way that libc wants them instead of
- * moving flags ahead of the 64-bit nbytes argument
- */
-SYSCALL_DEFINE6(sh_sync_file_range6, int, fd, SC_ARG64(offset),
-                SC_ARG64(nbytes), unsigned int, flags)
-{
-        return ksys_sync_file_range(fd, SC_VAL64(loff_t, offset),
-                                    SC_VAL64(loff_t, nbytes), flags);
-}

@@ -16,8 +16,6 @@
 
 #define sys_mmap2 sys_mmap_pgoff
 
-#define sys_sync_file_range sys_sync_file_range2
-
 void *sys_call_table[__NR_syscalls] = {
 #include <asm/syscall_table_32.h>
 };

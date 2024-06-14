@@ -104,7 +104,9 @@
 81	common	sync				sys_sync
 82	common	fsync				sys_fsync
 83	common	fdatasync			sys_fdatasync
-84	common	sync_file_range			sys_sync_file_range		compat_sys_sync_file_range
+84	32nopad	sync_file_range			sys_sync_file_range6
+84	32pad	sync_file_range2		sys_sync_file_range2
+84	64	sync_file_range			sys_sync_file_range
 85	common	timerfd_create			sys_timerfd_create
 86	time32	timerfd_settime			sys_timerfd_settime32
 86	64	timerfd_settime			sys_timerfd_settime

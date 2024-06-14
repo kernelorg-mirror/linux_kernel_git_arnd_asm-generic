@@ -316,7 +316,7 @@
 302	o32	ppoll				sys_ppoll_time32		compat_sys_ppoll_time32
 303	o32	unshare				sys_unshare
 304	o32	splice				sys_splice
-305	o32	sync_file_range			sys_sync_file_range		sys32_sync_file_range
+305	o32	sync_file_range			sys_sync_file_range7
 306	o32	tee				sys_tee
 307	o32	vmsplice			sys_vmsplice
 308	o32	move_pages			sys_move_pages

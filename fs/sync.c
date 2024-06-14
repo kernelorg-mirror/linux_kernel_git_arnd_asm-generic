@@ -367,25 +367,39 @@ int ksys_sync_file_range(int fd, loff_t offset, loff_t nbytes,
 	return ret;
 }
 
+#ifdef CONFIG_64BIT
 SYSCALL_DEFINE4(sync_file_range, int, fd, loff_t, offset, loff_t, nbytes,
 				unsigned int, flags)
 {
 	return ksys_sync_file_range(fd, offset, nbytes, flags);
 }
 
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_SYNC_FILE_RANGE)
-COMPAT_SYSCALL_DEFINE6(sync_file_range, int, fd, compat_arg_u64_dual(offset),
-		       compat_arg_u64_dual(nbytes), unsigned int, flags)
+#endif
+
+#if defined(CONFIG_COMPAT) || !defined(CONFIG_64BIT)
+#ifdef __ARCH_WANT_SYS_SYNC_FILE_RANGE6
+/*
+ * many 32-bit architectures can have six arguments without a
+ * particular alignment
+ */
+SYSCALL_DEFINE6(sync_file_range6, int, fd, SC_ARG64(offset),
+		       SC_ARG64(nbytes), unsigned int, flags)
 {
-	return ksys_sync_file_range(fd, compat_arg_u64_glue(offset),
-				    compat_arg_u64_glue(nbytes), flags);
+	return ksys_sync_file_range(fd, SC_VAL64(loff_t, offset),
+				    SC_VAL64(loff_t, nbytes), flags);
 }
 #endif
 
-/* It would be nice if people remember that not all the world's an i386
-   when they introduce new system calls */
-SYSCALL_DEFINE4(sync_file_range2, int, fd, unsigned int, flags,
-				 loff_t, offset, loff_t, nbytes)
+#ifdef __ARCH_WANT_SYS_SYNC_FILE_RANGE2
+/*
+ * Others reordered the arguments to make all 64-bit arguments
+ * fit into aligned register pairs
+ */
+SYSCALL_DEFINE6(sync_file_range2, int, fd, unsigned int, flags,
+		SC_ARG64(offset), SC_ARG64(nbytes))
 {
-	return ksys_sync_file_range(fd, offset, nbytes, flags);
+	return ksys_sync_file_range(fd, SC_VAL64(loff_t, offset),
+				    SC_VAL64(loff_t, nbytes), flags);
 }
+#endif
+#endif

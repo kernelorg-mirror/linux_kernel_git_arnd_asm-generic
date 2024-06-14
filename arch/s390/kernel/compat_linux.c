@@ -273,13 +273,6 @@ COMPAT_SYSCALL_DEFINE1(s390_fadvise64_64, struct fadvise64_64_args __user *, arg
 	return ksys_fadvise64_64(a.fd, a.offset, a.len, a.advice);
 }
 
-COMPAT_SYSCALL_DEFINE6(s390_sync_file_range, int, fd, u32, offhigh, u32, offlow,
-		       u32, nhigh, u32, nlow, unsigned int, flags)
-{
-	return ksys_sync_file_range(fd, ((loff_t)offhigh << 32) + offlow,
-				   ((u64)nhigh << 32) + nlow, flags);
-}
-
 COMPAT_SYSCALL_DEFINE6(s390_fallocate, int, fd, int, mode, u32, offhigh, u32, offlow,
 		       u32, lenhigh, u32, lenlow)
 {

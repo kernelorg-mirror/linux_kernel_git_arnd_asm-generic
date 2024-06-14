@@ -98,6 +98,16 @@ COMPAT_SYSCALL_DEFINE1(ppc64_personality, unsigned long, personality)
 	return do_ppc64_personality(personality);
 }
 #endif /* CONFIG_COMPAT */
+
+/*
+ * ppc64 uses the same argument order as sync_file_range2(), but
+ * with 64-bit offset arguments
+ */
+SYSCALL_DEFINE4(ppc64_sync_file_range2, int, fd, unsigned int, flags,
+		loff_t, offset, loff_t, nbytes)
+{
+	return ksys_sync_file_range(fd, offset, nbytes, flags);
+}
 #endif /* CONFIG_PPC64 */
 
 SYSCALL_DEFINE0(switch_endian)

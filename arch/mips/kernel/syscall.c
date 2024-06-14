@@ -248,3 +248,11 @@ SYSCALL_DEFINE7(fadvise64_64_7, int, fd, int, __pad,
 	return ksys_fadvise64_64(fd, SC_VAL64(loff_t, offset),
 				 SC_VAL64(loff_t, len), flags);
 }
+
+SYSCALL_DEFINE7(sync_file_range7, int, fd, int, __pad,
+		SC_ARG64(offset), SC_ARG64(nbytes),
+		unsigned int, flags)
+{
+	return ksys_sync_file_range(fd, SC_VAL64(loff_t, nbytes),
+				    SC_VAL64(loff_t, nbytes), flags);
+}

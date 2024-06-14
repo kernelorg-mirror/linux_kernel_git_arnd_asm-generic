@@ -327,7 +327,7 @@
 289	common	set_robust_list		sys_set_robust_list		compat_sys_set_robust_list
 290	common	get_robust_list		sys_get_robust_list		compat_sys_get_robust_list
 291	common	splice			sys_splice
-292	32	sync_file_range		parisc_sync_file_range
+292	32	sync_file_range		sys_sync_file_range6
 292	64	sync_file_range		sys_sync_file_range
 293	common	tee			sys_tee
 294	common	vmsplice		sys_vmsplice

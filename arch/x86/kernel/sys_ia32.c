@@ -85,15 +85,6 @@ SYSCALL_DEFINE4(ia32_readahead, int, fd, unsigned int, off_lo,
 	return ksys_readahead(fd, ((u64)off_hi << 32) | off_lo, count);
 }
 
-SYSCALL_DEFINE6(ia32_sync_file_range, int, fd, unsigned int, off_low,
-		unsigned int, off_hi, unsigned int, n_low,
-		unsigned int, n_hi, int, flags)
-{
-	return ksys_sync_file_range(fd,
-				    ((u64)off_hi << 32) | off_low,
-				    ((u64)n_hi << 32) | n_low, flags);
-}
-
 SYSCALL_DEFINE6(ia32_fallocate, int, fd, int, mode,
 		unsigned int, offset_lo, unsigned int, offset_hi,
 		unsigned int, len_lo, unsigned int, len_hi)

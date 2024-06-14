@@ -205,15 +205,6 @@ COMPAT_SYSCALL_DEFINE4(readahead, int, fd, u32, offhi, u32, offlo,
 	return ksys_readahead(fd, ((u64)offhi << 32) | offlo, count);
 }
 
-COMPAT_SYSCALL_DEFINE6(sync_file_range, unsigned int, fd, u32, off_high, u32, off_low,
-			u32, nb_high, u32, nb_low, unsigned int, flags)
-{
-	return ksys_sync_file_range(fd,
-				    ((u64)off_high << 32) | off_low,
-				    ((u64)nb_high << 32) | nb_low,
-				    flags);
-}
-
 COMPAT_SYSCALL_DEFINE6(fallocate, int, fd, int, mode, u32, offhi, u32, offlo,
 				     u32, lenhi, u32, lenlo)
 {

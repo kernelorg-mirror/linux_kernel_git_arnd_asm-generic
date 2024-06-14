@@ -326,7 +326,7 @@
 311	i386	set_robust_list		sys_set_robust_list		compat_sys_set_robust_list
 312	i386	get_robust_list		sys_get_robust_list		compat_sys_get_robust_list
 313	i386	splice			sys_splice
-314	i386	sync_file_range		sys_ia32_sync_file_range
+314	i386	sync_file_range		sys_sync_file_range6
 315	i386	tee			sys_tee
 316	i386	vmsplice		sys_vmsplice
 317	i386	move_pages		sys_move_pages
