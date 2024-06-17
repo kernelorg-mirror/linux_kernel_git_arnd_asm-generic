@@ -341,8 +341,8 @@
 327	o32	dup3				sys_dup3
 328	o32	pipe2				sys_pipe2
 329	o32	inotify_init1			sys_inotify_init1
-330	o32	preadv				sys_preadv			compat_sys_preadv
-331	o32	pwritev				sys_pwritev			compat_sys_pwritev
+330	o32	preadv				sys_preadv5
+331	o32	pwritev				sys_pwritev5
 332	o32	rt_tgsigqueueinfo		sys_rt_tgsigqueueinfo		compat_sys_rt_tgsigqueueinfo
 333	o32	perf_event_open			sys_perf_event_open
 334	o32	accept4				sys_accept4
@@ -372,8 +372,8 @@
 358	o32	membarrier			sys_membarrier
 359	o32	mlock2				sys_mlock2
 360	o32	copy_file_range			sys_copy_file_range
-361	o32	preadv2				sys_preadv2			compat_sys_preadv2
-362	o32	pwritev2			sys_pwritev2			compat_sys_pwritev2
+361	o32	preadv2				sys_preadv6
+362	o32	pwritev2			sys_pwritev6
 363	o32	pkey_mprotect			sys_pkey_mprotect
 364	o32	pkey_alloc			sys_pkey_alloc
 365	o32	pkey_free			sys_pkey_free

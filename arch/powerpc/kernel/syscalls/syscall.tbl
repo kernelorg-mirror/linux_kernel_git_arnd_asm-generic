@@ -416,8 +416,12 @@
 317	common	pipe2				sys_pipe2
 318	nospu	inotify_init1			sys_inotify_init1
 319	common	perf_event_open			sys_perf_event_open
-320	common	preadv				sys_preadv			compat_sys_preadv
-321	common	pwritev				sys_pwritev			compat_sys_pwritev
+320	32	preadv				sys_preadv5
+321	32	pwritev				sys_pwritev5
+320	64	preadv				sys_preadv
+321	64	pwritev				sys_pwritev
+320	spu	preadv				sys_preadv
+321	spu	pwritev				sys_pwritev
 322	nospu	rt_tgsigqueueinfo		sys_rt_tgsigqueueinfo		compat_sys_rt_tgsigqueueinfo
 323	nospu	fanotify_init			sys_fanotify_init
 324	nospu	fanotify_mark			sys_fanotify_mark		compat_sys_fanotify_mark
@@ -471,8 +475,12 @@
 # 366-377 originally left for IPC, now unused
 378	nospu	mlock2				sys_mlock2
 379	nospu	copy_file_range			sys_copy_file_range
-380	common	preadv2				sys_preadv2			compat_sys_preadv2
-381	common	pwritev2			sys_pwritev2			compat_sys_pwritev2
+380	32	preadv2				sys_preadv6
+381	32	pwritev2			sys_pwritev6
+380	64	preadv2				sys_preadv2
+381	64	pwritev2			sys_pwritev2
+380	spu	preadv2				sys_preadv2
+381	spu	pwritev2			sys_pwritev2
 382	nospu	kexec_file_load			sys_kexec_file_load
 383	nospu	statx				sys_statx
 384	nospu	pkey_alloc			sys_pkey_alloc

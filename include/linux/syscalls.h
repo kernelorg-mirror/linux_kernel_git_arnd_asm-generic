@@ -500,9 +500,13 @@ asmlinkage long sys_pread64(unsigned int fd, char __user *buf,
 asmlinkage long sys_pwrite64(unsigned int fd, const char __user *buf,
 			     size_t count, loff_t pos);
 asmlinkage long sys_preadv(unsigned long fd, const struct iovec __user *vec,
-			   unsigned long vlen, unsigned long pos_l, unsigned long pos_h);
+			   unsigned long vlen, loff_t pos);
 asmlinkage long sys_pwritev(unsigned long fd, const struct iovec __user *vec,
-			    unsigned long vlen, unsigned long pos_l, unsigned long pos_h);
+			   unsigned long vlen, loff_t pos);
+asmlinkage long sys_preadv5(unsigned long fd, const struct iovec __user *vec,
+			   unsigned long vlen, u32 pos_l, u32 pos_h);
+asmlinkage long sys_pwritev5(unsigned long fd, const struct iovec __user *vec,
+			   unsigned long vlen, u32 pos_l, u32 pos_h);
 asmlinkage long sys_sendfile64(int out_fd, int in_fd,
 			       loff_t __user *offset, size_t count);
 asmlinkage long sys_pselect6(int, fd_set __user *, fd_set __user *,
@@ -959,10 +963,16 @@ asmlinkage long sys_copy_file_range(int fd_in, loff_t __user *off_in,
 				    int fd_out, loff_t __user *off_out,
 				    size_t len, unsigned int flags);
 asmlinkage long sys_preadv2(unsigned long fd, const struct iovec __user *vec,
-			    unsigned long vlen, unsigned long pos_l, unsigned long pos_h,
+			    unsigned long vlen, loff_t pos, unsigned long unused,
 			    rwf_t flags);
 asmlinkage long sys_pwritev2(unsigned long fd, const struct iovec __user *vec,
-			    unsigned long vlen, unsigned long pos_l, unsigned long pos_h,
+			    unsigned long vlen, loff_t pos, unsigned long unused,
+			    rwf_t flags);
+asmlinkage long sys_preadv6(unsigned long fd, const struct iovec __user *vec,
+			    unsigned long vlen, u32 pos_l, u32 pos_h,
+			    rwf_t flags);
+asmlinkage long sys_pwritev6(unsigned long fd, const struct iovec __user *vec,
+			    unsigned long vlen, u32 pos_l, u32 pos_h,
 			    rwf_t flags);
 asmlinkage long sys_pkey_mprotect(unsigned long start, size_t len,
 				  unsigned long prot, int pkey);

@@ -393,8 +393,10 @@
 321	common	pipe2			sys_pipe2
 322	common	inotify_init1		sys_inotify_init1
 323	common	accept4			sys_accept4
-324	common	preadv			sys_preadv			compat_sys_preadv
-325	common	pwritev			sys_pwritev			compat_sys_pwritev
+324	32	preadv			sys_preadv5
+325	32	pwritev			sys_pwritev5
+324	64	preadv			sys_preadv
+325	64	pwritev			sys_pwritev
 326	common	rt_tgsigqueueinfo	sys_rt_tgsigqueueinfo		compat_sys_rt_tgsigqueueinfo
 327	common	perf_event_open		sys_perf_event_open
 328	32	recvmmsg		sys_recvmmsg_time32		compat_sys_recvmmsg_time32
@@ -431,8 +433,10 @@
 355	common	setsockopt		sys_setsockopt			sys_setsockopt
 356	common	mlock2			sys_mlock2
 357	common	copy_file_range		sys_copy_file_range
-358	common	preadv2			sys_preadv2			compat_sys_preadv2
-359	common	pwritev2		sys_pwritev2			compat_sys_pwritev2
+358	32	preadv2			sys_preadv6
+359	32	pwritev2		sys_pwritev6
+358	64	preadv2			sys_preadv2
+359	64	pwritev2		sys_pwritev2
 360	common	statx			sys_statx
 361	32	io_pgetevents		sys_io_pgetevents_time32	compat_sys_io_pgetevents
 361	64	io_pgetevents		sys_io_pgetevents

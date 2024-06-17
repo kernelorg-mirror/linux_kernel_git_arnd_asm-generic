@@ -84,8 +84,10 @@
 66	common	writev				sys_writev			sys_writev
 67	common	pread64				sys_pread64			compat_sys_pread64
 68	common	pwrite64			sys_pwrite64			compat_sys_pwrite64
-69	common	preadv				sys_preadv			compat_sys_preadv
-70	common	pwritev				sys_pwritev			compat_sys_pwritev
+69	32	preadv				sys_preadv5
+69	64	preadv				sys_preadv
+70	32	pwritev				sys_pwritev5
+70	64	pwritev				sys_pwritev
 71	32	sendfile64			sys_sendfile64
 71	64	sendfile			sys_sendfile64
 72	time32	pselect6			sys_pselect6_time32		compat_sys_pselect6_time32
@@ -335,8 +337,10 @@
 283	common	membarrier			sys_membarrier
 284	common	mlock2				sys_mlock2
 285	common	copy_file_range			sys_copy_file_range
-286	common	preadv2				sys_preadv2			compat_sys_preadv2
-287	common	pwritev2			sys_pwritev2			compat_sys_pwritev2
+286	32	preadv2				sys_preadv6
+286	64	preadv2				sys_preadv2
+287	32	pwritev2			sys_pwritev6
+287	64	pwritev2			sys_pwritev2
 288	common	pkey_mprotect			sys_pkey_mprotect
 289	common	pkey_alloc			sys_pkey_alloc
 290	common	pkey_free			sys_pkey_free

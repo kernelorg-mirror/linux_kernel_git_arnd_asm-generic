@@ -1027,12 +1027,6 @@ static ssize_t do_writev(unsigned long fd, const struct iovec __user *vec,
 	return ret;
 }
 
-static inline loff_t pos_from_hilo(unsigned long high, unsigned long low)
-{
-#define HALF_LONG_BITS (BITS_PER_LONG / 2)
-	return (((loff_t)high << HALF_LONG_BITS) << HALF_LONG_BITS) | low;
-}
-
 static ssize_t do_preadv(unsigned long fd, const struct iovec __user *vec,
 			 unsigned long vlen, loff_t pos, rwf_t flags)
 {
@@ -1091,84 +1085,64 @@ SYSCALL_DEFINE3(writev, unsigned long, fd, const struct iovec __user *, vec,
 	return do_writev(fd, vec, vlen, 0);
 }
 
-SYSCALL_DEFINE5(preadv, unsigned long, fd, const struct iovec __user *, vec,
-		unsigned long, vlen, unsigned long, pos_l, unsigned long, pos_h)
+#ifdef CONFIG_64BIT
+/*
+ * The system call entry on 64-bit architectures only use one loff_t word
+ * and ignore the other one rather than combining the two as was originally
+ * intended.
+ */
+SYSCALL_DEFINE4(preadv, unsigned long, fd, const struct iovec __user *, vec,
+		unsigned long, vlen, loff_t, pos)
 {
-	loff_t pos = pos_from_hilo(pos_h, pos_l);
-
 	return do_preadv(fd, vec, vlen, pos, 0);
 }
 
 SYSCALL_DEFINE6(preadv2, unsigned long, fd, const struct iovec __user *, vec,
-		unsigned long, vlen, unsigned long, pos_l, unsigned long, pos_h,
+		unsigned long, vlen, loff_t, pos, unsigned long, unused,
 		rwf_t, flags)
 {
-	loff_t pos = pos_from_hilo(pos_h, pos_l);
-
 	if (pos == -1)
 		return do_readv(fd, vec, vlen, flags);
-
 	return do_preadv(fd, vec, vlen, pos, flags);
 }
 
-SYSCALL_DEFINE5(pwritev, unsigned long, fd, const struct iovec __user *, vec,
-		unsigned long, vlen, unsigned long, pos_l, unsigned long, pos_h)
+SYSCALL_DEFINE4(pwritev, unsigned long, fd, const struct iovec __user *, vec,
+		unsigned long, vlen, loff_t, pos)
 {
-	loff_t pos = pos_from_hilo(pos_h, pos_l);
-
 	return do_pwritev(fd, vec, vlen, pos, 0);
 }
 
 SYSCALL_DEFINE6(pwritev2, unsigned long, fd, const struct iovec __user *, vec,
-		unsigned long, vlen, unsigned long, pos_l, unsigned long, pos_h,
+		unsigned long, vlen, loff_t, pos, unsigned long, unused,
 		rwf_t, flags)
 {
-	loff_t pos = pos_from_hilo(pos_h, pos_l);
-
 	if (pos == -1)
 		return do_writev(fd, vec, vlen, flags);
-
 	return do_pwritev(fd, vec, vlen, pos, flags);
 }
+#endif
 
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
 /*
- * Various compat syscalls.  Note that they all pretend to take a native
- * iovec - import_iovec will properly treat those as compat_iovecs based on
- * in_compat_syscall().
+ * 32-bit version of the above with split low/high halves of the offset.
+ * This is different from other loff_t syscalls on big-endian architectures
+ * where these are otherwise swapped.
+ *
+ * Note that they all pretend to take a native iovec - import_iovec will
+ * properly treat those as compat_iovecs based on in_compat_syscall().
  */
-#ifdef CONFIG_COMPAT
-#ifdef __ARCH_WANT_COMPAT_SYS_PREADV64
-COMPAT_SYSCALL_DEFINE4(preadv64, unsigned long, fd,
+SYSCALL_DEFINE5(preadv5, unsigned long, fd,
 		const struct iovec __user *, vec,
-		unsigned long, vlen, loff_t, pos)
-{
-	return do_preadv(fd, vec, vlen, pos, 0);
-}
-#endif
-
-COMPAT_SYSCALL_DEFINE5(preadv, compat_ulong_t, fd,
-		const struct iovec __user *, vec,
-		compat_ulong_t, vlen, u32, pos_low, u32, pos_high)
+		unsigned long, vlen, u32, pos_low, u32, pos_high)
 {
 	loff_t pos = ((loff_t)pos_high << 32) | pos_low;
 
 	return do_preadv(fd, vec, vlen, pos, 0);
 }
 
-#ifdef __ARCH_WANT_COMPAT_SYS_PREADV64V2
-COMPAT_SYSCALL_DEFINE5(preadv64v2, unsigned long, fd,
+SYSCALL_DEFINE6(preadv6, unsigned long, fd,
 		const struct iovec __user *, vec,
-		unsigned long, vlen, loff_t, pos, rwf_t, flags)
-{
-	if (pos == -1)
-		return do_readv(fd, vec, vlen, flags);
-	return do_preadv(fd, vec, vlen, pos, flags);
-}
-#endif
-
-COMPAT_SYSCALL_DEFINE6(preadv2, compat_ulong_t, fd,
-		const struct iovec __user *, vec,
-		compat_ulong_t, vlen, u32, pos_low, u32, pos_high,
+		unsigned long, vlen, u32, pos_low, u32, pos_high,
 		rwf_t, flags)
 {
 	loff_t pos = ((loff_t)pos_high << 32) | pos_low;
@@ -1178,26 +1152,41 @@ COMPAT_SYSCALL_DEFINE6(preadv2, compat_ulong_t, fd,
 	return do_preadv(fd, vec, vlen, pos, flags);
 }
 
-#ifdef __ARCH_WANT_COMPAT_SYS_PWRITEV64
-COMPAT_SYSCALL_DEFINE4(pwritev64, unsigned long, fd,
-		const struct iovec __user *, vec,
-		unsigned long, vlen, loff_t, pos)
-{
-	return do_pwritev(fd, vec, vlen, pos, 0);
-}
-#endif
-
-COMPAT_SYSCALL_DEFINE5(pwritev, compat_ulong_t, fd,
+SYSCALL_DEFINE5(pwritev5, unsigned long, fd,
 		const struct iovec __user *,vec,
-		compat_ulong_t, vlen, u32, pos_low, u32, pos_high)
+		unsigned long, vlen, u32, pos_low, u32, pos_high)
 {
 	loff_t pos = ((loff_t)pos_high << 32) | pos_low;
 
 	return do_pwritev(fd, vec, vlen, pos, 0);
 }
 
-#ifdef __ARCH_WANT_COMPAT_SYS_PWRITEV64V2
-COMPAT_SYSCALL_DEFINE5(pwritev64v2, unsigned long, fd,
+SYSCALL_DEFINE6(pwritev6, unsigned long, fd,
+		const struct iovec __user *,vec,
+		unsigned long, vlen, u32, pos_low, u32, pos_high, rwf_t, flags)
+{
+	loff_t pos = ((loff_t)pos_high << 32) | pos_low;
+
+	if (pos == -1)
+		return do_writev(fd, vec, vlen, flags);
+	return do_pwritev(fd, vec, vlen, pos, flags);
+}
+#endif /* !CONFIG_64BIT || CONFIG_COMPAT */
+
+#ifdef CONFIG_X86_X32_ABI
+/*
+ * x32 picked a slightly different ABI, don't use elsewhere.
+ */
+COMPAT_SYSCALL_DEFINE5(x32_preadv64v2, unsigned long, fd,
+		const struct iovec __user *, vec,
+		unsigned long, vlen, loff_t, pos, rwf_t, flags)
+{
+	if (pos == -1)
+		return do_readv(fd, vec, vlen, flags);
+	return do_preadv(fd, vec, vlen, pos, flags);
+}
+
+COMPAT_SYSCALL_DEFINE5(x32_pwritev64v2, unsigned long, fd,
 		const struct iovec __user *, vec,
 		unsigned long, vlen, loff_t, pos, rwf_t, flags)
 {
@@ -1206,18 +1195,6 @@ COMPAT_SYSCALL_DEFINE5(pwritev64v2, unsigned long, fd,
 	return do_pwritev(fd, vec, vlen, pos, flags);
 }
 #endif
-
-COMPAT_SYSCALL_DEFINE6(pwritev2, compat_ulong_t, fd,
-		const struct iovec __user *,vec,
-		compat_ulong_t, vlen, u32, pos_low, u32, pos_high, rwf_t, flags)
-{
-	loff_t pos = ((loff_t)pos_high << 32) | pos_low;
-
-	if (pos == -1)
-		return do_writev(fd, vec, vlen, flags);
-	return do_pwritev(fd, vec, vlen, pos, flags);
-}
-#endif /* CONFIG_COMPAT */
 
 static ssize_t do_sendfile(int out_fd, int in_fd, loff_t *ppos,
 			   size_t count, loff_t max)

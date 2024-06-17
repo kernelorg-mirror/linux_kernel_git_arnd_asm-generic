@@ -335,8 +335,8 @@
 325  common	pipe2			sys_pipe2			sys_pipe2
 326  common	dup3			sys_dup3			sys_dup3
 327  common	epoll_create1		sys_epoll_create1		sys_epoll_create1
-328  common	preadv			sys_preadv			compat_sys_preadv
-329  common	pwritev			sys_pwritev			compat_sys_pwritev
+328  common	preadv			sys_preadv			sys_preadv5
+329  common	pwritev			sys_pwritev			sys_pwritev5
 330  common	rt_tgsigqueueinfo	sys_rt_tgsigqueueinfo		compat_sys_rt_tgsigqueueinfo
 331  common	perf_event_open		sys_perf_event_open		sys_perf_event_open
 332  common	fanotify_init		sys_fanotify_init		sys_fanotify_init
@@ -383,8 +383,8 @@
 373  common	shutdown		sys_shutdown			sys_shutdown
 374  common	mlock2			sys_mlock2			sys_mlock2
 375  common	copy_file_range		sys_copy_file_range		sys_copy_file_range
-376  common	preadv2			sys_preadv2			compat_sys_preadv2
-377  common	pwritev2		sys_pwritev2			compat_sys_pwritev2
+376  common	preadv2			sys_preadv2			sys_preadv6
+377  common	pwritev2		sys_pwritev2			sys_pwritev6
 378  common	s390_guarded_storage	sys_s390_guarded_storage	sys_s390_guarded_storage
 379  common	statx			sys_statx			sys_statx
 380  common	s390_sthyi		sys_s390_sthyi			sys_s390_sthyi

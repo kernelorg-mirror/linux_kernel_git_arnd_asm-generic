@@ -419,8 +419,8 @@
 531	x32	get_robust_list		compat_sys_get_robust_list
 532	x32	vmsplice		sys_vmsplice
 533	x32	move_pages		sys_move_pages
-534	x32	preadv			compat_sys_preadv64
-535	x32	pwritev			compat_sys_pwritev64
+534	x32	preadv			sys_preadv
+535	x32	pwritev			sys_pwritev
 536	x32	rt_tgsigqueueinfo	compat_sys_rt_tgsigqueueinfo
 537	x32	recvmmsg		compat_sys_recvmmsg_time64
 538	x32	sendmmsg		compat_sys_sendmmsg
@@ -431,7 +431,7 @@
 543	x32	io_setup		compat_sys_io_setup
 544	x32	io_submit		compat_sys_io_submit
 545	x32	execveat		compat_sys_execveat
-546	x32	preadv2			compat_sys_preadv64v2
-547	x32	pwritev2		compat_sys_pwritev64v2
+546	x32	preadv2			compat_sys_x32_preadv64v2
+547	x32	pwritev2		compat_sys_x32_pwritev64v2
 # This is the end of the legacy x32 range.  Numbers 548 and above are
 # not special and are not to be used for x32-specific syscalls.
