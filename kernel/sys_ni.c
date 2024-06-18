@@ -232,6 +232,7 @@ COND_SYSCALL_COMPAT(setitimer);
 /* fanotify */
 COND_SYSCALL(fanotify_init);
 COND_SYSCALL(fanotify_mark);
+COND_SYSCALL(fanotify_mark6);
 
 /* open by handle */
 COND_SYSCALL(name_to_handle_at);
@@ -290,9 +291,6 @@ COND_SYSCALL(pciconfig_iobase);
 /* sys_socketcall: arm, mips, x86, ... */
 COND_SYSCALL(socketcall);
 COND_SYSCALL_COMPAT(socketcall);
-
-/* compat syscalls for arm64, x86, ... */
-COND_SYSCALL_COMPAT(fanotify_mark);
 
 /* x86 */
 COND_SYSCALL(vm86old);

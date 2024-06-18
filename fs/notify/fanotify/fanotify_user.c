@@ -1911,7 +1911,7 @@ fput_and_out:
 	return ret;
 }
 
-#ifndef CONFIG_ARCH_SPLIT_ARG64
+#ifdef CONFIG_64BIT
 SYSCALL_DEFINE5(fanotify_mark, int, fanotify_fd, unsigned int, flags,
 			      __u64, mask, int, dfd,
 			      const char  __user *, pathname)
@@ -1920,11 +1920,10 @@ SYSCALL_DEFINE5(fanotify_mark, int, fanotify_fd, unsigned int, flags,
 }
 #endif
 
-#if defined(CONFIG_ARCH_SPLIT_ARG64) || defined(CONFIG_COMPAT)
-SYSCALL32_DEFINE6(fanotify_mark,
-				int, fanotify_fd, unsigned int, flags,
-				SC_ARG64(mask), int, dfd,
-				const char  __user *, pathname)
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+SYSCALL_DEFINE6(fanotify_mark6, int, fanotify_fd, unsigned int, flags,
+		SC_ARG64(mask), int, dfd,
+		const char  __user *, pathname)
 {
 	return do_fanotify_mark(fanotify_fd, flags, SC_VAL64(__u64, mask),
 				dfd, pathname);

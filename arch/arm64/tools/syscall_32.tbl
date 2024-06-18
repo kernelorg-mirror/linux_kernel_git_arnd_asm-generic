@@ -380,7 +380,7 @@
 365	common	recvmmsg			sys_recvmmsg_time32		compat_sys_recvmmsg_time32
 366	common	accept4				sys_accept4
 367	common	fanotify_init			sys_fanotify_init
-368	common	fanotify_mark			sys_fanotify_mark		compat_sys_fanotify_mark
+368	common	fanotify_mark			sys_fanotify_mark6
 369	common	prlimit64			sys_prlimit64
 370	common	name_to_handle_at		sys_name_to_handle_at
 371	common	open_by_handle_at		sys_open_by_handle_at		compat_sys_open_by_handle_at

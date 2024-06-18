@@ -757,8 +757,6 @@ asmlinkage long compat_sys_recvmmsg_time32(int fd, struct compat_mmsghdr __user 
 asmlinkage long compat_sys_wait4(compat_pid_t pid,
 				 compat_uint_t __user *stat_addr, int options,
 				 struct compat_rusage __user *ru);
-asmlinkage long compat_sys_fanotify_mark(int, unsigned int, __u32, __u32,
-					    int, const char __user *);
 asmlinkage long compat_sys_open_by_handle_at(int mountdirfd,
 					     struct file_handle __user *handle,
 					     int flags);

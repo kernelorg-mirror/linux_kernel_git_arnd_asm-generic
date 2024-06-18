@@ -424,7 +424,8 @@
 321	spu	pwritev				sys_pwritev
 322	nospu	rt_tgsigqueueinfo		sys_rt_tgsigqueueinfo		compat_sys_rt_tgsigqueueinfo
 323	nospu	fanotify_init			sys_fanotify_init
-324	nospu	fanotify_mark			sys_fanotify_mark		compat_sys_fanotify_mark
+324	32	fanotify_mark			sys_fanotify_mark6
+324	64	fanotify_mark			sys_fanotify_mark
 325	common	prlimit64			sys_prlimit64
 326	common	socket				sys_socket
 327	common	bind				sys_bind

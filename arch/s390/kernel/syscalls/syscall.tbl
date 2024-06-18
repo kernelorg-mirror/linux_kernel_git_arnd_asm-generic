@@ -341,7 +341,8 @@
 330  common	rt_tgsigqueueinfo	sys_rt_tgsigqueueinfo		compat_sys_rt_tgsigqueueinfo
 331  common	perf_event_open		sys_perf_event_open		sys_perf_event_open
 332  common	fanotify_init		sys_fanotify_init		sys_fanotify_init
-333  common	fanotify_mark		sys_fanotify_mark		compat_sys_fanotify_mark
+333  32		fanotify_mark		-				sys_fanotify_mark6
+333  64		fanotify_mark		sys_fanotify_mark		-
 334  common	prlimit64		sys_prlimit64			sys_prlimit64
 335  common	name_to_handle_at	sys_name_to_handle_at		sys_name_to_handle_at
 336  common	open_by_handle_at	sys_open_by_handle_at		compat_sys_open_by_handle_at
