@@ -192,8 +192,8 @@
 177	i386	rt_sigtimedwait		sys_rt_sigtimedwait_time32	compat_sys_rt_sigtimedwait_time32
 178	i386	rt_sigqueueinfo		sys_rt_sigqueueinfo		compat_sys_rt_sigqueueinfo
 179	i386	rt_sigsuspend		sys_rt_sigsuspend		compat_sys_rt_sigsuspend
-180	i386	pread64			sys_ia32_pread64
-181	i386	pwrite64		sys_ia32_pwrite64
+180	i386	pread64			sys_pread5
+181	i386	pwrite64		sys_pwrite5
 182	i386	chown			sys_chown16
 183	i386	getcwd			sys_getcwd
 184	i386	capget			sys_capget

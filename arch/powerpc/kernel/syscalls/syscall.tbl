@@ -228,10 +228,10 @@
 176	64	rt_sigtimedwait			sys_rt_sigtimedwait
 177	nospu 	rt_sigqueueinfo			sys_rt_sigqueueinfo		compat_sys_rt_sigqueueinfo
 178	nospu 	rt_sigsuspend			sys_rt_sigsuspend		compat_sys_rt_sigsuspend
-179	32	pread64				sys_ppc_pread64			compat_sys_ppc_pread64
+179	32	pread64				sys_pread6
 179	64	pread64				sys_pread64
 179	spu	pread64				sys_pread64
-180	32	pwrite64			sys_ppc_pwrite64		compat_sys_ppc_pwrite64
+180	32	pwrite64			sys_pwrite6
 180	64	pwrite64			sys_pwrite64
 180	spu	pwrite64			sys_pwrite64
 181	common	chown				sys_chown

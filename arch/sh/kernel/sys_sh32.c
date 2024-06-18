@@ -35,15 +35,3 @@ asmlinkage int sys_sh_pipe(void)
 	}
 	return error;
 }
-
-asmlinkage ssize_t sys_pread_wrapper(unsigned int fd, char __user *buf,
-			     size_t count, long dummy, loff_t pos)
-{
-	return ksys_pread64(fd, buf, count, pos);
-}
-
-asmlinkage ssize_t sys_pwrite_wrapper(unsigned int fd, const char __user *buf,
-			      size_t count, long dummy, loff_t pos)
-{
-	return ksys_pwrite64(fd, buf, count, pos);
-}

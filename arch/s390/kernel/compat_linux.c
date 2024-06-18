@@ -77,22 +77,6 @@ COMPAT_SYSCALL_DEFINE3(s390_ftruncate64, unsigned int, fd, u32, high, u32, low)
 	return ksys_ftruncate(fd, (unsigned long)high << 32 | low);
 }
 
-COMPAT_SYSCALL_DEFINE5(s390_pread64, unsigned int, fd, char __user *, ubuf,
-		       compat_size_t, count, u32, high, u32, low)
-{
-	if ((compat_ssize_t) count < 0)
-		return -EINVAL;
-	return ksys_pread64(fd, ubuf, count, (unsigned long)high << 32 | low);
-}
-
-COMPAT_SYSCALL_DEFINE5(s390_pwrite64, unsigned int, fd, const char __user *, ubuf,
-		       compat_size_t, count, u32, high, u32, low)
-{
-	if ((compat_ssize_t) count < 0)
-		return -EINVAL;
-	return ksys_pwrite64(fd, ubuf, count, (unsigned long)high << 32 | low);
-}
-
 COMPAT_SYSCALL_DEFINE4(s390_readahead, int, fd, u32, high, u32, low, s32, count)
 {
 	return ksys_readahead(fd, (unsigned long)high << 32 | low, count);

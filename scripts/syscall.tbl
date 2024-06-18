@@ -83,8 +83,12 @@
 64	common	write				sys_write
 65	common	readv				sys_readv			sys_readv
 66	common	writev				sys_writev			sys_writev
-67	common	pread64				sys_pread64			compat_sys_pread64
-68	common	pwrite64			sys_pwrite64			compat_sys_pwrite64
+67	32nopad	pread64				sys_pread5
+67	32pad	pread64				sys_pread6
+67	64	pread64				sys_pread64
+68	32nopad write64				sys_pwrite5
+68	32pad	pwrite64			sys_pwrite6
+68	64	pwrite64			sys_pwrite64
 69	32	preadv				sys_preadv5
 69	64	preadv				sys_preadv
 70	32	pwritev				sys_pwritev5

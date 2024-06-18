@@ -64,21 +64,6 @@ SYSCALL_DEFINE3(ia32_ftruncate64, unsigned int, fd,
 	return ksys_ftruncate(fd, ((loff_t) offset_high << 32) | offset_low);
 }
 
-/* warning: next two assume little endian */
-SYSCALL_DEFINE5(ia32_pread64, unsigned int, fd, char __user *, ubuf,
-		u32, count, u32, poslo, u32, poshi)
-{
-	return ksys_pread64(fd, ubuf, count,
-			    ((loff_t)AA(poshi) << 32) | AA(poslo));
-}
-
-SYSCALL_DEFINE5(ia32_pwrite64, unsigned int, fd, const char __user *, ubuf,
-		u32, count, u32, poslo, u32, poshi)
-{
-	return ksys_pwrite64(fd, ubuf, count,
-			     ((loff_t)AA(poshi) << 32) | AA(poslo));
-}
-
 SYSCALL_DEFINE4(ia32_readahead, int, fd, unsigned int, off_lo,
 		unsigned int, off_hi, size_t, count)
 {

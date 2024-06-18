@@ -69,23 +69,6 @@ SYSCALL_DEFINE5(32_llseek, unsigned int, fd, unsigned int, offset_high,
 {
 	return sys_llseek(fd, offset_high, offset_low, result, origin);
 }
-
-/* From the Single Unix Spec: pread & pwrite act like lseek to pos + op +
-   lseek back to original location.  They fail just like lseek does on
-   non-seekable files.	*/
-
-SYSCALL_DEFINE6(32_pread, unsigned long, fd, char __user *, buf, size_t, count,
-	unsigned long, unused, unsigned long, a4, unsigned long, a5)
-{
-	return ksys_pread64(fd, buf, count, merge_64(a4, a5));
-}
-
-SYSCALL_DEFINE6(32_pwrite, unsigned int, fd, const char __user *, buf,
-	size_t, count, u32, unused, u64, a4, u64, a5)
-{
-	return ksys_pwrite64(fd, buf, count, merge_64(a4, a5));
-}
-
 SYSCALL_DEFINE1(32_personality, unsigned long, personality)
 {
 	unsigned int p = personality & 0xffffffff;

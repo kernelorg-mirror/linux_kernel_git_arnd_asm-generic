@@ -88,8 +88,10 @@
 64	common	getpagesize		sys_getpagesize
 65	common	msync			sys_msync
 66	common	vfork			sys_vfork
-67	common	pread64			sys_pread64			compat_sys_pread64
-68	common	pwrite64		sys_pwrite64			compat_sys_pwrite64
+67	32	pread64			sys_pread5
+67	64	pread64			sys_pread64
+68	32	pwrite64		sys_pwrite5
+68	64	pwrite64		sys_pwrite64
 69	32    	geteuid32		sys_geteuid
 70	32	getegid32		sys_getegid
 71	common	mmap			sys_mmap

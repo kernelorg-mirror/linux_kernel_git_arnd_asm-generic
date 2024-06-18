@@ -168,8 +168,10 @@
 177  common	rt_sigtimedwait		sys_rt_sigtimedwait		compat_sys_rt_sigtimedwait_time32
 178  common	rt_sigqueueinfo		sys_rt_sigqueueinfo		compat_sys_rt_sigqueueinfo
 179  common	rt_sigsuspend		sys_rt_sigsuspend		compat_sys_rt_sigsuspend
-180  common	pread64			sys_pread64			compat_sys_s390_pread64
-181  common	pwrite64		sys_pwrite64			compat_sys_s390_pwrite64
+180  32		pread64			-				sys_pread5
+180  64		pread64			sys_pread64			-	
+181  32		pwrite64		-				sys_pwrite5
+181  64		pwrite64		sys_pwrite64			-
 182  32		chown			-				sys_chown16
 183  common	getcwd			sys_getcwd			sys_getcwd
 184  common	capget			sys_capget			sys_capget

@@ -64,19 +64,6 @@ COMPAT_SYSCALL_DEFINE6(aarch32_mmap2, unsigned long, addr, unsigned long, len,
 
 #define arg_u64(name)	(((u64)name##_hi << 32) | name##_lo)
 
-COMPAT_SYSCALL_DEFINE6(aarch32_pread64, unsigned int, fd, char __user *, buf,
-		       size_t, count, u32, __pad, arg_u32p(pos))
-{
-	return ksys_pread64(fd, buf, count, arg_u64(pos));
-}
-
-COMPAT_SYSCALL_DEFINE6(aarch32_pwrite64, unsigned int, fd,
-		       const char __user *, buf, size_t, count, u32, __pad,
-		       arg_u32p(pos))
-{
-	return ksys_pwrite64(fd, buf, count, arg_u64(pos));
-}
-
 COMPAT_SYSCALL_DEFINE4(aarch32_truncate64, const char __user *, pathname,
 		       u32, __pad, arg_u32p(length))
 {

@@ -293,11 +293,15 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #endif
 
 #ifdef __ARCH_WANT_SYSCALLS_32PAD
+#define __ARCH_WANT_SYS_PREAD6
+#define __ARCH_WANT_SYS_PWRITE6
 #define __ARCH_WANT_SYS_SYNC_FILE_RANGE2
 #define __ARCH_WANT_SYS_FADVISE64_64_2
 #endif
 
 #ifdef __ARCH_WANT_SYSCALLS_32NOPAD
+#define __ARCH_WANT_SYS_PREAD5
+#define __ARCH_WANT_SYS_PWRITE5
 #define __ARCH_WANT_SYS_SYNC_FILE_RANGE6
 #define __ARCH_WANT_SYS_FADVISE64_64_6
 #endif
@@ -498,8 +502,16 @@ asmlinkage long sys_writev(unsigned long fd,
 			   unsigned long vlen);
 asmlinkage long sys_pread64(unsigned int fd, char __user *buf,
 			    size_t count, loff_t pos);
+asmlinkage long sys_pread5(unsigned int fd, char __user *buf,
+			   size_t count, SC_DECL64(pos));
+asmlinkage long sys_pread6(unsigned int fd, char __user *buf,
+			   size_t count, int unused, SC_DECL64(pos));
 asmlinkage long sys_pwrite64(unsigned int fd, const char __user *buf,
 			     size_t count, loff_t pos);
+asmlinkage long sys_pwrite5(unsigned int fd, const char __user *buf,
+			    size_t count, SC_DECL64(pos));
+asmlinkage long sys_pwrite6(unsigned int fd, const char __user *buf,
+			    size_t count, int unused, SC_DECL64(pos));
 asmlinkage long sys_preadv(unsigned long fd, const struct iovec __user *vec,
 			   unsigned long vlen, loff_t pos);
 asmlinkage long sys_pwritev(unsigned long fd, const struct iovec __user *vec,

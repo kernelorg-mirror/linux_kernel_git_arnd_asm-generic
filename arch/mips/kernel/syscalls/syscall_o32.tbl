@@ -211,8 +211,8 @@
 197	o32	rt_sigtimedwait			sys_rt_sigtimedwait_time32	compat_sys_rt_sigtimedwait_time32
 198	o32	rt_sigqueueinfo			sys_rt_sigqueueinfo		compat_sys_rt_sigqueueinfo
 199	o32	rt_sigsuspend			sys_rt_sigsuspend		compat_sys_rt_sigsuspend
-200	o32	pread64				sys_pread64			sys_32_pread
-201	o32	pwrite64			sys_pwrite64			sys_32_pwrite
+200	o32	pread64				sys_pread6
+201	o32	pwrite64			sys_pwrite6
 202	o32	chown				sys_chown
 203	o32	getcwd				sys_getcwd
 204	o32	capget				sys_capget

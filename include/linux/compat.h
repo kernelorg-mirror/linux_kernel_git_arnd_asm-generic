@@ -830,16 +830,6 @@ asmlinkage long compat_sys_truncate64(const char __user *pathname, compat_arg_u6
 asmlinkage long compat_sys_ftruncate64(unsigned int fd, compat_arg_u64(len));
 #endif
 
-#ifdef __ARCH_WANT_COMPAT_PREAD64
-asmlinkage long compat_sys_pread64(unsigned int fd, char __user *buf, size_t count,
-				   compat_arg_u64(pos));
-#endif
-
-#ifdef __ARCH_WANT_COMPAT_PWRITE64
-asmlinkage long compat_sys_pwrite64(unsigned int fd, const char __user *buf, size_t count,
-				    compat_arg_u64(pos));
-#endif
-
 #ifdef __ARCH_WANT_COMPAT_READAHEAD
 asmlinkage long compat_sys_readahead(int fd, compat_arg_u64(offset), size_t count);
 #endif

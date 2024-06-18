@@ -88,12 +88,6 @@ long compat_sys_old_getrlimit(unsigned int resource,
  */
 
 #ifdef CONFIG_PPC32
-long sys_ppc_pread64(unsigned int fd,
-		     char __user *ubuf, compat_size_t count,
-		     u32 reg6, u32 pos1, u32 pos2);
-long sys_ppc_pwrite64(unsigned int fd,
-		      const char __user *ubuf, compat_size_t count,
-		      u32 reg6, u32 pos1, u32 pos2);
 long sys_ppc_readahead(int fd, u32 r4,
 		       u32 offset1, u32 offset2, u32 count);
 long sys_ppc_truncate64(const char __user *path, u32 reg4,
@@ -105,12 +99,6 @@ long sys_ppc_ftruncate64(unsigned int fd, u32 reg4,
 long compat_sys_mmap2(unsigned long addr, size_t len,
 		      unsigned long prot, unsigned long flags,
 		      unsigned long fd, unsigned long pgoff);
-long compat_sys_ppc_pread64(unsigned int fd,
-			    char __user *ubuf, compat_size_t count,
-			    u32 reg6, u32 pos1, u32 pos2);
-long compat_sys_ppc_pwrite64(unsigned int fd,
-			     const char __user *ubuf, compat_size_t count,
-			     u32 reg6, u32 pos1, u32 pos2);
 long compat_sys_ppc_readahead(int fd, u32 r4,
 			      u32 offset1, u32 offset2, u32 count);
 long compat_sys_ppc_truncate64(const char __user *path, u32 reg4,

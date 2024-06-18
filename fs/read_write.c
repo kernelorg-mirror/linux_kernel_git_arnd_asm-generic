@@ -675,18 +675,30 @@ ssize_t ksys_pread64(unsigned int fd, char __user *buf, size_t count,
 	return ret;
 }
 
+#ifdef CONFIG_64BIT
 SYSCALL_DEFINE4(pread64, unsigned int, fd, char __user *, buf,
 			size_t, count, loff_t, pos)
 {
 	return ksys_pread64(fd, buf, count, pos);
 }
+#endif
 
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_PREAD64)
-COMPAT_SYSCALL_DEFINE5(pread64, unsigned int, fd, char __user *, buf,
-		       size_t, count, compat_arg_u64_dual(pos))
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+#ifdef __ARCH_WANT_SYS_PREAD5
+SYSCALL_DEFINE5(pread5, unsigned int, fd, char __user *, buf,
+		size_t, count, SC_ARG64(pos))
 {
-	return ksys_pread64(fd, buf, count, compat_arg_u64_glue(pos));
+	return ksys_pread64(fd, buf, count, SC_VAL64(loff_t, pos));
 }
+#endif
+
+#ifdef __ARCH_WANT_SYS_PREAD6
+SYSCALL_DEFINE6(pread6, unsigned int, fd, char __user *, buf,
+		size_t, count, int, unused, SC_ARG64(pos))
+{
+	return ksys_pread64(fd, buf, count, SC_VAL64(loff_t, pos));
+}
+#endif
 #endif
 
 ssize_t ksys_pwrite64(unsigned int fd, const char __user *buf,
@@ -709,18 +721,30 @@ ssize_t ksys_pwrite64(unsigned int fd, const char __user *buf,
 	return ret;
 }
 
+#ifdef CONFIG_64BIT
 SYSCALL_DEFINE4(pwrite64, unsigned int, fd, const char __user *, buf,
 			 size_t, count, loff_t, pos)
 {
 	return ksys_pwrite64(fd, buf, count, pos);
 }
+#endif
 
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_PWRITE64)
-COMPAT_SYSCALL_DEFINE5(pwrite64, unsigned int, fd, const char __user *, buf,
-		       size_t, count, compat_arg_u64_dual(pos))
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+#ifdef __ARCH_WANT_SYS_PWRITE5
+SYSCALL_DEFINE5(pwrite5, unsigned int, fd, const char __user *, buf,
+		size_t, count, SC_ARG64(pos))
 {
-	return ksys_pwrite64(fd, buf, count, compat_arg_u64_glue(pos));
+	return ksys_pwrite64(fd, buf, count, SC_VAL64(loff_t, pos));
 }
+#endif
+
+#ifdef __ARCH_WANT_SYS_PWRITE6
+SYSCALL_DEFINE6(pwrite6, unsigned int, fd, const char __user *, buf,
+		size_t, count, int, unused, SC_ARG64(pos))
+{
+	return ksys_pwrite64(fd, buf, count, SC_VAL64(loff_t, pos));
+}
+#endif
 #endif
 
 static ssize_t do_iter_readv_writev(struct file *filp, struct iov_iter *iter,

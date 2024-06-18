@@ -414,20 +414,6 @@ ENDPROC(sys_mmap2)
 
 #ifdef CONFIG_OABI_COMPAT
 
-/*
- * These are syscalls with argument register differences
- */
-
-sys_oabi_pread64:
-		stmia	sp, {r3, r4}
-		b	sys_pread64
-ENDPROC(sys_oabi_pread64)
-
-sys_oabi_pwrite64:
-		stmia	sp, {r3, r4}
-		b	sys_pwrite64
-ENDPROC(sys_oabi_pwrite64)
-
 sys_oabi_truncate64:
 		mov	r3, r2
 		mov	r2, r1

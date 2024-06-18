@@ -67,22 +67,6 @@
 #define PPC32_SYSCALL_DEFINE6	COMPAT_SYSCALL_DEFINE6
 #endif
 
-PPC32_SYSCALL_DEFINE6(ppc_pread64,
-		       unsigned int, fd,
-		       char __user *, ubuf, compat_size_t, count,
-		       u32, reg6, u32, pos1, u32, pos2)
-{
-	return ksys_pread64(fd, ubuf, count, merge_64(pos1, pos2));
-}
-
-PPC32_SYSCALL_DEFINE6(ppc_pwrite64,
-		       unsigned int, fd,
-		       const char __user *, ubuf, compat_size_t, count,
-		       u32, reg6, u32, pos1, u32, pos2)
-{
-	return ksys_pwrite64(fd, ubuf, count, merge_64(pos1, pos2));
-}
-
 PPC32_SYSCALL_DEFINE5(ppc_readahead,
 		       int, fd, u32, r4,
 		       u32, offset1, u32, offset2, u32, count)

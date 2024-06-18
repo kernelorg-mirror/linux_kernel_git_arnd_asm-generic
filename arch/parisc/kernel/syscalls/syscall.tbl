@@ -118,9 +118,9 @@
 105	common	getitimer		sys_getitimer			compat_sys_getitimer
 106	common	capget			sys_capget
 107	common	capset			sys_capset
-108	32	pread64			parisc_pread64
+108	32	pread64			sys_pread5
 108	64	pread64			sys_pread64
-109	32	pwrite64		parisc_pwrite64
+109	32	pwrite64		sys_pwrite5
 109	64	pwrite64		sys_pwrite64
 110	common	getcwd			sys_getcwd
 111	common	vhangup			sys_vhangup
