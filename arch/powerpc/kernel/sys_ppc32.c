@@ -103,14 +103,3 @@ PPC32_SYSCALL_DEFINE4(ppc_ftruncate64,
 {
 	return ksys_ftruncate(fd, merge_64(len1, len2));
 }
-
-#ifdef CONFIG_PPC32
-SYSCALL_DEFINE6(ppc_fallocate,
-		int, fd, int, mode,
-		u32, offset1, u32, offset2, u32, len1, u32, len2)
-{
-	return ksys_fallocate(fd, mode,
-			      merge_64(offset1, offset2),
-			      merge_64(len1, len2));
-}
-#endif

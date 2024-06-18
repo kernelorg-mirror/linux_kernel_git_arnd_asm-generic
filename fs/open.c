@@ -348,7 +348,7 @@ int vfs_fallocate(struct file *file, int mode, loff_t offset, loff_t len)
 }
 EXPORT_SYMBOL_GPL(vfs_fallocate);
 
-int ksys_fallocate(int fd, int mode, loff_t offset, loff_t len)
+static int ksys_fallocate(int fd, int mode, loff_t offset, loff_t len)
 {
 	struct fd f = fdget(fd);
 	int error = -EBADF;
@@ -360,17 +360,19 @@ int ksys_fallocate(int fd, int mode, loff_t offset, loff_t len)
 	return error;
 }
 
+#ifdef CONFIG_64BIT
 SYSCALL_DEFINE4(fallocate, int, fd, int, mode, loff_t, offset, loff_t, len)
 {
 	return ksys_fallocate(fd, mode, offset, len);
 }
+#endif
 
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_FALLOCATE)
-COMPAT_SYSCALL_DEFINE6(fallocate, int, fd, int, mode, compat_arg_u64_dual(offset),
-		       compat_arg_u64_dual(len))
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+SYSCALL_DEFINE6(fallocate6, int, fd, int, mode, SC_ARG64(offset),
+		SC_ARG64(len))
 {
-	return ksys_fallocate(fd, mode, compat_arg_u64_glue(offset),
-			      compat_arg_u64_glue(len));
+	return ksys_fallocate(fd, mode, SC_VAL64(loff_t, offset),
+			      SC_VAL64(loff_t, len));
 }
 #endif
 

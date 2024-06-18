@@ -336,7 +336,7 @@
 321	i386	signalfd		sys_signalfd			compat_sys_signalfd
 322	i386	timerfd_create		sys_timerfd_create
 323	i386	eventfd			sys_eventfd
-324	i386	fallocate		sys_ia32_fallocate
+324	i386	fallocate		sys_fallocate6
 325	i386	timerfd_settime		sys_timerfd_settime32
 326	i386	timerfd_gettime		sys_timerfd_gettime32
 327	i386	signalfd4		sys_signalfd4			compat_sys_signalfd4

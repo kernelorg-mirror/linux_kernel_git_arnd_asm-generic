@@ -451,6 +451,7 @@ asmlinkage long sys_truncate64(const char __user *path, loff_t length);
 asmlinkage long sys_ftruncate64(unsigned int fd, loff_t length);
 #endif
 asmlinkage long sys_fallocate(int fd, int mode, loff_t offset, loff_t len);
+asmlinkage long sys_fallocate6(int fd, int mode, SC_DECL64(offset), SC_DECL64(len));
 asmlinkage long sys_faccessat(int dfd, const char __user *filename, int mode);
 asmlinkage long sys_faccessat2(int dfd, const char __user *filename, int mode,
 			       int flags);
@@ -1263,7 +1264,6 @@ ssize_t ksys_pread64(unsigned int fd, char __user *buf, size_t count,
 		     loff_t pos);
 ssize_t ksys_pwrite64(unsigned int fd, const char __user *buf,
 		      size_t count, loff_t pos);
-int ksys_fallocate(int fd, int mode, loff_t offset, loff_t len);
 #ifdef CONFIG_ADVISE_SYSCALLS
 int ksys_fadvise64_64(int fd, loff_t offset, loff_t len, int advice);
 #else

@@ -609,7 +609,6 @@ asmlinkage long compat_sys_fstatfs64(unsigned int fd, compat_size_t sz,
 				     struct compat_statfs64 __user *buf);
 asmlinkage long compat_sys_truncate(const char __user *, compat_off_t);
 asmlinkage long compat_sys_ftruncate(unsigned int, compat_off_t);
-/* No generic prototype for truncate64, ftruncate64, fallocate */
 asmlinkage long compat_sys_openat(int dfd, const char __user *filename,
 				  int flags, umode_t mode);
 asmlinkage long compat_sys_getdents(unsigned int fd,
@@ -831,11 +830,6 @@ asmlinkage long compat_sys_truncate64(const char __user *pathname, compat_arg_u6
 
 #ifdef __ARCH_WANT_COMPAT_FTRUNCATE64
 asmlinkage long compat_sys_ftruncate64(unsigned int fd, compat_arg_u64(len));
-#endif
-
-#ifdef __ARCH_WANT_COMPAT_FALLOCATE
-asmlinkage long compat_sys_fallocate(int fd, int mode, compat_arg_u64(offset),
-				     compat_arg_u64(len));
 #endif
 
 #ifdef __ARCH_WANT_COMPAT_PREAD64

@@ -85,14 +85,6 @@ SYSCALL_DEFINE4(ia32_readahead, int, fd, unsigned int, off_lo,
 	return ksys_readahead(fd, ((u64)off_hi << 32) | off_lo, count);
 }
 
-SYSCALL_DEFINE6(ia32_fallocate, int, fd, int, mode,
-		unsigned int, offset_lo, unsigned int, offset_hi,
-		unsigned int, len_lo, unsigned int, len_hi)
-{
-	return ksys_fallocate(fd, mode, ((u64)offset_hi << 32) | offset_lo,
-			      ((u64)len_hi << 32) | len_lo);
-}
-
 #ifdef CONFIG_IA32_EMULATION
 /*
  * Another set for IA32/LFS -- x86_64 struct stat is different due to

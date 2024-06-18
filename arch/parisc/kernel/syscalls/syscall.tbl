@@ -342,7 +342,7 @@
 302	common	signalfd		sys_signalfd			compat_sys_signalfd
 # 303 was timerfd
 304	common	eventfd			sys_eventfd
-305	32	fallocate		parisc_fallocate
+305	32	fallocate		sys_fallocate6
 305	64	fallocate		sys_fallocate
 306	common	timerfd_create		parisc_timerfd_create
 307	32	timerfd_settime		sys_timerfd_settime32

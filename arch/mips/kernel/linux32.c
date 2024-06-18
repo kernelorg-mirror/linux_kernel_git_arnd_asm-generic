@@ -105,10 +105,3 @@ asmlinkage ssize_t sys32_readahead(int fd, u32 pad0, u64 a2, u64 a3,
 {
 	return ksys_readahead(fd, merge_64(a2, a3), count);
 }
-
-asmlinkage long sys32_fallocate(int fd, int mode, unsigned offset_a2,
-	unsigned offset_a3, unsigned len_a4, unsigned len_a5)
-{
-	return ksys_fallocate(fd, mode, merge_64(offset_a2, offset_a3),
-			      merge_64(len_a4, len_a5));
-}

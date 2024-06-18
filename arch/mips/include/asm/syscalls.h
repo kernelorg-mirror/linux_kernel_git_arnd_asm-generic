@@ -16,9 +16,6 @@ asmlinkage long mipsmt_sys_sched_setaffinity(pid_t pid, unsigned int len,
                                      unsigned long __user *user_mask_ptr);
 asmlinkage long mipsmt_sys_sched_getaffinity(pid_t pid, unsigned int len,
                                      unsigned long __user *user_mask_ptr);
-asmlinkage long sys32_fallocate(int fd, int mode, unsigned offset_a2,
-				unsigned offset_a3, unsigned len_a4,
-				unsigned len_a5);
 asmlinkage long sys_fadvise64_64_7(int fd, int __pad,
 				   u32 a2, u32 a3,
 				   u32 a4, u32 a5,

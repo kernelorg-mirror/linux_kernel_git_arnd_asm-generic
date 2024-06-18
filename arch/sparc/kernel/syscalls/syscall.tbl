@@ -381,7 +381,8 @@
 311	common	signalfd		sys_signalfd			compat_sys_signalfd
 312	common	timerfd_create		sys_timerfd_create
 313	common	eventfd			sys_eventfd
-314	common	fallocate		sys_fallocate			compat_sys_fallocate
+314	32	fallocate		sys_fallocate6
+314	64	fallocate		sys_fallocate
 315	32	timerfd_settime		sys_timerfd_settime32
 315	64	timerfd_settime		sys_timerfd_settime
 316	32	timerfd_gettime		sys_timerfd_gettime32

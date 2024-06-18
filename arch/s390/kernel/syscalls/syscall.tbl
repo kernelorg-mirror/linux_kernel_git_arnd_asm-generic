@@ -321,7 +321,8 @@
 311  common	getcpu			sys_getcpu			sys_getcpu
 312  common	epoll_pwait		sys_epoll_pwait			compat_sys_epoll_pwait
 313  common	utimes			sys_utimes			sys_utimes_time32
-314  common	fallocate		sys_fallocate			compat_sys_s390_fallocate
+314  32		fallocate		-				sys_fallocate6
+314  64		fallocate		sys_fallocate			-
 315  common	utimensat		sys_utimensat			sys_utimensat_time32
 316  common	signalfd		sys_signalfd			compat_sys_signalfd
 317  common	timerfd			-				-

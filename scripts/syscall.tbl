@@ -61,7 +61,8 @@
 45	64	truncate			sys_truncate
 46	32	ftruncate64			sys_ftruncate64			compat_sys_ftruncate64
 46	64	ftruncate			sys_ftruncate
-47	common	fallocate			sys_fallocate			compat_sys_fallocate
+47	32	fallocate			sys_fallocate6
+47	64	fallocate			sys_fallocate
 48	common	faccessat			sys_faccessat
 49	common	chdir				sys_chdir
 50	common	fchdir				sys_fchdir

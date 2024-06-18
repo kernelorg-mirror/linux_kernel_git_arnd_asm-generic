@@ -100,8 +100,6 @@ long sys_ppc_truncate64(const char __user *path, u32 reg4,
 		        unsigned long len1, unsigned long len2);
 long sys_ppc_ftruncate64(unsigned int fd, u32 reg4,
 			 unsigned long len1, unsigned long len2);
-long sys_ppc_fallocate(int fd, int mode, u32 offset1, u32 offset2,
-		       u32 len1, u32 len2);
 #endif
 #ifdef CONFIG_COMPAT
 long compat_sys_mmap2(unsigned long addr, size_t len,

@@ -331,7 +331,7 @@
 317	o32	signalfd			sys_signalfd			compat_sys_signalfd
 318	o32	timerfd				sys_ni_syscall
 319	o32	eventfd				sys_eventfd
-320	o32	fallocate			sys_fallocate			sys32_fallocate
+320	o32	fallocate			sys_fallocate6
 321	o32	timerfd_create			sys_timerfd_create
 322	o32	timerfd_gettime			sys_timerfd_gettime32
 323	o32	timerfd_settime			sys_timerfd_settime32
