@@ -44,25 +44,6 @@
 #include <asm/mman.h>
 #include <asm/syscalls.h>
 
-#ifdef __MIPSEB__
-#define merge_64(r1, r2) ((((r1) & 0xffffffffUL) << 32) + ((r2) & 0xffffffffUL))
-#endif
-#ifdef __MIPSEL__
-#define merge_64(r1, r2) ((((r2) & 0xffffffffUL) << 32) + ((r1) & 0xffffffffUL))
-#endif
-
-SYSCALL_DEFINE4(32_truncate64, const char __user *, path,
-	unsigned long, __dummy, unsigned long, a2, unsigned long, a3)
-{
-	return ksys_truncate(path, merge_64(a2, a3));
-}
-
-SYSCALL_DEFINE4(32_ftruncate64, unsigned long, fd, unsigned long, __dummy,
-	unsigned long, a2, unsigned long, a3)
-{
-	return ksys_ftruncate(fd, merge_64(a2, a3));
-}
-
 SYSCALL_DEFINE5(32_llseek, unsigned int, fd, unsigned int, offset_high,
 		unsigned int, offset_low, loff_t __user *, result,
 		unsigned int, origin)

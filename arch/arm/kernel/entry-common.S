@@ -413,19 +413,6 @@ sys_mmap2:
 ENDPROC(sys_mmap2)
 
 #ifdef CONFIG_OABI_COMPAT
-
-sys_oabi_truncate64:
-		mov	r3, r2
-		mov	r2, r1
-		b	sys_truncate64
-ENDPROC(sys_oabi_truncate64)
-
-sys_oabi_ftruncate64:
-		mov	r3, r2
-		mov	r2, r1
-		b	sys_ftruncate64
-ENDPROC(sys_oabi_ftruncate64)
-
 /*
  * Let's declare a second syscall table for old ABI binaries
  * using the compatibility syscall entries.

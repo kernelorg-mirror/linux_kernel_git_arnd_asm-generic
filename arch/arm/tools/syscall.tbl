@@ -210,8 +210,10 @@
 # SuS compliant getrlimit
 191	common	ugetrlimit			sys_getrlimit
 192	common	mmap2				sys_mmap2
-193	common	truncate64			sys_truncate64			sys_oabi_truncate64
-194	common	ftruncate64			sys_ftruncate64			sys_oabi_ftruncate64
+193	eabi	truncate64			sys_truncate4
+193	oabi	truncate64			sys_truncate3
+194	eabi	ftruncate64			sys_ftruncate4
+194	oabi	ftruncate64			sys_ftruncate3
 195	common	stat64				sys_stat64			sys_oabi_stat64
 196	common	lstat64				sys_lstat64			sys_oabi_lstat64
 197	common	fstat64				sys_fstat64			sys_oabi_fstat64

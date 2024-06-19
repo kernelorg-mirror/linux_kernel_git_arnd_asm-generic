@@ -216,10 +216,10 @@
 # 196 was getpmsg
 # 197 was putpmsg
 198	common	lstat64			sys_lstat64
-199	32	truncate64		parisc_truncate64
-199	64	truncate64		sys_truncate64
-200	32	ftruncate64		parisc_ftruncate64
-200	64	ftruncate64		sys_ftruncate64
+199	32	truncate64		sys_truncate3
+199	64	truncate64		sys_truncate
+200	32	ftruncate64		sys_ftruncate3
+200	64	ftruncate64		sys_ftruncate
 201	common	getdents64		sys_getdents64
 202	common	fcntl64			sys_fcntl64			compat_sys_fcntl64
 # 203 was attrctl

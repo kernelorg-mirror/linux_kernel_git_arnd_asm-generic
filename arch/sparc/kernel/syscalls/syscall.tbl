@@ -101,7 +101,7 @@
 74	common	mprotect		sys_mprotect
 75	common	madvise			sys_madvise
 76	common	vhangup			sys_vhangup
-77	32	truncate64		sys_truncate64			compat_sys_truncate64
+77	32	truncate64		sys_truncate3
 78	common	mincore			sys_mincore
 79	32	getgroups		sys_getgroups16
 79	64	getgroups		sys_getgroups
@@ -110,7 +110,7 @@
 81	common	getpgrp			sys_getpgrp
 82	32	setgroups32		sys_setgroups
 83	common	setitimer		sys_setitimer			compat_sys_setitimer
-84	32	ftruncate64		sys_ftruncate64			compat_sys_ftruncate64
+84	32	ftruncate64		sys_ftruncate3
 85	common	swapon			sys_swapon
 86	common	getitimer		sys_getitimer			compat_sys_getitimer
 87	32	setuid32		sys_setuid

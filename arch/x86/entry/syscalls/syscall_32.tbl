@@ -205,8 +205,8 @@
 190	i386	vfork			sys_vfork
 191	i386	ugetrlimit		sys_getrlimit			compat_sys_getrlimit
 192	i386	mmap2			sys_mmap_pgoff
-193	i386	truncate64		sys_ia32_truncate64
-194	i386	ftruncate64		sys_ia32_ftruncate64
+193	i386	truncate64		sys_truncate3
+194	i386	ftruncate64		sys_ftruncate3
 195	i386	stat64			sys_stat64			compat_sys_ia32_stat64
 196	i386	lstat64			sys_lstat64			compat_sys_ia32_lstat64
 197	i386	fstat64			sys_fstat64			compat_sys_ia32_fstat64

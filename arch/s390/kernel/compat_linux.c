@@ -67,16 +67,6 @@ COMPAT_SYSCALL_DEFINE5(s390_ipc, uint, call, int, first, compat_ulong_t, second,
 }
 #endif
 
-COMPAT_SYSCALL_DEFINE3(s390_truncate64, const char __user *, path, u32, high, u32, low)
-{
-	return ksys_truncate(path, (unsigned long)high << 32 | low);
-}
-
-COMPAT_SYSCALL_DEFINE3(s390_ftruncate64, unsigned int, fd, u32, high, u32, low)
-{
-	return ksys_ftruncate(fd, (unsigned long)high << 32 | low);
-}
-
 struct stat64_emu31 {
 	unsigned long long  st_dev;
 	unsigned int    __pad1;

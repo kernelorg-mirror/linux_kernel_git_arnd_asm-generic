@@ -57,9 +57,11 @@
 43	64	statfs				sys_statfs
 44	32	fstatfs64			sys_fstatfs64			compat_sys_fstatfs64
 44	64	fstatfs				sys_fstatfs
-45	32	truncate64			sys_truncate64			compat_sys_truncate64
+45	32nopad	truncate64			sys_truncate3
+45	32pad	truncate64			sys_truncate4
 45	64	truncate			sys_truncate
-46	32	ftruncate64			sys_ftruncate64			compat_sys_ftruncate64
+46	32nopad	ftruncate64			sys_ftruncate3
+46	32pad	ftruncate64			sys_ftruncate4
 46	64	ftruncate			sys_ftruncate
 47	32	fallocate			sys_fallocate6
 47	64	fallocate			sys_fallocate

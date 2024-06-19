@@ -214,33 +214,35 @@ COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_off_t, length)
 }
 #endif
 
-/* LFS versions of truncate are only needed on 32 bit machines */
-#if BITS_PER_LONG == 32
-SYSCALL_DEFINE2(truncate64, const char __user *, path, loff_t, length)
-{
-	return do_sys_truncate(path, length);
-}
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
 
-SYSCALL_DEFINE2(ftruncate64, unsigned int, fd, loff_t, length)
+#ifdef __ARCH_WANT_SYS_TRUNCATE3
+SYSCALL_DEFINE3(truncate3, const char __user *, pathname, SC_ARG64(length))
 {
-	return do_sys_ftruncate(fd, length, 0);
-}
-#endif /* BITS_PER_LONG == 32 */
-
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_TRUNCATE64)
-COMPAT_SYSCALL_DEFINE3(truncate64, const char __user *, pathname,
-		       compat_arg_u64_dual(length))
-{
-	return ksys_truncate(pathname, compat_arg_u64_glue(length));
+	return ksys_truncate(pathname, SC_VAL64(loff_t, length));
 }
 #endif
 
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_FTRUNCATE64)
-COMPAT_SYSCALL_DEFINE3(ftruncate64, unsigned int, fd,
-		       compat_arg_u64_dual(length))
+#ifdef __ARCH_WANT_SYS_TRUNCATE4
+SYSCALL_DEFINE4(truncate4, const char __user *, pathname, int, unused, SC_ARG64(length))
 {
-	return ksys_ftruncate(fd, compat_arg_u64_glue(length));
+	return ksys_truncate(pathname, SC_VAL64(loff_t, length));
 }
+#endif
+
+#ifdef __ARCH_WANT_SYS_FTRUNCATE3
+SYSCALL_DEFINE3(ftruncate3, unsigned int, fd, SC_ARG64(length))
+{
+	return ksys_ftruncate(fd, SC_VAL64(loff_t, length));
+}
+#endif
+
+#ifdef __ARCH_WANT_SYS_FTRUNCATE4
+SYSCALL_DEFINE4(ftruncate4, unsigned int, fd, int, unused, SC_ARG64(length))
+{
+	return ksys_ftruncate(fd, SC_VAL64(loff_t, length));
+}
+#endif
 #endif
 
 int vfs_fallocate(struct file *file, int mode, loff_t offset, loff_t len)

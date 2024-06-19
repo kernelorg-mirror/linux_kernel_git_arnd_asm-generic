@@ -206,44 +206,9 @@ asmlinkage unsigned long sys_mmap(unsigned long addr, unsigned long len,
 /* Fucking broken ABI */
 
 #ifdef CONFIG_64BIT
-asmlinkage long parisc_truncate64(const char __user * path,
-					unsigned int high, unsigned int low)
-{
-	return ksys_truncate(path, (long)high << 32 | low);
-}
-
-asmlinkage long parisc_ftruncate64(unsigned int fd,
-					unsigned int high, unsigned int low)
-{
-	return ksys_ftruncate(fd, (long)high << 32 | low);
-}
-
-/* stubs for the benefit of the syscall_table since truncate64 and truncate 
- * are identical on LP64 */
-asmlinkage long sys_truncate64(const char __user * path, unsigned long length)
-{
-	return ksys_truncate(path, length);
-}
-asmlinkage long sys_ftruncate64(unsigned int fd, unsigned long length)
-{
-	return ksys_ftruncate(fd, length);
-}
 asmlinkage long sys_fcntl64(unsigned int fd, unsigned int cmd, unsigned long arg)
 {
 	return sys_fcntl(fd, cmd, arg);
-}
-#else
-
-asmlinkage long parisc_truncate64(const char __user * path,
-					unsigned int high, unsigned int low)
-{
-	return ksys_truncate(path, (loff_t)high << 32 | low);
-}
-
-asmlinkage long parisc_ftruncate64(unsigned int fd,
-					unsigned int high, unsigned int low)
-{
-	return sys_ftruncate64(fd, (loff_t)high << 32 | low);
 }
 #endif
 

@@ -821,14 +821,6 @@ asmlinkage long compat_sys_sigaction(int sig,
 /* obsolete */
 asmlinkage long compat_sys_socketcall(int call, u32 __user *args);
 
-#ifdef __ARCH_WANT_COMPAT_TRUNCATE64
-asmlinkage long compat_sys_truncate64(const char __user *pathname, compat_arg_u64(len));
-#endif
-
-#ifdef __ARCH_WANT_COMPAT_FTRUNCATE64
-asmlinkage long compat_sys_ftruncate64(unsigned int fd, compat_arg_u64(len));
-#endif
-
 #endif /* CONFIG_ARCH_HAS_SYSCALL_WRAPPER */
 
 /**

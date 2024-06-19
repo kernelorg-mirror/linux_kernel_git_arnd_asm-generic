@@ -293,6 +293,8 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #endif
 
 #ifdef __ARCH_WANT_SYSCALLS_32PAD
+#define __ARCH_WANT_SYS_TRUNCATE4
+#define __ARCH_WANT_SYS_FTRUNCATE4
 #define __ARCH_WANT_SYS_PREAD6
 #define __ARCH_WANT_SYS_PWRITE6
 #define __ARCH_WANT_SYS_SYNC_FILE_RANGE2
@@ -301,6 +303,8 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #endif
 
 #ifdef __ARCH_WANT_SYSCALLS_32NOPAD
+#define __ARCH_WANT_SYS_TRUNCATE3
+#define __ARCH_WANT_SYS_FTRUNCATE3
 #define __ARCH_WANT_SYS_PREAD5
 #define __ARCH_WANT_SYS_PWRITE5
 #define __ARCH_WANT_SYS_SYNC_FILE_RANGE6
@@ -452,9 +456,11 @@ asmlinkage long sys_listmount(const struct mnt_id_req __user *req,
 			      unsigned int flags);
 asmlinkage long sys_truncate(const char __user *path, long length);
 asmlinkage long sys_ftruncate(unsigned int fd, off_t length);
-#if BITS_PER_LONG == 32
-asmlinkage long sys_truncate64(const char __user *path, loff_t length);
-asmlinkage long sys_ftruncate64(unsigned int fd, loff_t length);
+#if BITS_PER_LONG == 32 || defined(CONFIG_COMPAT)
+asmlinkage long sys_truncate3(const char __user *path, SC_DECL64(length));
+asmlinkage long sys_truncate4(const char __user *path, int unused, SC_DECL64(length));
+asmlinkage long sys_ftruncate3(unsigned int fd, SC_DECL64(length));
+asmlinkage long sys_ftruncate4(unsigned int fd, int unused, SC_DECL64(length));
 #endif
 asmlinkage long sys_fallocate(int fd, int mode, loff_t offset, loff_t len);
 asmlinkage long sys_fallocate6(int fd, int mode, SC_DECL64(offset), SC_DECL64(len));

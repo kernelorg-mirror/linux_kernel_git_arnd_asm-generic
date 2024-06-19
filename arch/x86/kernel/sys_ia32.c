@@ -51,19 +51,6 @@
 
 #define AA(__x)		((unsigned long)(__x))
 
-SYSCALL_DEFINE3(ia32_truncate64, const char __user *, filename,
-		unsigned long, offset_low, unsigned long, offset_high)
-{
-	return ksys_truncate(filename,
-			    ((loff_t) offset_high << 32) | offset_low);
-}
-
-SYSCALL_DEFINE3(ia32_ftruncate64, unsigned int, fd,
-		unsigned long, offset_low, unsigned long, offset_high)
-{
-	return ksys_ftruncate(fd, ((loff_t) offset_high << 32) | offset_low);
-}
-
 #ifdef CONFIG_IA32_EMULATION
 /*
  * Another set for IA32/LFS -- x86_64 struct stat is different due to

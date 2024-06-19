@@ -184,8 +184,8 @@
 191  32		ugetrlimit		-				compat_sys_getrlimit
 191  64		getrlimit		sys_getrlimit			-
 192  32		mmap2			-				compat_sys_s390_mmap2
-193  32		truncate64		-				compat_sys_s390_truncate64
-194  32		ftruncate64		-				compat_sys_s390_ftruncate64
+193  32		truncate64		-				sys_truncate3
+194  32		ftruncate64		-				sys_ftruncate3
 195  32		stat64			-				compat_sys_s390_stat64
 196  32		lstat64			-				compat_sys_s390_lstat64
 197  32		fstat64			-				compat_sys_s390_fstat64

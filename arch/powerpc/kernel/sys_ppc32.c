@@ -66,17 +66,3 @@
 #define PPC32_SYSCALL_DEFINE5	COMPAT_SYSCALL_DEFINE5
 #define PPC32_SYSCALL_DEFINE6	COMPAT_SYSCALL_DEFINE6
 #endif
-
-PPC32_SYSCALL_DEFINE4(ppc_truncate64,
-		       const char __user *, path, u32, reg4,
-		       unsigned long, len1, unsigned long, len2)
-{
-	return ksys_truncate(path, merge_64(len1, len2));
-}
-
-PPC32_SYSCALL_DEFINE4(ppc_ftruncate64,
-		       unsigned int, fd, u32, reg4,
-		       unsigned long, len1, unsigned long, len2)
-{
-	return ksys_ftruncate(fd, merge_64(len1, len2));
-}

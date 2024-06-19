@@ -51,16 +51,6 @@
 
 #include "systbls.h"
 
-COMPAT_SYSCALL_DEFINE3(truncate64, const char __user *, path, u32, high, u32, low)
-{
-	return ksys_truncate(path, ((u64)high << 32) | low);
-}
-
-COMPAT_SYSCALL_DEFINE3(ftruncate64, unsigned int, fd, u32, high, u32, low)
-{
-	return ksys_ftruncate(fd, ((u64)high << 32) | low);
-}
-
 static int cp_compat_stat64(struct kstat *stat,
 			    struct compat_stat64 __user *statbuf)
 {
