@@ -20,8 +20,6 @@ asmlinkage long sys_fadvise64_64_7(int fd, int __pad,
 				   u32 a2, u32 a3,
 				   u32 a4, u32 a5,
 				   int flags);
-asmlinkage ssize_t sys32_readahead(int fd, u32 pad0, u64 a2, u64 a3,
-				   size_t count);
 asmlinkage long sys_sync_file_range7(int fd, int __pad,
 				     u32 a2, u32 a3,
 				     u32 a4, u32 a5,

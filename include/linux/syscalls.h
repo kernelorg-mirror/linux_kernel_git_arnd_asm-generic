@@ -296,6 +296,7 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #define __ARCH_WANT_SYS_PREAD6
 #define __ARCH_WANT_SYS_PWRITE6
 #define __ARCH_WANT_SYS_SYNC_FILE_RANGE2
+#define __ARCH_WANT_SYS_READAHEAD5
 #define __ARCH_WANT_SYS_FADVISE64_64_2
 #endif
 
@@ -303,6 +304,7 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
 #define __ARCH_WANT_SYS_PREAD5
 #define __ARCH_WANT_SYS_PWRITE5
 #define __ARCH_WANT_SYS_SYNC_FILE_RANGE6
+#define __ARCH_WANT_SYS_READAHEAD4
 #define __ARCH_WANT_SYS_FADVISE64_64_6
 #endif
 
@@ -814,6 +816,8 @@ asmlinkage long sys_shutdown(int, int);
 asmlinkage long sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags);
 asmlinkage long sys_recvmsg(int fd, struct user_msghdr __user *msg, unsigned flags);
 asmlinkage long sys_readahead(int fd, loff_t offset, size_t count);
+asmlinkage long sys_readahead4(int fd, SC_DECL64(offset), size_t count);
+asmlinkage long sys_readahead5(int fd, int unused, SC_DECL64(offset), size_t count);
 asmlinkage long sys_brk(unsigned long brk);
 asmlinkage long sys_munmap(unsigned long addr, size_t len);
 asmlinkage long sys_mremap(unsigned long addr,

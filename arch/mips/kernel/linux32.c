@@ -82,9 +82,3 @@ SYSCALL_DEFINE1(32_personality, unsigned long, personality)
 		ret = (ret & ~PER_MASK) | PER_LINUX;
 	return ret;
 }
-
-asmlinkage ssize_t sys32_readahead(int fd, u32 pad0, u64 a2, u64 a3,
-				   size_t count)
-{
-	return ksys_readahead(fd, merge_64(a2, a3), count);
-}

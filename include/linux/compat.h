@@ -738,7 +738,6 @@ asmlinkage long compat_sys_sendmsg(int fd, struct compat_msghdr __user *msg,
 				   unsigned flags);
 asmlinkage long compat_sys_recvmsg(int fd, struct compat_msghdr __user *msg,
 				   unsigned int flags);
-/* No generic prototype for readahead */
 asmlinkage long compat_sys_keyctl(u32 option,
 			      u32 arg2, u32 arg3, u32 arg4, u32 arg5);
 asmlinkage long compat_sys_execve(const char __user *filename, const compat_uptr_t __user *argv,
@@ -828,10 +827,6 @@ asmlinkage long compat_sys_truncate64(const char __user *pathname, compat_arg_u6
 
 #ifdef __ARCH_WANT_COMPAT_FTRUNCATE64
 asmlinkage long compat_sys_ftruncate64(unsigned int fd, compat_arg_u64(len));
-#endif
-
-#ifdef __ARCH_WANT_COMPAT_READAHEAD
-asmlinkage long compat_sys_readahead(int fd, compat_arg_u64(offset), size_t count);
 #endif
 
 #endif /* CONFIG_ARCH_HAS_SYSCALL_WRAPPER */

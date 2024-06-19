@@ -226,7 +226,7 @@
 # 204 was acl_get
 # 205 was acl_set
 206	common	gettid			sys_gettid
-207	32	readahead		parisc_readahead
+207	32	readahead		sys_readahead4
 207	64	readahead		sys_readahead
 208	common	tkill			sys_tkill
 209	common	sendfile64		sys_sendfile64			compat_sys_sendfile64

@@ -76,12 +76,6 @@ COMPAT_SYSCALL_DEFINE4(aarch32_ftruncate64, unsigned int, fd, u32, __pad,
 	return ksys_ftruncate(fd, arg_u64(length));
 }
 
-COMPAT_SYSCALL_DEFINE5(aarch32_readahead, int, fd, u32, __pad,
-		       arg_u32p(offset), size_t, count)
-{
-	return ksys_readahead(fd, arg_u64(offset), count);
-}
-
 #define __SYSCALL_WITH_COMPAT(nr, sym, compat) __SYSCALL(nr, compat)
 
 #undef __SYSCALL

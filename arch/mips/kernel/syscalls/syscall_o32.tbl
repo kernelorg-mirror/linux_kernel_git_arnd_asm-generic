@@ -234,7 +234,7 @@
 220	o32	fcntl64				sys_fcntl64			compat_sys_fcntl64
 221	o32	reserved221			sys_ni_syscall
 222	o32	gettid				sys_gettid
-223	o32	readahead			sys_readahead			sys32_readahead
+223	o32	readahead			sys_readahead5
 224	o32	setxattr			sys_setxattr
 225	o32	lsetxattr			sys_lsetxattr
 226	o32	fsetxattr			sys_fsetxattr

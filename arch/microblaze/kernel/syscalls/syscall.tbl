@@ -232,7 +232,7 @@
 # 222 is reserved for TUX
 # 223 is unused
 224	common	gettid				sys_gettid
-225	common	readahead			sys_readahead
+225	common	readahead			sys_readahead4
 226	common	setxattr			sys_setxattr
 227	common	lsetxattr			sys_lsetxattr
 228	common	fsetxattr			sys_fsetxattr

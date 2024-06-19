@@ -67,13 +67,6 @@
 #define PPC32_SYSCALL_DEFINE6	COMPAT_SYSCALL_DEFINE6
 #endif
 
-PPC32_SYSCALL_DEFINE5(ppc_readahead,
-		       int, fd, u32, r4,
-		       u32, offset1, u32, offset2, u32, count)
-{
-	return ksys_readahead(fd, merge_64(offset1, offset2), count);
-}
-
 PPC32_SYSCALL_DEFINE4(ppc_truncate64,
 		       const char __user *, path, u32, reg4,
 		       unsigned long, len1, unsigned long, len2)

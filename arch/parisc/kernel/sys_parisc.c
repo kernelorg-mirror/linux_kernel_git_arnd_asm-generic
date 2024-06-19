@@ -247,12 +247,6 @@ asmlinkage long parisc_ftruncate64(unsigned int fd,
 }
 #endif
 
-asmlinkage ssize_t parisc_readahead(int fd, unsigned int high, unsigned int low,
-		                    size_t count)
-{
-	return ksys_readahead(fd, (loff_t)high << 32 | low, count);
-}
-
 asmlinkage long parisc_personality(unsigned long personality)
 {
 	long err;

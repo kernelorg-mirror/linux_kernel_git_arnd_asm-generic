@@ -262,7 +262,9 @@
 210	common	shutdown			sys_shutdown
 211	common	sendmsg				sys_sendmsg			compat_sys_sendmsg
 212	common	recvmsg				sys_recvmsg			compat_sys_recvmsg
-213	common	readahead			sys_readahead			compat_sys_readahead
+213	32nopad	readahead			sys_readahead4
+213	32pad	readahead			sys_readahead5
+213	64	readahead			sys_readahead
 214	common	brk				sys_brk
 215	common	munmap				sys_munmap
 216	common	mremap				sys_mremap

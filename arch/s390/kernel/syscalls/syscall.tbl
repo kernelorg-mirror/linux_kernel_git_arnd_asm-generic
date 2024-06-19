@@ -232,7 +232,8 @@
 219  common	madvise			sys_madvise			sys_madvise
 220  common	getdents64		sys_getdents64			sys_getdents64
 221  32		fcntl64			-				compat_sys_fcntl64
-222  common	readahead		sys_readahead			compat_sys_s390_readahead
+222  32		readahead		-				sys_readahead4
+222  64		readahead		sys_readahead			-
 223  32		sendfile64		-				compat_sys_sendfile64
 224  common	setxattr		sys_setxattr			sys_setxattr
 225  common	lsetxattr		sys_lsetxattr			sys_lsetxattr

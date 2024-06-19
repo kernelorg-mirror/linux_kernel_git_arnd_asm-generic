@@ -666,15 +666,25 @@ out:
 	return ret;
 }
 
+#ifdef CONFIG_64BIT
 SYSCALL_DEFINE3(readahead, int, fd, loff_t, offset, size_t, count)
 {
 	return ksys_readahead(fd, offset, count);
 }
+#endif
 
-#if defined(CONFIG_COMPAT) && defined(__ARCH_WANT_COMPAT_READAHEAD)
-COMPAT_SYSCALL_DEFINE4(readahead, int, fd, compat_arg_u64_dual(offset), size_t, count)
+#ifdef __ARCH_WANT_SYS_READAHEAD4
+SYSCALL_DEFINE4(readahead4, int, fd, SC_ARG64(offset), size_t, count)
 {
-	return ksys_readahead(fd, compat_arg_u64_glue(offset), count);
+	return ksys_readahead(fd, SC_VAL64(loff_t, offset), count);
+}
+#endif
+
+#ifdef __ARCH_WANT_SYS_READAHEAD5
+SYSCALL_DEFINE5(readahead5, int, fd, int, unused, SC_ARG64(offset),
+		size_t, count)
+{
+	return ksys_readahead(fd, SC_VAL64(loff_t, offset), count);
 }
 #endif
 

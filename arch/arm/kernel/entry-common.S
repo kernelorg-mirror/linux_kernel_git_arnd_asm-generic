@@ -426,13 +426,6 @@ sys_oabi_ftruncate64:
 		b	sys_ftruncate64
 ENDPROC(sys_oabi_ftruncate64)
 
-sys_oabi_readahead:
-		str	r3, [sp]
-		mov	r3, r2
-		mov	r2, r1
-		b	sys_readahead
-ENDPROC(sys_oabi_readahead)
-
 /*
  * Let's declare a second syscall table for old ABI binaries
  * using the compatibility syscall entries.

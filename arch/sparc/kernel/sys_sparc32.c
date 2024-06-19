@@ -186,9 +186,3 @@ COMPAT_SYSCALL_DEFINE5(rt_sigaction, int, sig,
 
         return ret;
 }
-
-COMPAT_SYSCALL_DEFINE4(readahead, int, fd, u32, offhi, u32, offlo,
-		     compat_size_t, count)
-{
-	return ksys_readahead(fd, ((u64)offhi << 32) | offlo, count);
-}

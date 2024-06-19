@@ -242,7 +242,8 @@
 # 222 for tux
 # 223 is unused
 224	common	gettid				sys_gettid
-225	common	readahead			sys_readahead			sys_oabi_readahead
+225	eabi	readahead			sys_readahead5
+225	oabi	readahead			sys_readahead4
 226	common	setxattr			sys_setxattr
 227	common	lsetxattr			sys_lsetxattr
 228	common	fsetxattr			sys_fsetxattr

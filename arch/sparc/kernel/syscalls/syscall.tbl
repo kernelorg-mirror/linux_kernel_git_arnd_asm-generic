@@ -248,7 +248,8 @@
 203	common	uselib			sys_uselib
 204	32	readdir			sys_old_readdir			compat_sys_old_readdir
 204	64	readdir			sys_nis_syscall
-205	common	readahead		sys_readahead			compat_sys_readahead
+205	32	readahead		sys_readahead4
+205	64	readahead		sys_readahead
 206	common	socketcall		sys_socketcall			compat_sys_socketcall
 207	common	syslog			sys_syslog
 208	common	lookup_dcookie		sys_ni_syscall
