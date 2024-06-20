@@ -31,13 +31,14 @@ typedef void (*vfptr_t)(void);
  * Atomically swap in the new signal mask, and wait for a signal.
  */
 
-asmlinkage int sys32_sigsuspend(compat_sigset_t __user *uset)
+COMPAT_SYSCALL_DEFINE1(mips_sigsuspend, compat_sigset_t __user *, uset)
 {
 	return compat_sys_rt_sigsuspend(uset, sizeof(compat_sigset_t));
 }
 
-SYSCALL_DEFINE3(32_sigaction, long, sig, const struct compat_sigaction __user *, act,
-	struct compat_sigaction __user *, oact)
+COMPAT_SYSCALL_DEFINE3(mips_sigaction, long, sig,
+		       const struct compat_sigaction __user *, act,
+		       struct compat_sigaction __user *, oact)
 {
 	struct k_sigaction new_ka, old_ka;
 	int ret;

@@ -586,14 +586,14 @@ void __user *get_sigframe(struct ksignal *ksig, struct pt_regs *regs,
  */
 
 #ifdef CONFIG_TRAD_SIGNALS
-SYSCALL_DEFINE1(sigsuspend, sigset_t __user *, uset)
+SYSCALL_DEFINE1(mips_sigsuspend, sigset_t __user *, uset)
 {
 	return sys_rt_sigsuspend(uset, sizeof(sigset_t));
 }
 #endif
 
 #ifdef CONFIG_TRAD_SIGNALS
-SYSCALL_DEFINE3(sigaction, int, sig, const struct sigaction __user *, act,
+SYSCALL_DEFINE3(mips_sigaction, int, sig, const struct sigaction __user *, act,
 	struct sigaction __user *, oact)
 {
 	struct k_sigaction new_ka, old_ka;

@@ -76,12 +76,12 @@
 64	o32	getppid				sys_getppid
 65	o32	getpgrp				sys_getpgrp
 66	o32	setsid				sys_setsid
-67	o32	sigaction			sys_sigaction			sys_32_sigaction
+67	o32	sigaction			sys_mips_sigaction		compat_sys_mips_sigaction
 68	o32	sgetmask			sys_sgetmask
 69	o32	ssetmask			sys_ssetmask
 70	o32	setreuid			sys_setreuid
 71	o32	setregid			sys_setregid
-72	o32	sigsuspend			sys_sigsuspend			sys32_sigsuspend
+72	o32	sigsuspend			sys_mips_sigsuspend		compat_sys_mips_sigsuspend
 73	o32	sigpending			sys_sigpending			compat_sys_sigpending
 74	o32	sethostname			sys_sethostname
 75	o32	setrlimit			sys_setrlimit			compat_sys_setrlimit

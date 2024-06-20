@@ -34,7 +34,14 @@ asmlinkage long sys_sync_file_range7(int fd, int __pad,
 				     u32 a2, u32 a3,
 				     u32 a4, u32 a5,
 				     unsigned int flags);
-asmlinkage int sys32_sigsuspend(compat_sigset_t __user *uset);
+asmlinkage long sys_mips_sigaction(int sig, const struct sigaction __user * act,
+        struct sigaction __user * oact);
+
+asmlinkage long sys_mips_sigsuspend(sigset_t __user *uset);
+asmlinkage long compat_sys_mips_sigsuspend(compat_sigset_t __user *uset);
+asmlinkage long compat_sys_mips_sigaction(long sig,
+		const struct compat_sigaction __user * act,
+	        struct compat_sigaction __user * oact);
 asmlinkage long sys_n32_rt_sigreturn(void);
 asmlinkage long sys_32_llseek(unsigned int fd, unsigned int offset_high,
                 unsigned int offset_low, loff_t __user * result,
