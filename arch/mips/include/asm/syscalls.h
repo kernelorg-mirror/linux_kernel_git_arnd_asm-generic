@@ -11,6 +11,16 @@
 #define __MAP7(m,t,a,...) m(t,a), __MAP6(m,__VA_ARGS__)
 #define SYSCALL_DEFINE7(name, ...) SYSCALL_DEFINEx(7, _##name, __VA_ARGS__)
 
+asmlinkage long sys_set_thread_area(unsigned long addr);
+asmlinkage long sys_mips_mmap2(unsigned long addr, unsigned long len,
+			      unsigned long prot, unsigned long flags,
+			      unsigned long fd, unsigned long offset);
+
+asmlinkage long sys_mips_mmap(unsigned long addr, unsigned long len,
+			      unsigned long prot, unsigned long flags,
+			      unsigned long fd, off_t offset);
+asmlinkage long sys_sysmips(long cmd, long arg1, long arg2);
+asmlinkage long sys_cachectl(char * addr, int nbytes, int op);
 asmlinkage long sys_mips_pipe(void);
 asmlinkage long mipsmt_sys_sched_setaffinity(pid_t pid, unsigned int len,
                                      unsigned long __user *user_mask_ptr);
@@ -26,5 +36,10 @@ asmlinkage long sys_sync_file_range7(int fd, int __pad,
 				     unsigned int flags);
 asmlinkage int sys32_sigsuspend(compat_sigset_t __user *uset);
 asmlinkage long sys_n32_rt_sigreturn(void);
+asmlinkage long sys_32_llseek(unsigned int fd, unsigned int offset_high,
+                unsigned int offset_low, loff_t __user * result,
+                unsigned int origin);
+asmlinkage long sys_32_personality(unsigned long personality);
+
 
 #endif
