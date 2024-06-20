@@ -9,9 +9,6 @@
 #include <linux/compat.h>
 
 #include <asm/syscall.h>
-#ifdef CONFIG_PPC64
-#include <asm/syscalls_32.h>
-#endif
 #include <asm/unistd.h>
 #include <asm/ucontext.h>
 
@@ -72,6 +69,7 @@ long sys_subpage_prot(unsigned long addr,
 		      unsigned long len, u32 __user *map);
 
 #ifdef CONFIG_COMPAT
+struct ucontext32;
 long compat_sys_swapcontext(struct ucontext32 __user *old_ctx,
 			    struct ucontext32 __user *new_ctx,
 			    int ctx_size);
