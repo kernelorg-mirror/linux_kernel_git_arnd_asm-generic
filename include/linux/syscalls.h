@@ -1157,6 +1157,7 @@ asmlinkage long sys_fork(void);
 
 /* architecture specific */
 asmlinkage long sys_cacheflush(void __user *, unsigned long, int);
+asmlinkage long sys_getpagesize(void);
 
 /* obsolete */
 asmlinkage long sys_stime(__kernel_old_time_t __user *tptr);

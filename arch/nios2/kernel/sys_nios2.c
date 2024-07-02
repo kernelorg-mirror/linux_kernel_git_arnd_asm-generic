@@ -54,7 +54,7 @@ SYSCALL_DEFINE3(cacheflush, void __user *, p, unsigned long, len, int, op)
 	return 0;
 }
 
-asmlinkage int sys_getpagesize(void)
+SYSCALL_DEFINE0(getpagesize)
 {
 	return PAGE_SIZE;
 }

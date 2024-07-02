@@ -561,7 +561,7 @@ sys_atomic_cmpxchg_32(unsigned long newval, int oldval, int d3, int d4, int d5,
 
 #endif /* CONFIG_MMU */
 
-asmlinkage int sys_getpagesize(void)
+SYSCALLL_DEFINE0(getpagesize)
 {
 	return PAGE_SIZE;
 }
