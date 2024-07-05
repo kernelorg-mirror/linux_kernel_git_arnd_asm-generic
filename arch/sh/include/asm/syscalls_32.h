@@ -8,10 +8,10 @@
 
 struct pt_regs;
 
-asmlinkage int sys_sh_pipe(void);
-asmlinkage ssize_t sys_pread_wrapper(unsigned int fd, char __user *buf,
+asmlinkage long sys_sh_pipe(void);
+asmlinkage long sys_pread_wrapper(unsigned int fd, char __user *buf,
 				     size_t count, long dummy, loff_t pos);
-asmlinkage ssize_t sys_pwrite_wrapper(unsigned int fd, const char __user *buf,
+asmlinkage long sys_pwrite_wrapper(unsigned int fd, const char __user *buf,
 				      size_t count, long dummy, loff_t pos);
 
 /* Misc syscall related bits */

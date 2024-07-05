@@ -29,18 +29,18 @@
 #include <asm/cacheflush.h>
 #include <asm/cachectl.h>
 
-asmlinkage int old_mmap(unsigned long addr, unsigned long len,
-	unsigned long prot, unsigned long flags,
-	int fd, unsigned long off)
+SYSCALL_DEFINE6(sh_old_mmap, unsigned long, addr, unsigned long, len,
+		unsigned long, prot, unsigned long, flags,
+		int, fd, unsigned long, off)
 {
 	if (off & ~PAGE_MASK)
 		return -EINVAL;
 	return ksys_mmap_pgoff(addr, len, prot, flags, fd, off>>PAGE_SHIFT);
 }
 
-asmlinkage long sys_mmap2(unsigned long addr, unsigned long len,
-	unsigned long prot, unsigned long flags,
-	unsigned long fd, unsigned long pgoff)
+SYSCALL_DEFINE6(mmap2, unsigned long, addr, unsigned long, len,
+		unsigned long, prot, unsigned long, flags,
+		unsigned long, fd, unsigned long, pgoff)
 {
 	/*
 	 * The shift for mmap2 is constant, regardless of PAGE_SIZE
