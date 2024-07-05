@@ -181,9 +181,9 @@ unsigned long arch_get_unmapped_area_topdown(struct file *filp,
 			addr, len, pgoff, flags, DOWN);
 }
 
-asmlinkage unsigned long sys_mmap2(unsigned long addr, unsigned long len,
-	unsigned long prot, unsigned long flags, unsigned long fd,
-	unsigned long pgoff)
+SYSCALL_DEFINE6(mmap2, unsigned long, addr, unsigned long, len,
+		unsigned long, prot, unsigned long, flags, unsigned long, fd,
+		unsigned long, pgoff)
 {
 	/* Make sure the shift for mmap2 is constant (12), no matter what PAGE_SIZE
 	   we have. */
@@ -191,9 +191,9 @@ asmlinkage unsigned long sys_mmap2(unsigned long addr, unsigned long len,
 			       pgoff >> (PAGE_SHIFT - 12));
 }
 
-asmlinkage unsigned long sys_mmap(unsigned long addr, unsigned long len,
-		unsigned long prot, unsigned long flags, unsigned long fd,
-		unsigned long offset)
+SYSCALL_DEFINE6(mmap, unsigned long, addr, unsigned long, len,
+		unsigned long, prot, unsigned long, flags, unsigned long, fd,
+		unsigned long, offset)
 {
 	if (!(offset & ~PAGE_MASK)) {
 		return ksys_mmap_pgoff(addr, len, prot, flags, fd,
@@ -206,13 +206,13 @@ asmlinkage unsigned long sys_mmap(unsigned long addr, unsigned long len,
 /* Fucking broken ABI */
 
 #ifdef CONFIG_64BIT
-asmlinkage long sys_fcntl64(unsigned int fd, unsigned int cmd, unsigned long arg)
+SYSCALL_DEFINE3(fcntl64, unsigned int, fd, unsigned int, cmd, unsigned long, arg)
 {
 	return sys_fcntl(fd, cmd, arg);
 }
 #endif
 
-asmlinkage long parisc_personality(unsigned long personality)
+SYSCALL_DEFINE1(parisc_personality, unsigned long, personality)
 {
 	long err;
 
@@ -252,51 +252,51 @@ static int FIX_O_NONBLOCK(int flags)
 	return flags & ~O_NONBLOCK_MASK_OUT;
 }
 
-asmlinkage long parisc_timerfd_create(int clockid, int flags)
+SYSCALL_DEFINE2(parisc_timerfd_create, int, clockid, int, flags)
 {
 	flags = FIX_O_NONBLOCK(flags);
 	return sys_timerfd_create(clockid, flags);
 }
 
-asmlinkage long parisc_signalfd4(int ufd, sigset_t __user *user_mask,
-	size_t sizemask, int flags)
+SYSCALL_DEFINE4(parisc_signalfd4, int, ufd, sigset_t __user *, user_mask,
+	size_t, sizemask, int, flags)
 {
 	flags = FIX_O_NONBLOCK(flags);
 	return sys_signalfd4(ufd, user_mask, sizemask, flags);
 }
 
 #ifdef CONFIG_COMPAT
-asmlinkage long parisc_compat_signalfd4(int ufd,
-	compat_sigset_t __user *user_mask,
-	compat_size_t sizemask, int flags)
+COMPAT_SYSCALL_DEFINE4(parisc_signalfd4,  int, ufd,
+	compat_sigset_t __user *, user_mask,
+	compat_size_t, sizemask, int ,flags)
 {
 	flags = FIX_O_NONBLOCK(flags);
 	return compat_sys_signalfd4(ufd, user_mask, sizemask, flags);
 }
 #endif
 
-asmlinkage long parisc_eventfd2(unsigned int count, int flags)
+SYSCALL_DEFINE2(parisc_eventfd2, unsigned int, count, int, flags)
 {
 	flags = FIX_O_NONBLOCK(flags);
 	return sys_eventfd2(count, flags);
 }
 
-asmlinkage long parisc_userfaultfd(int flags)
+SYSCALL_DEFINE1(parisc_userfaultfd, int, flags)
 {
 	flags = FIX_O_NONBLOCK(flags);
 	return sys_userfaultfd(flags);
 }
 
-asmlinkage long parisc_pipe2(int __user *fildes, int flags)
+SYSCALL_DEFINE2(parisc_pipe2, int __user *, fildes, int, flags)
 {
 	flags = FIX_O_NONBLOCK(flags);
 	return sys_pipe2(fildes, flags);
 }
 
-asmlinkage long parisc_inotify_init1(int flags)
+SYSCALL_DEFINE1(parisc_inotify_init1, int, flags)
 {
 	flags = FIX_O_NONBLOCK(flags);
-	return sys_inotify_init1(flags);
+	return ksys_inotify_init(flags);
 }
 
 /*
@@ -310,7 +310,7 @@ asmlinkage long parisc_inotify_init1(int flags)
  * XXX: Remove this wrapper in year 2025 (or later)
  */
 
-asmlinkage notrace long parisc_madvise(unsigned long start, size_t len_in, int behavior)
+SYSCALL_DEFINE3(parisc_madvise, unsigned long, start, size_t, len_in, int, behavior)
 {
 	switch (behavior) {
 	case 65: behavior = MADV_MERGEABLE;	break;
@@ -324,5 +324,5 @@ asmlinkage notrace long parisc_madvise(unsigned long start, size_t len_in, int b
 	case 73: behavior = MADV_COLLAPSE;	break;
 	}
 
-	return sys_madvise(start, len_in, behavior);
+	return do_madvise(current->mm, start, len_in, behavior);
 }

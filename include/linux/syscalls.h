@@ -1304,6 +1304,7 @@ int ksys_ipc(unsigned int call, int first, unsigned long second,
 	unsigned long third, void __user * ptr, long fifth);
 int compat_ksys_ipc(u32 call, int first, int second,
 	u32 third, u32 ptr, u32 fifth);
+int ksys_inotify_init(int flags);
 
 /*
  * The following kernel syscall equivalents are just wrappers to fs-internal

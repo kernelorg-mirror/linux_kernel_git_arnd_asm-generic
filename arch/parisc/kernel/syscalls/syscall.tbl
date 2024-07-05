@@ -131,7 +131,7 @@
 116	common	sysinfo			sys_sysinfo			compat_sys_sysinfo
 117	common	shutdown		sys_shutdown
 118	common	fsync			sys_fsync
-119	common	madvise			parisc_madvise
+119	common	madvise			sys_parisc_madvise
 120	common	clone			sys_clone_wrapper
 121	common	setdomainname		sys_setdomainname
 122	common	sendfile		sys_sendfile			compat_sys_sendfile
@@ -149,7 +149,7 @@
 133	common	fchdir			sys_fchdir
 134	common	bdflush			sys_ni_syscall
 135	common	sysfs			sys_sysfs
-136	32	personality		parisc_personality
+136	32	personality		sys_parisc_personality
 136	64	personality		sys_personality
 # 137 was afs_syscall
 138	common	setfsuid		sys_setfsuid
@@ -344,17 +344,17 @@
 304	common	eventfd			sys_eventfd
 305	32	fallocate		sys_fallocate6
 305	64	fallocate		sys_fallocate
-306	common	timerfd_create		parisc_timerfd_create
+306	common	timerfd_create		sys_parisc_timerfd_create
 307	32	timerfd_settime		sys_timerfd_settime32
 307	64	timerfd_settime		sys_timerfd_settime
 308	32	timerfd_gettime		sys_timerfd_gettime32
 308	64	timerfd_gettime		sys_timerfd_gettime
-309	common	signalfd4		parisc_signalfd4		parisc_compat_signalfd4
-310	common	eventfd2		parisc_eventfd2
+309	common	signalfd4		sys_parisc_signalfd4		compat_sys_parisc_signalfd4
+310	common	eventfd2		sys_parisc_eventfd2
 311	common	epoll_create1		sys_epoll_create1
 312	common	dup3			sys_dup3
-313	common	pipe2			parisc_pipe2
-314	common	inotify_init1		parisc_inotify_init1
+313	common	pipe2			sys_parisc_pipe2
+314	common	inotify_init1		sys_parisc_inotify_init1
 315	32	preadv			sys_preadv5
 316	32	pwritev			sys_pwritev5
 315	64	preadv			sys_preadv
@@ -390,7 +390,7 @@
 341	common	bpf			sys_bpf
 342	common	execveat		sys_execveat			compat_sys_execveat
 343	common	membarrier		sys_membarrier
-344	common	userfaultfd		parisc_userfaultfd
+344	common	userfaultfd		sys_parisc_userfaultfd
 345	common	mlock2			sys_mlock2
 346	common	copy_file_range		sys_copy_file_range
 347	32	preadv2			sys_preadv6

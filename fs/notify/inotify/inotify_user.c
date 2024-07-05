@@ -691,7 +691,7 @@ static struct fsnotify_group *inotify_new_group(unsigned int max_events)
 
 
 /* inotify syscalls */
-static int do_inotify_init(int flags)
+int ksys_inotify_init(int flags)
 {
 	struct fsnotify_group *group;
 	int ret;
@@ -718,12 +718,12 @@ static int do_inotify_init(int flags)
 
 SYSCALL_DEFINE1(inotify_init1, int, flags)
 {
-	return do_inotify_init(flags);
+	return ksys_inotify_init(flags);
 }
 
 SYSCALL_DEFINE0(inotify_init)
 {
-	return do_inotify_init(0);
+	return ksys_inotify_init(0);
 }
 
 SYSCALL_DEFINE3(inotify_add_watch, int, fd, const char __user *, pathname,
