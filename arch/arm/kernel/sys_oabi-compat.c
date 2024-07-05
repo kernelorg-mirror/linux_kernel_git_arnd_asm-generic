@@ -145,8 +145,8 @@ static long cp_oldabi_stat64(struct kstat *stat,
 	return copy_to_user(statbuf,&tmp,sizeof(tmp)) ? -EFAULT : 0;
 }
 
-asmlinkage long sys_oabi_stat64(const char __user * filename,
-				struct oldabi_stat64 __user * statbuf)
+SYSCALL_DEFINE2(oabi_stat64, const char __user *, filename,
+		struct oldabi_stat64 __user *, statbuf)
 {
 	struct kstat stat;
 	int error = vfs_stat(filename, &stat);
@@ -155,8 +155,8 @@ asmlinkage long sys_oabi_stat64(const char __user * filename,
 	return error;
 }
 
-asmlinkage long sys_oabi_lstat64(const char __user * filename,
-				 struct oldabi_stat64 __user * statbuf)
+SYSCALL_DEFINE2(oabi_lstat64, const char __user *, filename,
+		struct oldabi_stat64 __user *, statbuf)
 {
 	struct kstat stat;
 	int error = vfs_lstat(filename, &stat);
@@ -165,8 +165,8 @@ asmlinkage long sys_oabi_lstat64(const char __user * filename,
 	return error;
 }
 
-asmlinkage long sys_oabi_fstat64(unsigned long fd,
-				 struct oldabi_stat64 __user * statbuf)
+SYSCALL_DEFINE2(oabi_fstat64, unsigned long, fd,
+		struct oldabi_stat64 __user *, statbuf)
 {
 	struct kstat stat;
 	int error = vfs_fstat(fd, &stat);
@@ -175,10 +175,10 @@ asmlinkage long sys_oabi_fstat64(unsigned long fd,
 	return error;
 }
 
-asmlinkage long sys_oabi_fstatat64(int dfd,
-				   const char __user *filename,
-				   struct oldabi_stat64  __user *statbuf,
-				   int flag)
+SYSCALL_DEFINE4(oabi_fstatat64, int, dfd,
+		const char __user *, filename,
+		struct oldabi_stat64  __user *, statbuf,
+		int, flag)
 {
 	struct kstat stat;
 	int error;
@@ -231,8 +231,8 @@ static int put_oabi_flock(struct flock64 *kernel, struct oabi_flock64 __user *ar
 	return 0;
 }
 
-asmlinkage long sys_oabi_fcntl64(unsigned int fd, unsigned int cmd,
-				 unsigned long arg)
+SYSCALL_DEFINE3(oabi_fcntl64, unsigned int, fd, unsigned int, cmd,
+		unsigned long, arg)
 {
 	void __user *argp = (void __user *)arg;
 	struct fd f = fdget_raw(fd);
@@ -282,8 +282,8 @@ struct oabi_epoll_event {
 } __attribute__ ((packed,aligned(4)));
 
 #ifdef CONFIG_EPOLL
-asmlinkage long sys_oabi_epoll_ctl(int epfd, int op, int fd,
-				   struct oabi_epoll_event __user *event)
+SYSCALL_DEFINE4(oabi_epoll_ctl, int, epfd, int, op, int, fd,
+		struct oabi_epoll_event __user *, event)
 {
 	struct oabi_epoll_event user;
 	struct epoll_event kernel;
@@ -298,8 +298,8 @@ asmlinkage long sys_oabi_epoll_ctl(int epfd, int op, int fd,
 	return do_epoll_ctl(epfd, op, fd, &kernel, false);
 }
 #else
-asmlinkage long sys_oabi_epoll_ctl(int epfd, int op, int fd,
-				   struct oabi_epoll_event __user *event)
+SYSCALL_DEFINE4(oabi_epoll_ctl, int, epfd, int, op, int, fd,
+		struct oabi_epoll_event __user *, event)
 {
 	return -EINVAL;
 }
@@ -336,10 +336,8 @@ struct oabi_sembuf {
 #define sc_semopm     sem_ctls[2]
 
 #ifdef CONFIG_SYSVIPC
-asmlinkage long sys_oabi_semtimedop(int semid,
-				    struct oabi_sembuf __user *tsops,
-				    unsigned nsops,
-				    const struct old_timespec32 __user *timeout)
+SYSCALL_DEFINE4(oabi_semtimedop, int, semid, struct oabi_sembuf __user *, tsops,
+		unsigned, nsops, const struct old_timespec32 __user *, timeout)
 {
 	struct ipc_namespace *ns;
 	struct sembuf *sops;
@@ -382,14 +380,14 @@ out:
 	return err;
 }
 
-asmlinkage long sys_oabi_semop(int semid, struct oabi_sembuf __user *tsops,
-			       unsigned nsops)
+SYSCALL_DEFINE3(oabi_semop, int, semid, struct oabi_sembuf __user *, tsops,
+		unsigned, nsops)
 {
 	return sys_oabi_semtimedop(semid, tsops, nsops, NULL);
 }
 
-asmlinkage int sys_oabi_ipc(uint call, int first, int second, int third,
-			    void __user *ptr, long fifth)
+SYSCALL_DEFINE6(oabi_ipc, uint, call, int, first, int, second, int, third,
+		void __user *, ptr, long, fifth)
 {
 	switch (call & 0xffff) {
 	case SEMOP:
@@ -406,61 +404,60 @@ asmlinkage int sys_oabi_ipc(uint call, int first, int second, int third,
 	}
 }
 #else
-asmlinkage long sys_oabi_semtimedop(int semid,
-				    struct oabi_sembuf __user *tsops,
-				    unsigned nsops,
-				    const struct old_timespec32 __user *timeout)
+SYSCALL_DEFINE4(oabi_semtimedop, int, semid, struct oabi_sembuf __user *, tsops,
+		unsigned, nsops, const struct old_timespec32 __user *, timeout)
 {
 	return -ENOSYS;
 }
 
-asmlinkage long sys_oabi_semop(int semid, struct oabi_sembuf __user *tsops,
-			       unsigned nsops)
+SYSCALL_DEFINE3(oabi_semop, int, semid, struct oabi_sembuf __user *, tsops,
+		unsigned, nsops)
 {
 	return -ENOSYS;
 }
 
-asmlinkage int sys_oabi_ipc(uint call, int first, int second, int third,
-			    void __user *ptr, long fifth)
+SYSCALL_DEFINE5(oabi_ipc, uint, call, int, first, int, second, int, third,
+		void __user *, ptr, long, fifth)
 {
 	return -ENOSYS;
 }
 #endif
 
-asmlinkage long sys_oabi_bind(int fd, struct sockaddr __user *addr, int addrlen)
+SYSCALL_DEFINE3(oabi_bind, int, fd, struct sockaddr __user *, addr,
+		int, addrlen)
 {
 	sa_family_t sa_family;
 	if (addrlen == 112 &&
 	    get_user(sa_family, &addr->sa_family) == 0 &&
 	    sa_family == AF_UNIX)
 			addrlen = 110;
-	return sys_bind(fd, addr, addrlen);
+	return __sys_bind(fd, addr, addrlen);
 }
 
-asmlinkage long sys_oabi_connect(int fd, struct sockaddr __user *addr, int addrlen)
+SYSCALL_DEFINE3(oabi_connect, int, fd, struct sockaddr __user *, addr,
+		int, addrlen)
 {
 	sa_family_t sa_family;
 	if (addrlen == 112 &&
 	    get_user(sa_family, &addr->sa_family) == 0 &&
 	    sa_family == AF_UNIX)
 			addrlen = 110;
-	return sys_connect(fd, addr, addrlen);
+	return __sys_connect(fd, addr, addrlen);
 }
 
-asmlinkage long sys_oabi_sendto(int fd, void __user *buff,
-				size_t len, unsigned flags,
-				struct sockaddr __user *addr,
-				int addrlen)
+SYSCALL_DEFINE6(oabi_sendto, int, fd, void __user *, buff, size_t, len,
+		unsigned, flags, struct sockaddr __user *, addr, int, addrlen)
 {
 	sa_family_t sa_family;
 	if (addrlen == 112 &&
 	    get_user(sa_family, &addr->sa_family) == 0 &&
 	    sa_family == AF_UNIX)
 			addrlen = 110;
-	return sys_sendto(fd, buff, len, flags, addr, addrlen);
+	return __sys_sendto(fd, buff, len, flags, addr, addrlen);
 }
 
-asmlinkage long sys_oabi_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
+SYSCALL_DEFINE3(oabi_sendmsg, int, fd, struct user_msghdr __user *, msg,
+		unsigned, flags)
 {
 	struct sockaddr __user *addr;
 	int msg_namelen;
@@ -483,10 +480,10 @@ asmlinkage long sys_oabi_sendmsg(int fd, struct user_msghdr __user *msg, unsigne
 		 */
 		put_user(110, &msg->msg_namelen);
 	}
-	return sys_sendmsg(fd, msg, flags);
+	return __sys_sendmsg(fd, msg, flags, true);
 }
 
-asmlinkage long sys_oabi_socketcall(int call, unsigned long __user *args)
+SYSCALL_DEFINE2(oabi_socketcall, int, call, unsigned long __user *, args)
 {
 	unsigned long r = -EFAULT, a[6];
 

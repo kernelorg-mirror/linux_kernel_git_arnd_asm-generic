@@ -33,7 +33,7 @@ asmlinkage long sys_oabi_semtimedop(int semid,
 				    const struct old_timespec32 __user *timeout);
 asmlinkage long sys_oabi_semop(int semid, struct oabi_sembuf __user *tsops,
 			       unsigned nsops);
-asmlinkage int sys_oabi_ipc(uint call, int first, int second, int third,
+asmlinkage long sys_oabi_ipc(uint call, int first, int second, int third,
 			    void __user *ptr, long fifth);
 struct sockaddr;
 asmlinkage long sys_oabi_bind(int fd, struct sockaddr __user *addr, int addrlen);
