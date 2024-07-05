@@ -21,6 +21,7 @@
 #include <linux/personality.h>
 #include <linux/resume_user_mode.h>
 #include <linux/sched/task_stack.h>
+#include <linux/syscalls.h>
 
 #include <asm/ucontext.h>
 #include <linux/uaccess.h>
@@ -245,7 +246,7 @@ restore_sigcontext(struct pt_regs *regs, struct rt_sigframe __user *frame)
  * Do a signal return; undo the signal stack.
  */
 
-asmlinkage long xtensa_rt_sigreturn(void)
+SYSCALL_DEFINE0(xtensa_rt_sigreturn)
 {
 	struct pt_regs *regs = current_pt_regs();
 	struct rt_sigframe __user *frame;

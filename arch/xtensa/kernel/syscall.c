@@ -36,7 +36,7 @@ syscall_t sys_call_table[] /* FIXME __cacheline_aligned */= {
 	((((addr) + SHMLBA - 1) & ~(SHMLBA - 1)) + \
 	 (((pgoff) << PAGE_SHIFT) & (SHMLBA - 1)))
 
-asmlinkage long xtensa_shmat(int shmid, char __user *shmaddr, int shmflg)
+SYSCALL_DEFINE3(xtensa_shmat, int, shmid, char __user *, shmaddr, int, shmflg)
 {
 	unsigned long ret;
 	long err;

@@ -68,7 +68,7 @@ static inline void syscall_get_arguments(struct task_struct *task,
 		args[i] = regs->areg[reg[i]];
 }
 
-asmlinkage long xtensa_rt_sigreturn(void);
-asmlinkage long xtensa_shmat(int, char __user *, int);
+asmlinkage long sys_xtensa_rt_sigreturn(void);
+asmlinkage long sys_xtensa_shmat(int, char __user *, int);
 
 #endif

@@ -102,7 +102,7 @@
 90	common	mincore				sys_mincore
 91	common	madvise				sys_madvise
 92	common	shmget				sys_shmget
-93	common	shmat				xtensa_shmat
+93	common	shmat				sys_xtensa_shmat
 94	common	shmctl				sys_old_shmctl
 95	common	shmdt				sys_shmdt
 # Socket Operations
@@ -240,7 +240,7 @@
 # Signal Handling
 223	common	restart_syscall			sys_restart_syscall
 224	common	sigaltstack			sys_sigaltstack
-225	common	rt_sigreturn			xtensa_rt_sigreturn
+225	common	rt_sigreturn			sys_xtensa_rt_sigreturn
 226	common	rt_sigaction			sys_rt_sigaction
 227	common	rt_sigprocmask			sys_rt_sigprocmask
 228	common	rt_sigpending			sys_rt_sigpending
