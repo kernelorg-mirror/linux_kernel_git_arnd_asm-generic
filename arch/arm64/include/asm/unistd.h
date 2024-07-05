@@ -15,6 +15,7 @@
 #define __ARCH_WANT_SYS_UTIME32
 #define __ARCH_WANT_SYS_FORK
 #define __ARCH_WANT_SYS_VFORK
+#define __ARCH_WANT_SYSCALLS_32PAD
 
 /*
  * The following SVCs are ARM private.

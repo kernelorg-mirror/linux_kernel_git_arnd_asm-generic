@@ -32,6 +32,10 @@
 
 # endif
 
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+#  define __ARCH_WANT_SYSCALLS_32NOPAD
+#endif
+
 # define NR_syscalls (__NR_syscalls)
 
 # define __ARCH_WANT_NEW_STAT

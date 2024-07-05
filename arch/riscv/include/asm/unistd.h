@@ -16,6 +16,10 @@
 #define __ARCH_WANT_COMPAT_FADVISE64_64
 #endif
 
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+#define __ARCH_WANT_SYSCALLS_32NOPAD
+#endif
+
 #if defined(__LP64__) && !defined(__SYSCALL_COMPAT)
 #define __ARCH_WANT_NEW_STAT
 #define __ARCH_WANT_SET_GET_RLIMIT

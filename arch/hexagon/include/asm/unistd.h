@@ -4,6 +4,7 @@
 #define __ARCH_WANT_SYS_CLONE
 #define __ARCH_WANT_SYS_VFORK
 #define __ARCH_WANT_SYS_FORK
+#define __ARCH_WANT_SYSCALLS_32PAD
 
 #define __ARCH_BROKEN_SYS_CLONE3
 

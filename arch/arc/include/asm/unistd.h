@@ -8,6 +8,7 @@
 #define __ARCH_WANT_SYS_CLONE
 #define __ARCH_WANT_SYS_VFORK
 #define __ARCH_WANT_SYS_FORK
+#define __ARCH_WANT_SYSCALLS_32NOPAD
 
 #define NR_syscalls __NR_syscalls
 

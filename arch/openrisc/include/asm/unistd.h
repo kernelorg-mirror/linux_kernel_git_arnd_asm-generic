@@ -4,5 +4,6 @@
 #define __ARCH_WANT_SYS_FORK
 #define __ARCH_WANT_SYS_CLONE
 #define __ARCH_WANT_TIME32_SYSCALLS
+#define __ARCH_WANT_SYSCALLS_32NOPAD
 
 #include <uapi/asm/unistd.h>

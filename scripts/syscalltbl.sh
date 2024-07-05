@@ -52,7 +52,7 @@ outfile="$2"
 
 nxt=0
 
-grep -E "^[0-9]+[[:space:]]+$abis" "$infile" | {
+grep -E "^[0-9]+[[:space:]]+$abis\>" "$infile" | {
 
 	while read nr abi name native compat noreturn; do
 

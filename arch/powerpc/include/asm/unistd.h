@@ -52,5 +52,9 @@
 #define __ARCH_WANT_SYS_VFORK
 #define __ARCH_WANT_SYS_CLONE
 
+#if !defined(CONFIG_64BIT) || defined(CONFIG_COMPAT)
+#define __ARCH_WANT_SYSCALLS_32PAD
+#endif
+
 #endif		/* __ASSEMBLY__ */
 #endif /* _ASM_POWERPC_UNISTD_H_ */
