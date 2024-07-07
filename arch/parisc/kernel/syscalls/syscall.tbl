@@ -78,8 +78,8 @@
 65	common	getpgrp			sys_getpgrp
 66	common	setsid			sys_setsid
 67	common	pivot_root		sys_pivot_root
-68	common	sgetmask		sys_sgetmask			sys32_unimplemented
-69	common	ssetmask		sys_ssetmask			sys32_unimplemented
+68	common	sgetmask		sys_sgetmask
+69	common	ssetmask		sys_ssetmask
 70	common	setreuid		sys_setreuid
 71	common	setregid		sys_setregid
 72	common	mincore			sys_mincore

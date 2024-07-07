@@ -22,13 +22,12 @@ CFLAGS_REMOVE_patch.o = $(CC_FLAGS_FTRACE)
 endif
 
 CFLAGS_REMOVE_sys_parisc.o = -Wmissing-prototypes -Wmissing-declarations
-CFLAGS_REMOVE_sys_parisc32.o = -Wmissing-prototypes -Wmissing-declarations
 
 obj-$(CONFIG_SMP)	+= smp.o
 obj-$(CONFIG_PA11)	+= pci-dma.o
 obj-$(CONFIG_PCI)	+= pci.o
 obj-$(CONFIG_MODULES)	+= module.o
-obj-$(CONFIG_64BIT)	+= sys_parisc32.o signal32.o
+obj-$(CONFIG_64BIT)	+= signal32.o
 obj-$(CONFIG_STACKTRACE)+= stacktrace.o
 obj-$(CONFIG_AUDIT)	+= audit.o
 obj64-$(CONFIG_AUDIT)	+= compat_audit.o
