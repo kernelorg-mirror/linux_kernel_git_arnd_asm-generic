@@ -51,7 +51,7 @@
 39	o32	mkdir				sys_mkdir
 40	o32	rmdir				sys_rmdir
 41	o32	dup				sys_dup
-42	o32	pipe				sysm_pipe
+42	o32	pipe				sys_mips_pipe
 43	o32	times				sys_times			compat_sys_times
 44	o32	prof				sys_ni_syscall
 45	o32	brk				sys_brk

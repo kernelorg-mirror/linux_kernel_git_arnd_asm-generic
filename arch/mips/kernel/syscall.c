@@ -49,7 +49,7 @@
  * argument.  Historically that used to be expensive in Linux.	These days
  * the performance advantage is negligible.
  */
-asmlinkage int sysm_pipe(void)
+SYSCALL_DEFINE0(mips_pipe)
 {
 	int fd[2];
 	int error = do_pipe_flags(fd, 0);
