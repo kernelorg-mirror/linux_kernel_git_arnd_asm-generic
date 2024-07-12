@@ -83,8 +83,8 @@
 62	64	lseek				sys_lseek
 63	common	read				sys_read
 64	common	write				sys_write
-65	common	readv				sys_readv			sys_readv
-66	common	writev				sys_writev			sys_writev
+65	common	readv				sys_readv
+66	common	writev				sys_writev
 67	32nopad	pread64				sys_pread5
 67	32pad	pread64				sys_pread6
 67	64	pread64				sys_pread64
