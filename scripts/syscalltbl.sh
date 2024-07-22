@@ -54,9 +54,7 @@ nxt=0
 
 grep -E "^[0-9]+[[:space:]]+$abis" "$infile" | {
 
-	while read nr abi name native compat noreturn ; do
-		test x$native = x- && native=sys_ni_syscall
-		test x$compat = x- && compat=sys_ni_syscall
+	while read nr abi name native compat noreturn; do
 
 		if [ $nxt -gt $nr ]; then
 			echo "error: $infile: syscall table is not sorted or duplicates the same syscall number" >&2
