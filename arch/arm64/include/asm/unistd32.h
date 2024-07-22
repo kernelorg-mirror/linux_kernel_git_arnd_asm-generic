@@ -4,6 +4,4 @@
 
 #include <asm/unistd_32.h>
 
-#define __NR_sync_file_range2           __NR_arm_sync_file_range
-
 #endif /* _UAPI__ASM_ARM_UNISTD_H */
