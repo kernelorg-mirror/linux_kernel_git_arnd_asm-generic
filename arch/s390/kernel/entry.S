@@ -612,21 +612,17 @@ SYM_DATA_END(daton_psw)
 
 	.section .rodata, "a"
 	.balign	8
-#define __SYSCALL(nr,call)	.quad __s390x_ ## call
-#define __SYSCALL_WITH_COMPAT(nr, native, compat) __SYSCALL(nr, native)
+#define SYSCALL(esame,emu)	.quad __s390x_ ## esame
 SYM_DATA_START(sys_call_table)
-#include "asm/syscall_table_64.h"
+#include "asm/syscall_table.h"
 SYM_DATA_END(sys_call_table)
-#undef __SYSCALL
-#undef __SYSCALL_WITH_COMPAT
+#undef SYSCALL
 
 #ifdef CONFIG_COMPAT
 
-#define __SYSCALL(nr,call)	.quad __s390_ ## call
-#define __SYSCALL_WITH_COMPAT(nr, native, compat) __SYSCALL(nr, compat)
+#define SYSCALL(esame,emu)	.quad __s390_ ## emu
 SYM_DATA_START(sys_call_table_emu)
-#include "asm/syscall_table_32.h"
+#include "asm/syscall_table.h"
 SYM_DATA_END(sys_call_table_emu)
-#undef __SYSCALL
-#undef __SYSCALL_WITH_COMPAT
+#undef SYSCALL
 #endif

@@ -17,6 +17,6 @@ __kernel_compat_\func:
 	.size	__kernel_compat_\func,.-__kernel_compat_\func
 .endm
 
-vdso_syscall restart_syscall,__NR_compat32_restart_syscall
-vdso_syscall sigreturn,__NR_compat32_sigreturn
-vdso_syscall rt_sigreturn,__NR_compat32_rt_sigreturn
+vdso_syscall restart_syscall,__NR_restart_syscall
+vdso_syscall sigreturn,__NR_sigreturn
+vdso_syscall rt_sigreturn,__NR_rt_sigreturn

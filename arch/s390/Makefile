@@ -122,6 +122,7 @@ OBJCOPYFLAGS	:= -O binary
 libs-y		+= arch/s390/lib/
 
 boot		:= arch/s390/boot
+syscalls	:= arch/s390/kernel/syscalls
 tools		:= arch/s390/tools
 
 all: bzImage
@@ -138,7 +139,11 @@ bzImage: vmlinux
 zfcpdump:
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
+archheaders:
+	$(Q)$(MAKE) $(build)=$(syscalls) uapi
+
 archprepare:
+	$(Q)$(MAKE) $(build)=$(syscalls) kapi
 	$(Q)$(MAKE) $(build)=$(tools) kapi $(extra_tools)
 ifeq ($(KBUILD_EXTMOD),)
 # We need to generate vdso-offsets.h before compiling certain files in kernel/.

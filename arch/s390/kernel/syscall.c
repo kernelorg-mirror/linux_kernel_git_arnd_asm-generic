@@ -111,7 +111,7 @@ static void do_syscall(struct pt_regs *regs)
 	if (unlikely(test_and_clear_pt_regs_flag(regs, PIF_SYSCALL_RET_SET)))
 		goto out;
 	regs->gprs[2] = -ENOSYS;
-	if (likely(nr >= __NR_syscalls))
+	if (likely(nr >= NR_syscalls))
 		goto out;
 	do {
 		regs->gprs[2] = current->thread.sys_call_table[nr](regs);
