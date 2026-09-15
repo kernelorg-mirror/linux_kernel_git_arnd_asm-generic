@@ -40,10 +40,10 @@ src_n32 := $(src)/syscall_n.tbl
 src_n64 := $(src)/syscall_n.tbl
 src_o32 := $(src)/syscall_o32.tbl
 
-$(kapi)/unistd_nr_%.h: $(systbl_common) $(sysnr) FORCE
+$(kapi)/unistd_nr_%.h: $(src_o32) $(src_n64) $(systbl_common) $(sysnr) FORCE
 	$(call if_changed,sysnr)
 
-$(kapi)/syscall_table_%.h: $(systbl) $(systbl_common) FORCE
+$(kapi)/syscall_table_%.h: $(src_o32) $(src_n64) $(systbl) $(systbl_common) FORCE
 	$(call if_changed,systbl)
 
 uapisyshdr-y		+= unistd_n32.h			\

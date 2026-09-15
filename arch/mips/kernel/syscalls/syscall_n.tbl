@@ -133,14 +133,14 @@
 123	common	capget				sys_capget
 124	common	capset				sys_capset
 125	common	rt_sigpending			sys_rt_sigpending	compat_sys_rt_sigpending
-126	common	rt_sigtimedwait			sys_rt_sigtimedwait_time	compat_sys_rt_sigtimedwait_time32
+126	common	rt_sigtimedwait			sys_rt_sigtimedwait	compat_sys_rt_sigtimedwait_time32
 127	common	rt_sigqueueinfo			sys_rt_sigqueueinfo	compat_sys_rt_sigqueueinfo
 128	common	rt_sigsuspend			sys_rt_sigsuspend	compat_sys_rt_sigsuspend
 129	common	sigaltstack			sys_sigaltstack		compat_sys_sigaltstack
 130	common	utime				sys_utime		sys_utime32
 131	common	mknod				sys_mknod
 132	common	personality			sys_personality		sys_32_personality
-133	common	ustat				sys_usta		compat_sys_usta
+133	common	ustat				sys_ustat		compat_sys_ustat
 134	common	statfs				sys_statfs		compat_sys_statfs
 135	common	fstatfs				sys_fstatfs		compat_sys_fstatfs
 136	common	sysfs				sys_sysfs
